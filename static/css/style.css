@@ -9,6 +9,7 @@ body {
 #container {
   min-width: 800px !important;
   width: 100%;
+  padding: 15px;
 }
 
 #overlay {
@@ -42,7 +43,16 @@ body {
 	text-decoration: underline
 }
 
-#statsContainer {
+.stats-container {
   height: calc(100vh - 380px);
   overflow-y: scroll;
+}
+
+.graph-container {
+  height: 250px;
+  background-color: #f1f1f1;
+}
+
+.second-rusher {
+  display: none;
 }
