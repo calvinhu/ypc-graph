@@ -29,7 +29,7 @@ $(document).ready(function() {
 			},
 			chart: {
 				type: 'column',
-				height: 260,
+				height: 300,
 
 				alignTicks: false
 

@@ -8,7 +8,7 @@ body {
 }
 #container {
   min-width: 800px !important;
-  
+  width: 100%;
 }
 
 #overlay {
@@ -43,6 +43,6 @@ body {
 }
 
 #statsContainer {
-  height: calc( 100vh - 410px);
+  height: calc( 100vh - 370px);
   overflow-y: scroll;
 }
