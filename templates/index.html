@@ -80,6 +80,9 @@
 				<p>Made by Calvin Hu (<a href="http://www.github.com/chu3">github</a>)</p>
 			</footer>
 		</div> <!-- /container -->        
+		<script type=text/javascript>
+			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
 		<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
 
 		<script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
