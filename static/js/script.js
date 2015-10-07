@@ -2,7 +2,7 @@
 */
 $(document).ready(function() {   
 
-	// var API_URL = 'http://localhost:5000/'
+	var API_URL = 'https://blooming-dawn-3659.herokuapp.com/'
 	var spinner = new Spinner({color: '#fff'});
 
 	function makeError(message) {
@@ -221,7 +221,7 @@ $(document).ready(function() {
 		showLoad()
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "/rushingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "rushingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph('#rusherYardsGraph','YPC Distribution',selectGraphValues(response))
