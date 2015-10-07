@@ -12,10 +12,22 @@ $(document).ready(function() {
 		);
 	}
 
-	function showLoad() {
-			$('#overlay').show();
-			spinner.spin(document.getElementById('overlay'));
+	function groupBy(array, predicate) {
+		var grouped = {};
+		for(var i = 0; i < array.length; i++) {
+			var groupKey = predicate(array[i]);
+			if (typeof(grouped[groupKey]) === "undefined")
+				grouped[groupKey] = [];
+			grouped[groupKey].push(array[i]);
 		}
+
+		return grouped;
+	}
+
+	function showLoad() {
+		$('#overlay').show();
+		spinner.spin(document.getElementById('overlay'));
+	}
 
 	function hideLoad() {
 		$('#overlay').hide();
@@ -68,20 +80,20 @@ $(document).ready(function() {
 				floating: true
 			},
 			tooltip: {
-	            formatter: function () {
-	                var s = '<b>' + this.x + ' Yard Plays</b>';
+				formatter: function () {
+					var s = '<b>' + this.x + ' Yard Plays</b>';
 
-	                $.each(this.points, function () {
-	                    s += '<br/>' + this.y+ ' ' +
-	                        this.series.name;
-	                });
+					$.each(this.points, function () {
+						s += '<br/>' + this.y+ ' ' +
+							this.series.name;
+					});
 
-	                s += '<br/>' + this.points[0].total + ' Total plays'
+					s += '<br/>' + this.points[0].total + ' Total plays'
 
-	                return s;
-	            },
-	            shared: true
-	        },
+					return s;
+				},
+				shared: true
+			},
 			plotOptions: {
 				column: {
 					groupPadding: 0,
@@ -177,7 +189,6 @@ $(document).ready(function() {
 			)
 		});
 		$("#statsTable").stupidtable();
-
 	}
 
 	function getRushersList() {
@@ -185,6 +196,10 @@ $(document).ready(function() {
 		showLoad();
 
 		var hardCodedTop50 = {"result": [{"id": "00-0025394", "name": "Adrian Peterson", "team": "MIN"}, {"id": "00-0026184", "name": "Matt Forte", "team": "CHI"}, {"id": "00-0027531", "name": "Chris Ivory", "team": "NYJ"}, {"id": "00-0026213", "name": "Jamaal Charles", "team": "KC"}, {"id": "00-0026164", "name": "Chris Johnson", "team": "ARI"}, {"id": "00-0030513", "name": "Latavius Murray", "team": "OAK"}, {"id": "00-0030456", "name": "Giovani Bernard", "team": "CIN"}, {"id": "00-0029613", "name": "Doug Martin", "team": "TB"}, {"id": "00-0031045", "name": "Carlos Hyde", "team": "SF"}, {"id": "00-0026373", "name": "Justin Forsett", "team": "BAL"}, {"id": "00-0029141", "name": "Alfred Morris", "team": "WAS"}, {"id": "00-0032209", "name": "T.J. Yeldon", "team": "JAC"}, {"id": "00-0031285", "name": "Devonta Freeman", "team": "ATL"}, {"id": "00-0030485", "name": "Eddie Lacy", "team": "GB"}, {"id": "00-0030388", "name": "Joseph Randle", "team": "DAL"}, {"id": "00-0032144", "name": "Melvin Gordon", "team": "SD"}, {"id": "00-0023500", "name": "Frank Gore", "team": "IND"}, {"id": "00-0032152", "name": "Karlos Williams", "team": "BUF"}, {"id": "00-0026153", "name": "Jonathan Stewart", "team": "CAR"}, {"id": "00-0024242", "name": "DeAngelo Williams", "team": "PIT"}, {"id": "00-0031075", "name": "Alfred Blue", "team": "HOU"}, {"id": "00-0027966", "name": "Mark Ingram", "team": "NO"}, {"id": "00-0031939", "name": "Matt Jones", "team": "WAS"}, {"id": "00-0027939", "name": "Cam Newton", "team": "CAR"}, {"id": "00-0027974", "name": "Colin Kaepernick", "team": "SF"}, {"id": "00-0030656", "name": "Isaiah Crowell", "team": "CLE"}, {"id": "00-0029683", "name": "Ronnie Hillman", "team": "DEN"}, {"id": "00-0030496", "name": "Le'Veon Bell", "team": "PIT"}, {"id": "00-0029263", "name": "Russell Wilson", "team": "SEA"}, {"id": "00-0031301", "name": "Jeremy Hill", "team": "CIN"}, {"id": "00-0027791", "name": "James Starks", "team": "GB"}, {"id": "00-0031897", "name": "Thomas Rawls", "team": "SEA"}, {"id": "00-0032241", "name": "Todd Gurley", "team": "STL"}, {"id": "00-0028087", "name": "Dion Lewis", "team": "NE"}, {"id": "00-0027029", "name": "LeSean McCoy", "team": "BUF"}, {"id": "00-0026019", "name": "Danny Woodhead", "team": "SD"}, {"id": "00-0027155", "name": "Rashad Jennings", "team": "NYG"}, {"id": "00-0027864", "name": "Ryan Mathews", "team": "PHI"}, {"id": "00-0029615", "name": "Lamar Miller", "team": "MIA"}, {"id": "00-0028064", "name": "Bilal Powell", "team": "NYJ"}, {"id": "00-0025399", "name": "Marshawn Lynch", "team": "SEA"}, {"id": "00-0031413", "name": "Bishop Sankey", "team": "TEN"}, {"id": "00-0031055", "name": "Andre Williams", "team": "NYG"}, {"id": "00-0029854", "name": "C.J. Anderson", "team": "DEN"}, {"id": "00-0032104", "name": "Ameer Abdullah", "team": "DET"}, {"id": "00-0027651", "name": "Dexter McCluster", "team": "TEN"}, {"id": "00-0026144", "name": "Darren McFadden", "team": "DAL"}, {"id": "00-0032058", "name": "Tevin Coleman", "team": "ATL"}, {"id": "00-0028118", "name": "Tyrod Taylor", "team": "BUF"}, {"id": "00-0023459", "name": "Aaron Rodgers", "team": "GB"} ] }
+		var groupedByTeam = groupBy(hardCodedTop50.result, function (obj) {
+		    return obj.team;
+		});
+		console.log(groupedByTeam);
 
 		// $.ajax({
 		// 	type: "GET",
@@ -207,14 +222,17 @@ $(document).ready(function() {
 		// });
 
 		hideLoad();
-		$('#rbSelect').append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'))
-		$.each(hardCodedTop50.result, function(key,value) {
+		$('#rbSelect').append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'));
+		var $optgroup;
+		$.each(Object.keys(groupedByTeam).sort(), function(index,value) {
+			$optgroup = $('<optgroup>').attr('label',value),
 			$('#rbSelect').append(
-				$('<option>').html(value.name + ' (' + value.team + ')' ).attr('value',value.id)
+				$optgroup
 			)
+			$.each(groupedByTeam[value], function(key,value) {
+				$optgroup.append($('<option>').html(value.name + ' (' + value.team + ')' ).attr('value',value.id))
+			})
 		});
-
-
 	}
 
 	function getRusherStats(playerid,year) {
