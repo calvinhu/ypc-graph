@@ -2,7 +2,7 @@
 */
 $(document).ready(function() {   
 
-	var API_URL = 'https://localhost:5000/'
+	var $SCRIPT_ROOT = 'https://localhost:5000/'
 	var spinner = new Spinner({color: '#fff'});
 
 	function makeError(message) {
@@ -188,7 +188,7 @@ $(document).ready(function() {
 
 		// $.ajax({
 		// 	type: "GET",
-		// 	url: API_URL + "toprushers",
+		// 	url: $SCRIPT_ROOT + "toprushers",
 		// 	success: function (response) {
 		// 		hideLoad();
 		// 		$('#rbSelect').append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'))
@@ -222,7 +222,7 @@ $(document).ready(function() {
 		showLoad()
 		$.ajax({
 			type: "GET",
-			url: API_URL + "rushingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "rushingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph('#rusherYardsGraph','YPC Distribution',selectGraphValues(response))
