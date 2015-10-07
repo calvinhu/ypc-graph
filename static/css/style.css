@@ -43,6 +43,6 @@ body {
 }
 
 #statsContainer {
-  height: calc( 100vh - 370px);
+  height: calc(100vh - 380px);
   overflow-y: scroll;
 }
