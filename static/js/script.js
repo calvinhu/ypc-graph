@@ -2,7 +2,7 @@
 */
 $(document).ready(function() {   
 
-	// var $SCRIPT_ROOT = 'https://localhost:5000/'
+	// var API_URL = 'http://localhost:5000/'
 	var spinner = new Spinner({color: '#fff'});
 
 	function makeError(message) {
@@ -188,7 +188,7 @@ $(document).ready(function() {
 
 		// $.ajax({
 		// 	type: "GET",
-		// 	url: $SCRIPT_ROOT + "toprushers",
+		// 	url: API_URL + "toprushers",
 		// 	success: function (response) {
 		// 		hideLoad();
 		// 		$('#rbSelect').append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'))
@@ -217,12 +217,11 @@ $(document).ready(function() {
 
 	}
 
-
 	function getRusherStats(playerid,year) {
 		showLoad()
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "rushingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "/rushingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph('#rusherYardsGraph','YPC Distribution',selectGraphValues(response))
@@ -238,7 +237,6 @@ $(document).ready(function() {
 			},
 		});
 	}
-
 
 	(function initialize() {
 
@@ -259,9 +257,4 @@ $(document).ready(function() {
 		})
 	}())
 
-	
-
-
-
-	
 });
