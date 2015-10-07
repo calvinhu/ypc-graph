@@ -2,7 +2,7 @@
 */
 $(document).ready(function() {   
 
-	var $SCRIPT_ROOT = 'https://localhost:5000/'
+	// var $SCRIPT_ROOT = 'https://localhost:5000/'
 	var spinner = new Spinner({color: '#fff'});
 
 	function makeError(message) {
