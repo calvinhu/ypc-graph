@@ -119,8 +119,8 @@ $(document).ready(function() {
 			},
 			series: data
 		});
-		var lastLabel = $('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').last();
-		var firstLabel = $('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').first();
+		var lastLabel = $(container).find('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').last();
+		var firstLabel = $(container).find('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').first();
 		if (lastLabel.text() === '50') {
 			lastLabel.text('50+');
 		}
