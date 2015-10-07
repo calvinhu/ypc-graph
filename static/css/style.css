@@ -1,0 +1,48 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+body {
+	padding-bottom: 0;
+  font-size: 13px;
+}
+#container {
+  min-width: 800px !important;
+  
+}
+
+#overlay {
+  display: none;
+  background-color: black;
+  position: fixed;
+  left:0;
+  top:0;
+  height:100%;
+  width:100%;
+  z-index: 10;
+  opacity: 0.5; /* also -moz-opacity, etc. */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 60px;
+  background-color: #428bca;
+  border-color:#357ebd
+}
+#footer .text-muted {
+	color: white;
+	margin: 20px 0;
+}
+
+#footer .text-muted a {
+	color: white;
+	text-decoration: underline
+}
+
+#statsContainer {
+  height: calc( 100vh - 400px);
+  overflow-y: scroll;
+}
