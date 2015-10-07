@@ -33,10 +33,10 @@
 		
 		<div id="container" class="container">
 			<!-- Example row of columns -->
-			<br />
 			<div class="row">
 				<div class="col-sm-12">
 					<div class="pull-right form-inline">
+						<button id="addSecondPlayer" class="btn btn-default">Show Second Graph</button>
 						<select class="form-control" style="display:inline-block" id="rbSelect"></select>
 						<select class="form-control" style="display:inline-block" id="yearSelect">
 							<option value="2015" selected>2015</option>
@@ -47,20 +47,58 @@
 						<button id="submit" class="btn btn-primary">Go</button>
 						<!-- <button id="forteButton" class="btn btn-default">Matt Forte</button> -->
 					</div>
-					<h2 class="pull-left" style="margin-top:0"id="playerName"></h2>
+					<h3 class="pull-left" style="margin-top:0"id="playerName"></h3>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-sm-12">
-					<div id="rusherYardsGraph" style="height:300px"><h3 style="padding-top:50px">This is a lightweight tool to visualize a running back's yards per carry, spread over the course of a season.
+					<div id="rusherYardsGraph" class="graph-container"><h3 style="padding-top:50px">This is a lightweight tool to visualize a running back's yards per carry, spread over the course of a season.
 					<br /><br />
 					To use, select a player from the top right of the screen, then hit go.</h3></div>
 				</div>
 			</div>
-			<div id="statsContainer" class="row">
-				
+
+			<div class="row second-rusher">
 				<div class="col-sm-12">
+					<div class="pull-right form-inline">
+						<select class="form-control" style="display:inline-block" id="rbSelect2"></select>
+						<select class="form-control" style="display:inline-block" id="yearSelect2">
+							<option value="2015" selected>2015</option>
+							<option value="2014">2014</option>
+							<option value="2013">2013</option>
+							<option value="2012">2012</option>
+						</select>
+						<button id="submit2" class="btn btn-primary">Go</button>
+						<!-- <button id="forteButton" class="btn btn-default">Matt Forte</button> -->
+					</div>
+					<h3 class="pull-left" style="margin-top:0"id="playerName2"></h3>
+				</div>
+			</div>
+			<div class="row second-rusher">
+				<div class="col-sm-12">
+					<div id="rusherYardsGraph2" class="graph-container"><h3 style="padding-top:50px">Compare a second player</h3></div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12 stats-container">
+					<h4 id="tablePlayerName" class="second-rusher">Top Player</h4>
 					<table id="statsTable" class="table table-condensed">
+						<thead>
+							<tr>
+								<th align="right" data-sort="int">Week</th>
+								<th width="175px" data-sort="string">Game</th>
+								<th data-sort="string">Type</th>
+								<th align="right" data-sort="int">Yards</th>
+								<th>Description</th>
+							</tr>
+						</thead>
+						<tbody>
+						</tbody>
+					</table>
+				</div>
+				<div class="col-sm-6 second-rusher stats-container">
+					<h4 id="tablePlayerName2">Bottom Player</h4>
+					<table id="statsTable2" class="table table-condensed">
 						<thead>
 							<tr>
 								<th align="right" data-sort="int">Week</th>
