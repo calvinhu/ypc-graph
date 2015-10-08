@@ -25,6 +25,10 @@ $(document).ready(function() {
 		return grouped;
 	}
 
+	function addCommas(intNum) {
+		return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
+	}
+
 	function showLoad() {
 		$('#overlay').show();
 		spinner.spin(document.getElementById('overlay'));
@@ -186,9 +190,21 @@ $(document).ready(function() {
 		return result;
 	}
 
-	function showStats(response,containerString) {
-		// var rush_attempts = response.result.filter(function(item) { return item.type === 'RUSH'});
-		// var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
+	function showStats(response,containerString,summaryContainerString) {
+		var rush_attempts = response.result.filter(function(item) { return item.type === 'RUSH'});
+		var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
+		var stats = {};
+
+		stats['rushing attempts'] = rush_attempts.length;
+		stats['rushing yards'] = rush_attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['yards per carry'] = parseFloat(stats['rushing yards'] / stats['rushing attempts']).toFixed(1);
+
+		stats['passing attempts'] = pass_attempts.length;
+		stats['passing yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['yards per pass'] = parseFloat(stats['passing yards'] / stats['passing attempts']).toFixed(1);
+
+		console.log(stats);
+
 		$(containerString + ' tbody').html('');
 		$.each(response.result, function(index,value) {
 			$(containerString + ' tbody').append(
@@ -201,6 +217,14 @@ $(document).ready(function() {
 			)
 		});
 		$(containerString).stupidtable();
+
+		$.each(stats, function(key,value) {
+			$(summaryContainerString + ' tbody').append(
+				$('<tr>')
+					.append($('<td>').html(key))
+					.append($('<td>').attr('align','right').html(value < 1000 ? addCommas(value) : value))
+			)
+		});
 	}
 
 	function getRushersList() {
@@ -208,8 +232,9 @@ $(document).ready(function() {
 		$('#rbList2').html('');
 		showLoad();
 
-		var hardCodedTop50 = {"result": [{"id": "00-0025394", "name": "Adrian Peterson", "team": "MIN"}, {"id": "00-0026184", "name": "Matt Forte", "team": "CHI"}, {"id": "00-0027531", "name": "Chris Ivory", "team": "NYJ"}, {"id": "00-0026213", "name": "Jamaal Charles", "team": "KC"}, {"id": "00-0026164", "name": "Chris Johnson", "team": "ARI"}, {"id": "00-0030513", "name": "Latavius Murray", "team": "OAK"}, {"id": "00-0030456", "name": "Giovani Bernard", "team": "CIN"}, {"id": "00-0029613", "name": "Doug Martin", "team": "TB"}, {"id": "00-0031045", "name": "Carlos Hyde", "team": "SF"}, {"id": "00-0026373", "name": "Justin Forsett", "team": "BAL"}, {"id": "00-0029141", "name": "Alfred Morris", "team": "WAS"}, {"id": "00-0032209", "name": "T.J. Yeldon", "team": "JAC"}, {"id": "00-0031285", "name": "Devonta Freeman", "team": "ATL"}, {"id": "00-0030485", "name": "Eddie Lacy", "team": "GB"}, {"id": "00-0030388", "name": "Joseph Randle", "team": "DAL"}, {"id": "00-0032144", "name": "Melvin Gordon", "team": "SD"}, {"id": "00-0023500", "name": "Frank Gore", "team": "IND"}, {"id": "00-0032152", "name": "Karlos Williams", "team": "BUF"}, {"id": "00-0026153", "name": "Jonathan Stewart", "team": "CAR"}, {"id": "00-0024242", "name": "DeAngelo Williams", "team": "PIT"}, {"id": "00-0031075", "name": "Alfred Blue", "team": "HOU"}, {"id": "00-0027966", "name": "Mark Ingram", "team": "NO"}, {"id": "00-0031939", "name": "Matt Jones", "team": "WAS"}, {"id": "00-0027939", "name": "Cam Newton", "team": "CAR"}, {"id": "00-0027974", "name": "Colin Kaepernick", "team": "SF"}, {"id": "00-0030656", "name": "Isaiah Crowell", "team": "CLE"}, {"id": "00-0029683", "name": "Ronnie Hillman", "team": "DEN"}, {"id": "00-0030496", "name": "Le'Veon Bell", "team": "PIT"}, {"id": "00-0029263", "name": "Russell Wilson", "team": "SEA"}, {"id": "00-0031301", "name": "Jeremy Hill", "team": "CIN"}, {"id": "00-0027791", "name": "James Starks", "team": "GB"}, {"id": "00-0031897", "name": "Thomas Rawls", "team": "SEA"}, {"id": "00-0032241", "name": "Todd Gurley", "team": "STL"}, {"id": "00-0028087", "name": "Dion Lewis", "team": "NE"}, {"id": "00-0027029", "name": "LeSean McCoy", "team": "BUF"}, {"id": "00-0026019", "name": "Danny Woodhead", "team": "SD"}, {"id": "00-0027155", "name": "Rashad Jennings", "team": "NYG"}, {"id": "00-0027864", "name": "Ryan Mathews", "team": "PHI"}, {"id": "00-0029615", "name": "Lamar Miller", "team": "MIA"}, {"id": "00-0028064", "name": "Bilal Powell", "team": "NYJ"}, {"id": "00-0025399", "name": "Marshawn Lynch", "team": "SEA"}, {"id": "00-0031413", "name": "Bishop Sankey", "team": "TEN"}, {"id": "00-0031055", "name": "Andre Williams", "team": "NYG"}, {"id": "00-0029854", "name": "C.J. Anderson", "team": "DEN"}, {"id": "00-0032104", "name": "Ameer Abdullah", "team": "DET"}, {"id": "00-0027651", "name": "Dexter McCluster", "team": "TEN"}, {"id": "00-0026144", "name": "Darren McFadden", "team": "DAL"}, {"id": "00-0032058", "name": "Tevin Coleman", "team": "ATL"}, {"id": "00-0028118", "name": "Tyrod Taylor", "team": "BUF"}, {"id": "00-0023459", "name": "Aaron Rodgers", "team": "GB"} ] }
-		var groupedByTeam = groupBy(hardCodedTop50.result, function (obj) {
+		var hardCodedTop75 = {"result": [{"id": "00-0025394", "name": "Adrian Peterson", "team": "MIN"}, {"id": "00-0026184", "name": "Matt Forte", "team": "CHI"}, {"id": "00-0027531", "name": "Chris Ivory", "team": "NYJ"}, {"id": "00-0026213", "name": "Jamaal Charles", "team": "KC"}, {"id": "00-0026164", "name": "Chris Johnson", "team": "ARI"}, {"id": "00-0030513", "name": "Latavius Murray", "team": "OAK"}, {"id": "00-0030456", "name": "Giovani Bernard", "team": "CIN"}, {"id": "00-0029613", "name": "Doug Martin", "team": "TB"}, {"id": "00-0031045", "name": "Carlos Hyde", "team": "SF"}, {"id": "00-0026373", "name": "Justin Forsett", "team": "BAL"}, {"id": "00-0029141", "name": "Alfred Morris", "team": "WAS"}, {"id": "00-0032209", "name": "T.J. Yeldon", "team": "JAC"}, {"id": "00-0031285", "name": "Devonta Freeman", "team": "ATL"}, {"id": "00-0030485", "name": "Eddie Lacy", "team": "GB"}, {"id": "00-0030388", "name": "Joseph Randle", "team": "DAL"}, {"id": "00-0032144", "name": "Melvin Gordon", "team": "SD"}, {"id": "00-0023500", "name": "Frank Gore", "team": "IND"}, {"id": "00-0032152", "name": "Karlos Williams", "team": "BUF"}, {"id": "00-0026153", "name": "Jonathan Stewart", "team": "CAR"}, {"id": "00-0024242", "name": "DeAngelo Williams", "team": "PIT"}, {"id": "00-0031075", "name": "Alfred Blue", "team": "HOU"}, {"id": "00-0027966", "name": "Mark Ingram", "team": "NO"}, {"id": "00-0031939", "name": "Matt Jones", "team": "WAS"}, {"id": "00-0027939", "name": "Cam Newton", "team": "CAR"}, {"id": "00-0027974", "name": "Colin Kaepernick", "team": "SF"}, {"id": "00-0030656", "name": "Isaiah Crowell", "team": "CLE"}, {"id": "00-0029683", "name": "Ronnie Hillman", "team": "DEN"}, {"id": "00-0030496", "name": "Le'Veon Bell", "team": "PIT"}, {"id": "00-0029263", "name": "Russell Wilson", "team": "SEA"}, {"id": "00-0031301", "name": "Jeremy Hill", "team": "CIN"}, {"id": "00-0027791", "name": "James Starks", "team": "GB"}, {"id": "00-0031897", "name": "Thomas Rawls", "team": "SEA"}, {"id": "00-0032241", "name": "Todd Gurley", "team": "STL"}, {"id": "00-0028087", "name": "Dion Lewis", "team": "NE"}, {"id": "00-0027029", "name": "LeSean McCoy", "team": "BUF"}, {"id": "00-0026019", "name": "Danny Woodhead", "team": "SD"}, {"id": "00-0027155", "name": "Rashad Jennings", "team": "NYG"}, {"id": "00-0027864", "name": "Ryan Mathews", "team": "PHI"}, {"id": "00-0029615", "name": "Lamar Miller", "team": "MIA"}, {"id": "00-0028064", "name": "Bilal Powell", "team": "NYJ"}, {"id": "00-0025399", "name": "Marshawn Lynch", "team": "SEA"}, {"id": "00-0031413", "name": "Bishop Sankey", "team": "TEN"}, {"id": "00-0031055", "name": "Andre Williams", "team": "NYG"}, {"id": "00-0029854", "name": "C.J. Anderson", "team": "DEN"}, {"id": "00-0032104", "name": "Ameer Abdullah", "team": "DET"}, {"id": "00-0027651", "name": "Dexter McCluster", "team": "TEN"}, {"id": "00-0026144", "name": "Darren McFadden", "team": "DAL"}, {"id": "00-0032058", "name": "Tevin Coleman", "team": "ATL"}, {"id": "00-0028118", "name": "Tyrod Taylor", "team": "BUF"}, {"id": "00-0023459", "name": "Aaron Rodgers", "team": "GB"}, {"id": "00-0032257", "name": "Duke Johnson", "team": "CLE"}, {"id": "00-0030348", "name": "Khiry Robinson", "team": "NO"}, {"id": "00-0030404", "name": "Chris Thompson", "team": "WAS"}, {"id": "00-0029438", "name": "Chris Polk", "team": "HOU"}, {"id": "00-0031407", "name": "Blake Bortles", "team": "JAC"}, {"id": "00-0023436", "name": "Alex Smith", "team": "KC"}, {"id": "00-0032187", "name": "David Johnson", "team": "ARI"}, {"id": "00-0031390", "name": "Charles Sims", "team": "TB"}, {"id": "00-0027325", "name": "LeGarrette Blount", "team": "NE"}, {"id": "00-0023564", "name": "Darren Sproles", "team": "PHI"}, {"id": "00-0030525", "name": "Tavon Austin", "team": "STL"}, {"id": "00-0027994", "name": "Shane Vereen", "team": "NYG"}, {"id": "00-0031682", "name": "Terron Ward", "team": "ATL"}, {"id": "00-0030287", "name": "Andre Ellington", "team": "ARI"}, {"id": "00-0029004", "name": "Lance Dunbar", "team": "DAL"}, {"id": "00-0026069", "name": "Mike Tolbert", "team": "CAR"}, {"id": "00-0031577", "name": "Javorius Allen", "team": "BAL"}, {"id": "00-0029668", "name": "Andrew Luck", "team": "IND"}, {"id": "00-0031237", "name": "Teddy Bridgewater", "team": "MIN"}, {"id": "00-0029795", "name": "Benny Cunningham", "team": "STL"}, {"id": "00-0024226", "name": "Jay Cutler", "team": "CHI"}, {"id": "00-0029510", "name": "Jonathan Grimes", "team": "HOU"}, {"id": "00-0031503", "name": "Jameis Winston", "team": "TB"}, {"id": "00-0023682", "name": "Ryan Fitzpatrick", "team": "NYJ"}, {"id": "00-0031375", "name": "Terrance West", "team": "TEN"}, {"id": "00-0026796", "name": "Arian Foster", "team": "HOU"}, {"id": "00-0028009", "name": "DeMarco Murray", "team": "PHI"}, ] };
+
+		var groupedByTeam = groupBy(hardCodedTop75.result, function (obj) {
 		    return obj.team;
 		});
 		// $.ajax({
@@ -254,11 +279,11 @@ $(document).ready(function() {
 			url: $SCRIPT_ROOT + "rushingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
-				makeGraph(containerString,'YPC Distribution',selectGraphValues(response))
+				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
 				if (containerString === '#rusherYardsGraph') {
-					showStats(response, '#statsTable');
+					showStats(response, '#statsTable', '#summaryTable');
 				} else if (containerString === '#rusherYardsGraph2'){
-					showStats(response, '#statsTable2');
+					showStats(response, '#statsTable2', '#summaryTable2');
 				} else {
 					console.log("ERROR");
 				}
