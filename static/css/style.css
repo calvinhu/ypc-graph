@@ -56,3 +56,8 @@ body {
 .second-rusher {
   display: none;
 }
+
+.summary-table {
+  display: none;
+  font-size: 14px;
+}

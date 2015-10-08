@@ -54,13 +54,11 @@ def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_t
 
 @app.errorhandler(400)
 def custom400(error):
-    response = jsonify({'message': error.description})
-    # etc.
+	response = jsonify({'message': error.description})
 
 @app.route('/')
 def root():
-    return render_template('index.html')
-
+	return render_template('index.html')
 
 @app.route('/toprushers/<count>', methods=['GET'])
 @crossdomain(origin='*')
@@ -70,6 +68,20 @@ def toprushers(count):
 		allgames = nflgame.games(2015)
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.rushing().sort('rushing_yds').limit(int(count)):
+			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
+			topPlayers.append(topPlayer)
+		return jsonify(result = topPlayers)
+	except (ValueError, KeyError, TypeError):
+		abort(400, 'custom error message to appear in body')
+
+@app.route('/topreceivers/<count>', methods=['GET'])
+@crossdomain(origin='*')
+def topreceivers(count):
+	try:
+		topPlayers = []
+		allgames = nflgame.games(2015)
+		allplayers = nflgame.combine_game_stats(allgames)
+		for ap in allplayers.receiving().sort('receiving_yds').limit(int(count)):
 			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
 			topPlayers.append(topPlayer)
 		return jsonify(result = topPlayers)

@@ -13,21 +13,6 @@
 				<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
 		</head>
 		<body>
-		<!-- <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-			<div class="container">
-				<div class="navbar-header">
-					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-						<span class="sr-only">Toggle navigation</span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-						<span class="icon-bar"></span>
-					</button>
-					<a class="navbar-brand" href="#">Yards Per Carry Distribution</a>
-				</div>
-				<div class="navbar-collapse collapse">
-				</div>
-			</div>
-		</div> -->
 		<div class="errors"></div>
 		<div id="overlay"></div>
 		
@@ -37,7 +22,11 @@
 				<div class="col-sm-12">
 					<div class="pull-right form-inline">
 						<button id="addSecondPlayer" class="btn btn-default">Show Second Graph</button>
-						<select class="form-control" style="display:inline-block" id="rbSelect"></select>
+						<select class="form-control" style="display:inline-block" id="positionSelect">
+							<option value="RB">RB</option>
+							<option value="WR">WR</option>
+						</select>
+						<select class="form-control" style="display:inline-block" id="playerSelect"></select>
 						<select class="form-control" style="display:inline-block" id="yearSelect">
 							<option value="2015" selected>2015</option>
 							<option value="2014">2014</option>
@@ -56,8 +45,8 @@
 					<br /><br />
 					To use, select a player from the top right of the screen, then hit go.</h3></div>
 				</div>
-				<div class="col-sm-2">
-					<table id="summaryTable" style="font-size: 14px" class="table table-condensed table-striped">
+				<div class="col-sm-2 col-xs-4">
+					<table id="summaryTable" class="summary-table table table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Metric</th>
@@ -70,10 +59,15 @@
 				</div>
 			</div>
 
+			<hr>
 			<div class="row second-rusher">
 				<div class="col-sm-12">
 					<div class="pull-right form-inline">
-						<select class="form-control" style="display:inline-block" id="rbSelect2"></select>
+						<select class="form-control" style="display:inline-block" id="positionSelect2">
+							<option value="RB">RB</option>
+							<option value="WR">WR</option>
+						</select>
+						<select class="form-control" style="display:inline-block" id="playerSelect2"></select>
 						<select class="form-control" style="display:inline-block" id="yearSelect2">
 							<option value="2015" selected>2015</option>
 							<option value="2014">2014</option>
@@ -81,7 +75,6 @@
 							<option value="2012">2012</option>
 						</select>
 						<button id="submit2" class="btn btn-primary">Go</button>
-						<!-- <button id="forteButton" class="btn btn-default">Matt Forte</button> -->
 					</div>
 					<h3 class="pull-left" style="margin-top:0"id="playerName2"></h3>
 				</div>
@@ -91,7 +84,7 @@
 					<div id="rusherYardsGraph2" class="graph-container"><h3 style="padding-top:50px">Compare a second player</h3></div>
 				</div>
 				<div class="col-sm-2">
-					<table id="summaryTable2" style="font-size: 14px" class="table table-condensed table-striped">
+					<table id="summaryTable2" class="summary-table table table-condensed table-striped">
 					<thead>
 						<tr>
 							<th>Metric</th>
@@ -103,6 +96,7 @@
 					</table>
 				</div>
 			</div>
+
 			<div class="row">
 				<div class="col-sm-12 stats-container">
 					<h4 id="tablePlayerName" class="second-rusher">Top Player</h4>
