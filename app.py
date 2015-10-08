@@ -93,13 +93,15 @@ def topreceivers(count):
 @crossdomain(origin='*')
 def rushingyards(year,playerid):
 	try:
-		print year
 		print playerid
+
+		current_year, current_week = nflgame.live.current_year_and_week()
+		weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
 		current_player = nflgame.players[playerid]
 		current_playerid = current_player.playerid
 		current_team = current_player.team
 
-		games = nflgame.games(int(year), home=current_team, away=current_team)
+		games = nflgame.games(int(year), week=weeks, home=current_team, away=current_team)
 
 		rushing_yds_per_att = []
 
@@ -107,11 +109,66 @@ def rushingyards(year,playerid):
 
 		for p in allplays:
 			if p.has_player(current_playerid):
-				if (p.passing_cmp==1 and p.receiving_tar==1) or (p.rushing_att==1):
-					play = {'type': 'RUSH' if p.rushing_att else 'PASS', 'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds,'desc': str(p), 'down': str(p.down) + ' and ' + str(p.yards_togo), 'game': str(p.drive.game), 'week': p.drive.game.schedule['week']}
+				if (p.receiving_tar==1) or (p.rushing_att==1):
+					if p.rushing_att==1:
+						type = 'RUSH'
+					elif p.receiving_rec==1:
+						type = 'PASS'
+					else:
+						type = 'INCOMPLETE'
+					play = {
+						'type': type, 
+						'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
+						'desc': str(p), 
+						'down': str(p.down) + ' and ' + str(p.yards_togo), 
+						'game': str(p.drive.game), 
+						'week': p.drive.game.schedule['week']
+					}
 					rushing_yds_per_att.append(play)
 
 		return jsonify(result = rushing_yds_per_att)
+	except (ValueError, KeyError, TypeError):
+		abort(400, 'custom error message to appear in body')
+
+@app.route('/receivingyards/<year>/<playerid>', methods=['GET'])
+@crossdomain(origin='*')
+def receivingyards(year,playerid):
+	try:
+		print playerid
+
+		current_year, current_week = nflgame.live.current_year_and_week()
+		weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
+		current_player = nflgame.players[playerid]
+		current_playerid = current_player.playerid
+		current_team = current_player.team
+
+		games = nflgame.games(int(year), week=weeks, home=current_team, away=current_team)
+
+		receiving_yds_per_att = []
+
+		allplays = nflgame.combine_plays(games)
+
+		for p in allplays:
+			if p.has_player(current_playerid):
+				if (p.receiving_tar==1) or (p.rushing_att==1):
+					if p.rushing_att==1:
+						type = 'RUSH'
+					elif p.receiving_rec==1:
+						type = 'PASS'
+					else:
+						type = 'INCOMPLETE'
+					play = {
+						'type': type,
+						'complete': p.receiving_rec,
+						'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
+						'yac_yards': p.receiving_yac_yds, 
+						'desc': str(p), 
+						'down': str(p.down) + ' and ' + str(p.yards_togo), 
+						'game': str(p.drive.game), 
+						'week': p.drive.game.schedule['week']}
+					receiving_yds_per_att.append(play)
+
+		return jsonify(result = receiving_yds_per_att)
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 

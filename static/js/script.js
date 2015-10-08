@@ -2,8 +2,6 @@
 */
 $(document).ready(function() {   
 
-	// var API_URL = 'http://localhost:5000/'
-	var API_URL = 'https://ypc.herokuapp.com/'
 	var spinner = new Spinner({color: '#fff'});
 
 	function makeError(message) {
@@ -74,10 +72,8 @@ $(document).ready(function() {
 					text: 'yards per attempt'
 				},
 				allowDecimals: false,
-				// floor: -5,
-				// ceiling: 50,
-				endOnTick: true,
-				startOnTick: true,
+				endOnTick: false,
+				startOnTick: false,
 				min: -5,
 				max: 50,
 				minPadding: 0,
@@ -123,6 +119,7 @@ $(document).ready(function() {
 			},
 			series: data
 		});
+
 		var lastLabel = $(container).find('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').last();
 		var firstLabel = $(container).find('.highcharts-axis-labels.highcharts-xaxis-labels').find('text').first();
 		if (lastLabel.text() === '50') {
@@ -190,25 +187,33 @@ $(document).ready(function() {
 		return result;
 	}
 
-	function showStats(response,containerString,summaryContainerString) {
+	function showRushingStats(response,containerString,summaryContainerString) {
 		var rush_attempts = response.result.filter(function(item) { return item.type === 'RUSH'});
 		var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
 		var stats = {};
 
 		stats['rushing attempts'] = rush_attempts.length;
 		stats['rushing yards'] = rush_attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['yards per carry'] = rush_attempts == 0 ? 0 : parseFloat(stats['rushing yards'] / stats['rushing attempts']).toFixed(1);
+		stats['yards per carry'] = rush_attempts.length == 0 ? 0 : parseFloat(stats['rushing yards'] / stats['rushing attempts']).toFixed(1);
 
 		stats['receptions'] = pass_attempts.length;
 		stats['receiving yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['yards per reception'] = pass_attempts == 0 ? 0 : parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
-
-		console.log(stats);
+		stats['yards per reception'] = pass_attempts.length == 0 ? 0 : parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
 
 		$(containerString + ' tbody').html('');
+		var color;
 		$.each(response.result, function(index,value) {
+			if (value.type === 'RUSH') {
+				color = 'info';
+			} else if (value.type === 'PASS') {
+				color = 'success';
+			} else if (value.type === 'INCOMPLETE') {
+				color = 'danger';
+			} else {
+				color = 'default'
+			}
 			$(containerString + ' tbody').append(
-				$('<tr>').addClass(value.type === 'RUSH' ? 'info' : 'success')
+				$('<tr>').addClass(color)
 					.append($('<td>').attr('align','right').html(value.week))
 					.append($('<td>').html(value.game))
 					.append($('<td>').html(value.type))
@@ -228,30 +233,53 @@ $(document).ready(function() {
 		});
 	}
 
+	function showReceivingStats(response,containerString,summaryContainerString) {
+		var attempts = response.result
+		var stats = {};
+
+		stats['targets'] = attempts.length;
+		stats['receptions'] = attempts.reduce(function(a,b) { return a + b.complete },0);
+		stats['receiving yards'] = attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['receiving YAC'] = attempts.reduce(function(a,b) { return a + b.yac_yards },0);
+		stats['yards per reception'] = attempts == 0 ? 0 : parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
+		stats['AVG YAC'] = attempts == 0 ? 0 : parseFloat(stats['receiving YAC'] / stats['receptions']).toFixed(1);
+
+		$(containerString + ' tbody').html('');
+		var color;
+		$.each(response.result, function(index,value) {
+			if (value.type === 'RUSH') {
+				color = 'info';
+			} else if (value.type === 'PASS') {
+				color = 'success';
+			} else if (value.type === 'INCOMPLETE') {
+				color = 'danger';
+			} else {
+				color = 'default'
+			}
+			$(containerString + ' tbody').append(
+				$('<tr>').addClass(color)
+					.append($('<td>').attr('align','right').html(value.week))
+					.append($('<td>').html(value.game))
+					.append($('<td>').html(value.type))
+					.append($('<td>').attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
+					.append($('<td>').html(value.desc))
+			)
+		});
+		$(containerString).stupidtable();
+
+		$(summaryContainerString + ' tbody').html('');
+		$.each(stats, function(key,value) {
+			$(summaryContainerString + ' tbody').append(
+				$('<tr>')
+					.append($('<td>').html(key))
+					.append($('<td>').attr('align','right').html(value < 1000 ? addCommas(value) : value))
+			)
+		});
+	}
+
 	function displayList(list,containerString) {
 		$(containerString).html('')
-		showLoad();
-		// $.ajax({
-		// 	type: "GET",
-		// 	url: API_URL + "toprushers",
-		// 	success: function (response) {
-		// 		hideLoad();
-		// 		$('#playerSelect').append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'))
-		// 		$.each(response.result, function(key,value) {
-		// 			$('#playerSelect').append(
-		// 				$('<option>').html(value.name + ' (' + value.team + ')' ).attr('value',value.id)
-		// 			)
-		// 		});
-		// 	},
-		// 	error: function (jqxhr) {
-		// 		hideLoad();
-		// 		console.log(jqxhr.statusText);
 
-		// 		makeError(jqxhr.statusText);
-		// 	},
-		// });
-
-		hideLoad();
 		$(containerString).append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'));
 		var $optgroup;
 		$.each(Object.keys(list).sort(), function(index,value) {
@@ -275,9 +303,34 @@ $(document).ready(function() {
 				hideLoad();    
 				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
 				if (containerString === '#rusherYardsGraph') {
-					showStats(response, '#statsTable', '#summaryTable');
+					showRushingStats(response, '#statsTable', '#summaryTable');
 				} else if (containerString === '#rusherYardsGraph2'){
-					showStats(response, '#statsTable2', '#summaryTable2');
+					showRushingStats(response, '#statsTable2', '#summaryTable2');
+				} else {
+					console.log("ERROR");
+				}
+			},
+			error: function (jqxhr) {
+				hideLoad();
+				console.log(jqxhr.statusText);
+
+				makeError(jqxhr.statusText);
+			},
+		});
+	}
+
+	function getReceiverStats(playerid,year,containerString) {
+		showLoad()
+		$.ajax({
+			type: "GET",
+			url: $SCRIPT_ROOT + "receivingyards/" + year + "/" + playerid,
+			success: function (response) { 
+				hideLoad();    
+				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
+				if (containerString === '#rusherYardsGraph') {
+					showReceivingStats(response, '#statsTable', '#summaryTable');
+				} else if (containerString === '#rusherYardsGraph2'){
+					showReceivingStats(response, '#statsTable2', '#summaryTable2');
 				} else {
 					console.log("ERROR");
 				}
@@ -327,7 +380,16 @@ $(document).ready(function() {
 			var playerid = $('#playerSelect option').filter(":selected").val();
 			var playerName = $('#playerSelect option').filter(":selected").text();
 			var year = $('#yearSelect option').filter(":selected").val();
-			getRusherStats(playerid, year, '#rusherYardsGraph');
+
+			var position = $('#positionSelect option').filter(":selected").val();
+			if (position === 'RB') {
+				getRusherStats(playerid, year, '#rusherYardsGraph');
+			} else if (position === 'WR') {
+				getReceiverStats(playerid, year, '#rusherYardsGraph');
+			} else {
+				console.log("ERROR");
+			}
+
 			$('#playerName, #tablePlayerName').html(playerName)
 			$('#summaryTable').show();
 		});
@@ -336,7 +398,16 @@ $(document).ready(function() {
 			var playerid = $('#playerSelect2 option').filter(":selected").val();
 			var playerName = $('#playerSelect2 option').filter(":selected").text();
 			var year = $('#yearSelect2 option').filter(":selected").val();
-			getRusherStats(playerid, year, '#rusherYardsGraph2');
+
+			var position = $('#positionSelect2 option').filter(":selected").val();
+			if (position === 'RB') {
+				getRusherStats(playerid, year, '#rusherYardsGraph2');
+			} else if (position === 'WR') {
+				getReceiverStats(playerid, year, '#rusherYardsGraph2');
+			} else {
+				console.log("ERROR");
+			}
+
 			$('#playerName2, #tablePlayerName2').html(playerName)
 			$('#summaryTable2').show();
 
@@ -351,6 +422,8 @@ $(document).ready(function() {
 			} else {
 				console.log("ERROR");
 			}
+			$('#submit').prop('disabled',true);
+
 		});
 
 		$('#positionSelect2').change(function(event) {
@@ -362,6 +435,15 @@ $(document).ready(function() {
 			} else {
 				console.log("ERROR");
 			}
+			$('#submit2').prop('disabled',true);
+		});
+
+		$('#playerSelect').change(function() {
+			$('#submit').prop('disabled',false);
+		});
+
+		$('#playerSelect2').change(function() {
+			$('#submit2').prop('disabled',false);
 		});
 	}())
 
