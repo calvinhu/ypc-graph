@@ -199,9 +199,9 @@ $(document).ready(function() {
 		stats['rushing yards'] = rush_attempts.reduce(function(a,b) { return a + b.yards },0);
 		stats['yards per carry'] = parseFloat(stats['rushing yards'] / stats['rushing attempts']).toFixed(1);
 
-		stats['passing attempts'] = pass_attempts.length;
-		stats['passing yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['yards per pass'] = parseFloat(stats['passing yards'] / stats['passing attempts']).toFixed(1);
+		stats['receptions'] = pass_attempts.length;
+		stats['receiving yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['yards per reception'] = parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
 
 		console.log(stats);
 
@@ -307,6 +307,7 @@ $(document).ready(function() {
 				$('.second-rusher').show();
 				$('#addSecondPlayer').text('Hide Second Graph');
 				$('#statsTable').parent().removeClass('col-sm-12').addClass('col-sm-6');
+				
 				hiddenSecondGraph = false;
 			} else {
 				$('.second-rusher').hide();
