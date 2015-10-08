@@ -218,6 +218,7 @@ $(document).ready(function() {
 		});
 		$(containerString).stupidtable();
 
+		$(summaryContainerString + ' tbody').html('');
 		$.each(stats, function(key,value) {
 			$(summaryContainerString + ' tbody').append(
 				$('<tr>')
