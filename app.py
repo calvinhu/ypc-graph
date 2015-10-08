@@ -61,27 +61,6 @@ def custom400(error):
 def root():
     return render_template('index.html')
 
-@app.route('/rushers', methods=['GET'])
-@crossdomain(origin='*')
-def rushers():
-	topPlayers = []
-	allgames = nflgame.games(2014, week=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16])
-	allplayers = nflgame.combine_game_stats(allgames)
-	for ap in allplayers.rushing().sort('rushing_yds').limit(5):
-		topPlayer = {'name': str(ap.name), 'data':[]}
-		for x in range(1,17):
-			games = nflgame.games(2014, week=x)
-			for game in games:
-				player = game.players.name(str(ap.name))
-				if player != None:
-					topPlayer['data'].append({
-						'week': x, 
-						'attempts': player.rushing_att, 
-						'yards': player.rushing_yds, 
-						'tds': player.rushing_tds
-					})
-		topPlayers.append(topPlayer)
-	return jsonify(result = topPlayers)
 
 @app.route('/toprushers/<count>', methods=['GET'])
 @crossdomain(origin='*')
@@ -117,7 +96,6 @@ def rushingyards(year,playerid):
 		for p in allplays:
 			if p.has_player(current_playerid):
 				if (p.passing_cmp==1 and p.receiving_tar==1) or (p.rushing_att==1):
-					print 
 					play = {'type': 'RUSH' if p.rushing_att else 'PASS', 'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds,'desc': str(p), 'down': str(p.down) + ' and ' + str(p.yards_togo), 'game': str(p.drive.game), 'week': p.drive.game.schedule['week']}
 					rushing_yds_per_att.append(play)
 
