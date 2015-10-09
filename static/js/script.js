@@ -22,7 +22,7 @@ $(document).ready(function() {
 			chart: {
 				type: 'column',
 				height: 250,
-				marginLeft: 10
+				marginLeft: 20
 
 			},
 			title: {
@@ -40,10 +40,13 @@ $(document).ready(function() {
 				lineColor: 'transparent',
 				min: 0,
 				labels: {
-					x: 0,
+					x: -10,
             		y: -2
 				},
 				stackLabels: {
+					formatter: function() {
+						return this.total == 0 ? '' : this.total;
+					},
 					enabled: true
 				}
 			},
@@ -52,8 +55,8 @@ $(document).ready(function() {
 					text: 'yards per attempt'
 				},
 				allowDecimals: false,
-				endOnTick: false,
-				startOnTick: false,
+				endOnTick: true,
+				startOnTick: true,
 				min: -5,
 				max: 50,
 				minPadding: 0,
@@ -73,17 +76,22 @@ $(document).ready(function() {
 			},
 			tooltip: {
 				formatter: function () {
-					var s = '<b>' + this.x + ' Yard Plays</b>';
+					if (this.points[0].total == 0) {
+						return false;
+					} else {
+						var s = '<b>' + this.x + ' Yard Plays</b>';
 
-					$.each(this.points, function () {
-						s += '<br/>' + this.y+ ' ' +
-							this.series.name;
-					});
+						$.each(this.points, function () {
+							s += '<br/>' + this.y+ ' ' +
+								this.series.name;
+						});
 
-					s += '<br/>' + this.points[0].total + ' Total plays'
+						s += '<br/>' + this.points[0].total + ' Total plays'
 
-					return s;
+						return s;
+					}
 				},
+				shadow: false,
 				shared: true
 			},
 			plotOptions: {
@@ -116,6 +124,9 @@ $(document).ready(function() {
 
 		function aggregate(list) {
 			result = {};
+			for (var i=-5 ; i<=50 ; i++) {
+				result[i] = 0;
+			}
 			$.each(list, function(index,value) {
 				var yardKey = value.yards;
 				if (value.yards > 50) {
@@ -124,11 +135,12 @@ $(document).ready(function() {
 				if (value.yards < -5) {
 					yardKey = -5;
 				}
-				if (result[yardKey]) {
-					result[yardKey]++;
-				} else {
-					result[yardKey] = 1;
-				}
+				result[yardKey]++;
+				// if (result[yardKey]) {
+				// 	result[yardKey]++;
+				// } else {
+				// 	result[yardKey] = 1;
+				// }
 			})
 			return result;
 		}
