@@ -3,8 +3,9 @@
 		<head>
 				<meta charset="utf-8">
 				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-				<title>Yards Per Carry</title>
-				<meta name="description" content="">
+				<title>Yards Per Carry Histogram</title>
+				<meta name="description" content="This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.">
+				<meta name="keywords" content="fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
 				<meta name="viewport" content="width=device-width, initial-scale=1">
 
 				<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
@@ -41,7 +42,7 @@
 			</div>
 			<div class="row">
 				<div class="col-sm-10">
-					<div id="rusherYardsGraph" class="graph-container"><h3 style="padding-top:25px">This is a lightweight tool to create a histogram of a player's yards per attempt over the course of a season.
+					<div id="rusherYardsGraph" class="graph-container"><h3 style="padding-top:25px">This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.
 					<br /><br />
 					To use, select a player from the top right of the screen, then hit go.
 					<br /><br />
@@ -149,6 +150,7 @@
 		<script src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/vendor/spin.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/util.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/script.js') }}"></script>
 		<script>
 		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){

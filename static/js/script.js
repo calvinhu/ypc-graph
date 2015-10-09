@@ -4,29 +4,6 @@ $(document).ready(function() {
 
 	var spinner = new Spinner({color: '#fff'});
 
-	function makeError(message) {
-		var button = $('<button>').addClass('close').attr('type','button').attr('data-dismiss','alert').html('&times;');
-		$('.errors').append(
-			$('<div>').addClass('alert alert-danger alert-dismissable').html(message).append(button)
-		);
-	}
-
-	function groupBy(array, predicate) {
-		var grouped = {};
-		for(var i = 0; i < array.length; i++) {
-			var groupKey = predicate(array[i]);
-			if (typeof(grouped[groupKey]) === "undefined")
-				grouped[groupKey] = [];
-			grouped[groupKey].push(array[i]);
-		}
-
-		return grouped;
-	}
-
-	function addCommas(intNum) {
-		return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
-	}
-
 	function showLoad() {
 		$('#overlay').show();
 		spinner.spin(document.getElementById('overlay'));
@@ -301,7 +278,7 @@ $(document).ready(function() {
 		showLoad()
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "rushingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "api/v0/rushingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
@@ -326,7 +303,7 @@ $(document).ready(function() {
 		showLoad()
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "receivingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "api/v0/receivingyards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));

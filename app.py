@@ -60,7 +60,7 @@ def custom400(error):
 def root():
 	return render_template('index.html')
 
-@app.route('/toprushers/<count>', methods=['GET'])
+@app.route('/api/v0/toprushers/<count>', methods=['GET'])
 @crossdomain(origin='*')
 def toprushers(count):
 	try:
@@ -74,7 +74,7 @@ def toprushers(count):
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
-@app.route('/topreceivers/<count>', methods=['GET'])
+@app.route('/api/v0/topreceivers/<count>', methods=['GET'])
 @crossdomain(origin='*')
 def topreceivers(count):
 	try:
@@ -89,7 +89,7 @@ def topreceivers(count):
 		abort(400, 'custom error message to appear in body')
 
 
-@app.route('/rushingyards/<year>/<playerid>', methods=['GET'])
+@app.route('/api/v0/rushingyards/<year>/<playerid>', methods=['GET'])
 @crossdomain(origin='*')
 def rushingyards(year,playerid):
 	try:
@@ -130,7 +130,7 @@ def rushingyards(year,playerid):
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
-@app.route('/receivingyards/<year>/<playerid>', methods=['GET'])
+@app.route('/api/v0/receivingyards/<year>/<playerid>', methods=['GET'])
 @crossdomain(origin='*')
 def receivingyards(year,playerid):
 	try:
