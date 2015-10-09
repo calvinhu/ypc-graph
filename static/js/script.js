@@ -295,6 +295,8 @@ $(document).ready(function() {
 		var playerName = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").text();
 		var year = $('#yearSelect' + chartNum.toString() + ' option').filter(":selected").val();
 		var type = $('#typeSelect' + chartNum.toString() + ' option').filter(":selected").val();
+		
+		$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
 
 		getStats(playerid, year, type, chartNum, finishRender);
 
@@ -302,7 +304,6 @@ $(document).ready(function() {
 			$('#playerName' + chartNum.toString() + ', #playTableName' + chartNum.toString()).html(playerName)
 			$('#statTable' + chartNum.toString()).fadeIn();
 			$('.stats-row').fadeIn();
-			$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
 		}
 	}
 

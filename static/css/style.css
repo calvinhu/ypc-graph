@@ -55,6 +55,7 @@ body {
   height: 250px;
   background-color: #f1f1f1;
   min-width: 635px !important;
+  width: 100%;
 }
 
 .hidden-chart {
