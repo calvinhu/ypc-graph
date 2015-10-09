@@ -51,6 +51,12 @@ body {
   overflow-y: scroll;
 }
 
+.scrollable-container {
+  overflow-x: scroll;
+}
+
+.scrollable-container::-webkit-scrollbar { width: 0 !important }
+
 .graph-container {
   height: 250px;
   background-color: #f1f1f1;
