@@ -22,6 +22,7 @@ $(document).ready(function() {
 			chart: {
 				type: 'column',
 				height: 250,
+				spacingBottom: 0,
 				marginLeft: 20
 
 			},
@@ -123,10 +124,12 @@ $(document).ready(function() {
 		var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
 
 		function aggregate(list) {
-			result = {};
+			var result = {};
+			//initialize all yardages from -5 to 50 to zero
 			for (var i=-5 ; i<=50 ; i++) {
 				result[i] = 0;
 			}
+			//for each attempt, increment the yardage key by one. 50+ becomes 50, -5+ becomes -5
 			$.each(list, function(index,value) {
 				var yardKey = value.yards;
 				if (value.yards > 50) {
@@ -136,25 +139,11 @@ $(document).ready(function() {
 					yardKey = -5;
 				}
 				result[yardKey]++;
-				// if (result[yardKey]) {
-				// 	result[yardKey]++;
-				// } else {
-				// 	result[yardKey] = 1;
-				// }
 			})
 			return result;
 		}
 
-		function objToList(inputObject) {
-			var result = []
-			for(var key in inputObject) {
-				if(inputObject.hasOwnProperty(key)) {
-					result.push([parseInt(key), inputObject[key]])
-				}
-			}
-			return result;
-		}
-
+		//sort the list by yardage to make highcharts happy
 		function compare(a,b) {
 			if (parseInt(a[0]) < parseInt(b[0]))
 				return -1;
@@ -179,97 +168,88 @@ $(document).ready(function() {
 		return result;
 	}
 
-	function showRushingStats(response,containerString,summaryContainerString) {
+	function displayStatTable(containerString,stats) {
+		//makes the stats table next to the graph
+
+		$(containerString + ' tbody').html('');
+		$.each(stats, function(key,value) {
+			$(containerString + ' tbody').append(
+				$('<tr>')
+					.append($('<td>').html(key))
+					.append($('<td>').attr('align','right').html(value >=1000 ? addCommas(value) : value))
+			)
+		});
+	}
+
+	function displayPlaysTable(containerString,response) {
+		//makes the play by play table below the graph
+
+		$(containerString + ' tbody').html('');
+		var color;
+		$.each(response.result, function(index,value) {
+			if (value.type === 'RUSH') {
+				color = 'info';
+			} else if (value.type === 'PASS') {
+				color = 'success';
+			} else if (value.type === 'INCOMPLETE') {
+				color = 'danger';
+			} else {
+				color = 'default'
+			}
+			$(containerString + ' tbody').append(
+				$('<tr>').addClass(color)
+					.append($('<td>').attr('align','right').html(value.week))
+					.append($('<td>').html(value.game))
+					.append($('<td>').html(value.type))
+					.append($('<td>').attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
+					.append($('<td>').html(value.desc))
+			)
+		});
+		$(containerString).stupidtable();
+	}
+
+	function makeRushingStats(response) {
 		var rush_attempts = response.result.filter(function(item) { return item.type === 'RUSH'});
 		var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
 		var stats = {};
 
-		stats['rushing attempts'] = rush_attempts.length;
-		stats['rushing yards'] = rush_attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['yards per carry'] = rush_attempts.length == 0 ? 0 : parseFloat(stats['rushing yards'] / stats['rushing attempts']).toFixed(1);
+		stats['carries'] = rush_attempts.length;
+		stats['rush yards'] = rush_attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['avg YPC'] = rush_attempts.length == 0 ? 0 : parseFloat(stats['rush yards'] / stats['carries']).toFixed(1);
 
 		stats['receptions'] = pass_attempts.length;
-		stats['receiving yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['yards per reception'] = pass_attempts.length == 0 ? 0 : parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
-
-		$(containerString + ' tbody').html('');
-		var color;
-		$.each(response.result, function(index,value) {
-			if (value.type === 'RUSH') {
-				color = 'info';
-			} else if (value.type === 'PASS') {
-				color = 'success';
-			} else if (value.type === 'INCOMPLETE') {
-				color = 'danger';
-			} else {
-				color = 'default'
-			}
-			$(containerString + ' tbody').append(
-				$('<tr>').addClass(color)
-					.append($('<td>').attr('align','right').html(value.week))
-					.append($('<td>').html(value.game))
-					.append($('<td>').html(value.type))
-					.append($('<td>').attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
-					.append($('<td>').html(value.desc))
-			)
-		});
-		$(containerString).stupidtable();
-
-		$(summaryContainerString + ' tbody').html('');
-		$.each(stats, function(key,value) {
-			$(summaryContainerString + ' tbody').append(
-				$('<tr>')
-					.append($('<td>').html(key))
-					.append($('<td>').attr('align','right').html(value < 1000 ? addCommas(value) : value))
-			)
-		});
+		stats['rec yards'] = pass_attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['avg YPR'] = pass_attempts.length == 0 ? 0 : parseFloat(stats['rec yards'] / stats['receptions']).toFixed(1);
+		return stats;
 	}
 
-	function showReceivingStats(response,containerString,summaryContainerString) {
-		var attempts = response.result
+	function makeReceivingStats(response) {
+		var attempts = response.result;
 		var stats = {};
 
 		stats['targets'] = attempts.length;
 		stats['receptions'] = attempts.reduce(function(a,b) { return a + b.complete },0);
-		stats['receiving yards'] = attempts.reduce(function(a,b) { return a + b.yards },0);
-		stats['receiving YAC'] = attempts.reduce(function(a,b) { return a + b.yac_yards },0);
-		stats['yards per reception'] = attempts == 0 ? 0 : parseFloat(stats['receiving yards'] / stats['receptions']).toFixed(1);
-		stats['AVG YAC'] = attempts == 0 ? 0 : parseFloat(stats['receiving YAC'] / stats['receptions']).toFixed(1);
+		stats['rec yards'] = attempts.reduce(function(a,b) { return a + b.yards },0);
+		stats['rec YAC'] = attempts.reduce(function(a,b) { return a + b.yac_yards },0);
+		stats['avg YPR'] = attempts == 0 ? 0 : parseFloat(stats['rec yards'] / stats['receptions']).toFixed(1);
+		stats['avg YAC'] = attempts == 0 ? 0 : parseFloat(stats['rec YAC'] / stats['receptions']).toFixed(1);
+		console.log(stats);
+		return stats;
+	}
 
-		$(containerString + ' tbody').html('');
-		var color;
-		$.each(response.result, function(index,value) {
-			if (value.type === 'RUSH') {
-				color = 'info';
-			} else if (value.type === 'PASS') {
-				color = 'success';
-			} else if (value.type === 'INCOMPLETE') {
-				color = 'danger';
-			} else {
-				color = 'default'
-			}
-			$(containerString + ' tbody').append(
-				$('<tr>').addClass(color)
-					.append($('<td>').attr('align','right').html(value.week))
-					.append($('<td>').html(value.game))
-					.append($('<td>').html(value.type))
-					.append($('<td>').attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
-					.append($('<td>').html(value.desc))
-			)
-		});
-		$(containerString).stupidtable();
-
-		$(summaryContainerString + ' tbody').html('');
-		$.each(stats, function(key,value) {
-			$(summaryContainerString + ' tbody').append(
-				$('<tr>')
-					.append($('<td>').html(key))
-					.append($('<td>').attr('align','right').html(value < 1000 ? addCommas(value) : value))
-			)
-		});
+	function showStats(response,type,statTableContainerString,playTableContainerString) {
+		if (type === 'rushing') {
+			displayStatTable(statTableContainerString, makeRushingStats(response));
+		} else if (type === 'receiving') {
+			displayStatTable(statTableContainerString, makeReceivingStats(response));
+		} else {
+			console.log("ERROR");
+		}
+		displayPlaysTable(playTableContainerString, response);
 	}
 
 	function displayList(list,containerString) {
+		//populates the player selection input
 		$(containerString).html('')
 
 		$(containerString).append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'));
@@ -286,21 +266,20 @@ $(document).ready(function() {
 		});
 	}
 
-	function getRusherStats(playerid,year,containerString) {
-		showLoad()
+	function getStats(playerid,year,type,chartNum, callback) {
+		showLoad();
+		var statTableContainerString = '#statTable' + chartNum;
+		var playTableContainerString = '#playTable' + chartNum;
+		var graphContainerString = '#playerGraph' + chartNum;
+
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "api/v0/rushingyards/" + year + "/" + playerid,
+			url: $SCRIPT_ROOT + "api/v0/" + type + "yards/" + year + "/" + playerid,
 			success: function (response) { 
 				hideLoad();    
-				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
-				if (containerString === '#rusherYardsGraph') {
-					showRushingStats(response, '#statsTable', '#summaryTable');
-				} else if (containerString === '#rusherYardsGraph2'){
-					showRushingStats(response, '#statsTable2', '#summaryTable2');
-				} else {
-					console.log("ERROR");
-				}
+				makeGraph(graphContainerString,'YPC Distribution',selectGraphValues(response));
+				showStats(response,type,statTableContainerString,playTableContainerString)
+				callback();
 			},
 			error: function (jqxhr) {
 				hideLoad();
@@ -311,29 +290,20 @@ $(document).ready(function() {
 		});
 	}
 
-	function getReceiverStats(playerid,year,containerString) {
-		showLoad()
-		$.ajax({
-			type: "GET",
-			url: $SCRIPT_ROOT + "api/v0/receivingyards/" + year + "/" + playerid,
-			success: function (response) { 
-				hideLoad();    
-				makeGraph(containerString,'YPC Distribution',selectGraphValues(response));
-				if (containerString === '#rusherYardsGraph') {
-					showReceivingStats(response, '#statsTable', '#summaryTable');
-				} else if (containerString === '#rusherYardsGraph2'){
-					showReceivingStats(response, '#statsTable2', '#summaryTable2');
-				} else {
-					console.log("ERROR");
-				}
-			},
-			error: function (jqxhr) {
-				hideLoad();
-				console.log(jqxhr.statusText);
+	function submit(chartNum) {
+		var playerid = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").val();
+		var playerName = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").text();
+		var year = $('#yearSelect' + chartNum.toString() + ' option').filter(":selected").val();
+		var type = $('#typeSelect' + chartNum.toString() + ' option').filter(":selected").val();
 
-				makeError(jqxhr.statusText);
-			},
-		});
+		getStats(playerid, year, type, chartNum, finishRender);
+
+		function finishRender() {
+			$('#playerName' + chartNum.toString() + ', #playTableName' + chartNum.toString()).html(playerName)
+			$('#statTable' + chartNum.toString()).fadeIn();
+			$('.stats-row').fadeIn();
+			$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
+		}
 	}
 
 	(function initialize() {
@@ -348,81 +318,60 @@ $(document).ready(function() {
 		    return obj.team;
 		});
 
-		displayList(groupedByTeamRushers, '#playerSelect');
+		displayList(groupedByTeamRushers, '#playerSelect1');
 		displayList(groupedByTeamRushers, '#playerSelect2');
 
+		$('#playerSelect1').focus();
 
+		// setTimeout(function() { $('#playerSelect1').css('border','2px #5cb85c solid')}, 0);
+
+		//show and hide the second graph
 		var hiddenSecondGraph = true;
 		$('#addSecondPlayer').click(function() {
 			if (hiddenSecondGraph) {
-				$('.second-rusher').show();
-				$('#addSecondPlayer').text('Hide Second Graph');
-				$('#statsTable').parent().removeClass('col-sm-12').addClass('col-sm-6');
+				$('.hidden-chart').fadeIn();
+				$('#addSecondPlayer').text('Hide Second Graph').removeClass('btn-primary').addClass('btn-danger');
+				$('#playTable1').parent().removeClass('col-sm-12').addClass('col-sm-6');
 
 				hiddenSecondGraph = false;
 			} else {
-				$('.second-rusher').hide();
-				$('#addSecondPlayer').text('Show Second Graph');
-				$('#statsTable').parent().removeClass('col-sm-6').addClass('col-sm-12');
+				$('.hidden-chart').fadeOut();
+				$('#addSecondPlayer').text('Show Second Graph').removeClass('btn-danger').addClass('btn-primary');
+				$('#playTable1').parent().removeClass('col-sm-6').addClass('col-sm-12');
 				hiddenSecondGraph = true;
 			}
 		});
 
-		$('#submit').click(function(event) {
-			var playerid = $('#playerSelect option').filter(":selected").val();
-			var playerName = $('#playerSelect option').filter(":selected").text();
-			var year = $('#yearSelect option').filter(":selected").val();
+		$('#form1').submit(function(e) {
+			e.preventDefault();
+			$(this).blur();
+			submit(1);
+		});
 
-			var position = $('#positionSelect option').filter(":selected").val();
-			if (position === 'RB') {
-				getRusherStats(playerid, year, '#rusherYardsGraph');
-			} else if (position === 'WR') {
-				getReceiverStats(playerid, year, '#rusherYardsGraph');
+		$('#form2').submit(function(e) {
+			e.preventDefault();
+			$(this).blur();
+			submit(2);
+		});
+
+		$('#typeSelect1').change(function(event) {
+			var position = $('#typeSelect1 option').filter(":selected").val();
+			if (position === 'rushing') {
+				displayList(groupedByTeamRushers, '#playerSelect1');
+			} else if (position === 'receiving') {
+				displayList(groupedByTeamReceivers, '#playerSelect1');
 			} else {
 				console.log("ERROR");
 			}
-
-			$('#playerName, #tablePlayerName').html(playerName)
-			$('#summaryTable').show();
-		});
-
-		$('#submit2').click(function(event) {
-			var playerid = $('#playerSelect2 option').filter(":selected").val();
-			var playerName = $('#playerSelect2 option').filter(":selected").text();
-			var year = $('#yearSelect2 option').filter(":selected").val();
-
-			var position = $('#positionSelect2 option').filter(":selected").val();
-			if (position === 'RB') {
-				getRusherStats(playerid, year, '#rusherYardsGraph2');
-			} else if (position === 'WR') {
-				getReceiverStats(playerid, year, '#rusherYardsGraph2');
-			} else {
-				console.log("ERROR");
-			}
-
-			$('#playerName2, #tablePlayerName2').html(playerName)
-			$('#summaryTable2').show();
+			$('#submit1').prop('disabled',true);
 
 		});
 
-		$('#positionSelect').change(function(event) {
-			var position = $('#positionSelect option').filter(":selected").val();
-			if (position === 'RB') {
-				displayList(groupedByTeamRushers, '#playerSelect');
-			} else if (position === 'WR') {
-				displayList(groupedByTeamReceivers, '#playerSelect');
-			} else {
-				console.log("ERROR");
-			}
-			$('#submit').prop('disabled',true);
-
-		});
-
-		$('#positionSelect2').change(function(event) {
-			var position = $('#positionSelect2 option').filter(":selected").val();
-			if (position === 'RB') {
+		$('#typeSelect2').change(function(event) {
+			var position = $('#typeSelect2 option').filter(":selected").val();
+			if (position === 'rushing') {
 				displayList(groupedByTeamRushers, '#playerSelect2');
-			} else if (position === 'WR') {
+			} else if (position === 'receiving') {
 				displayList(groupedByTeamReceivers, '#playerSelect2');
 			} else {
 				console.log("ERROR");
@@ -430,8 +379,10 @@ $(document).ready(function() {
 			$('#submit2').prop('disabled',true);
 		});
 
-		$('#playerSelect').change(function() {
-			$('#submit').prop('disabled',false);
+		$('#playerSelect1').change(function() {
+			$('#submit1').prop('disabled',false);
+			$('#playerSelect1').css('border','1px solid #ccc')
+
 		});
 
 		$('#playerSelect2').change(function() {

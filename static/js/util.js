@@ -20,3 +20,13 @@ function groupBy(array, predicate) {
 function addCommas(intNum) {
 	return (intNum + '').replace(/(\d)(?=(\d{3})+$)/g, '$1,');
 }
+
+function objToList(inputObject) {
+	var result = []
+	for(var key in inputObject) {
+		if(inputObject.hasOwnProperty(key)) {
+			result.push([parseInt(key), inputObject[key]])
+		}
+	}
+	return result;
+}

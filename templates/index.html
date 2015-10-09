@@ -1,166 +1,176 @@
 <!DOCTYPE html>
 <html class="no-js">
-		<head>
-				<meta charset="utf-8">
-				<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-				<title>Yards Per Carry Histogram</title>
-				<meta name="description" content="This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.">
-				<meta name="keywords" content="fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
-				<meta name="viewport" content="width=device-width, initial-scale=1">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Yards Per Carry Histogram</title>
+		<meta name="description" content="This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.">
+		<meta name="keywords" content="fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 
-				<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-				<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
 
-				<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
-		</head>
-		<body>
-		<div class="errors"></div>
-		<div id="overlay"></div>
-		
-		<div id="container" class="container">
-			<!-- Example row of columns -->
-			<div class="row">
-				<div class="col-xs-12">
-					<div class="pull-right form-inline">
-						<button id="addSecondPlayer" class="btn btn-default">Show Second Graph</button>
-						<select class="form-control" style="display:inline-block" id="positionSelect">
-							<option value="RB">Rushers</option>
-							<option value="WR">Receivers</option>
-						</select>
-						<select class="form-control" style="display:inline-block" id="playerSelect"></select>
-						<select class="form-control" style="display:inline-block" id="yearSelect">
-							<option value="2015" selected>2015</option>
-							<option value="2014">2014</option>
-							<option value="2013">2013</option>
-							<option value="2012">2012</option>
-						</select>
-						<button id="submit" class="btn btn-primary" disabled>Go</button>
-						<!-- <button id="forteButton" class="btn btn-default">Matt Forte</button> -->
-					</div>
-					<h3 class="pull-left" style="margin-top:0"id="playerName"></h3>
-				</div>
+		<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+	</head>
+	<body>
+	<div class="errors"></div>
+	<div id="overlay"></div>
+	
+	<div id="container" class="container">
+		<form id="form1" class="row player-bar">
+			<div class="col-xs-3">
+				<select class="form-control"  id="yearSelect1">
+					<option value="2015" selected>2015</option>
+					<option value="2014">2014</option>
+					<option value="2013">2013</option>
+					<option value="2012">2012</option>
+				</select>
 			</div>
-			<div class="row">
-				<div class="col-sm-10">
-					<div id="rusherYardsGraph" class="graph-container"><h3 style="padding-top:25px">This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.
-					<br /><br />
-					To use, select a player from the top right of the screen, then hit go.
-					<br /><br />
-					<span style="font-size:16px; font-style:italic">Known bug: historical information for players who switched teams this year (for example LeSean McCoy, DeMarco Murray) doesn't work. Sorry :/</span></h3></div>
-				</div>
-				<div class="col-sm-2 col-xs-4">
-					<table id="summaryTable" class="summary-table table table-condensed table-striped">
+			<div class="col-xs-3">
+				<select class="form-control"  id="typeSelect1">
+					<option value="rushing">Rushers</option>
+					<option value="receiving">Receivers</option>
+				</select>
+			</div>
+			<div class="col-xs-5">
+			<select class="form-control"  id="playerSelect1"></select>
+			</div>
+			<div class="col-xs-1">
+				<button id="submit1" type="submit" class="btn btn-success" disabled>Go</button>
+			</div>
+		</form>
+		<h3 class="" style="margin-top:0" id="playerName1"></h3>
+
+		<div class="row">
+			<div class="col-md-12" style="overflow-x: scroll;padding-right:5px;">
+				<div id="playerGraph1" class="graph-container"><h3 style="padding-top:25px">This is a lightweight tool that creates a histogram of a player's yards per attempt over the course of a season.
+				<br /><br />
+				To use, select a player from the top right of the screen, then hit go.
+				<br /><br />
+				<span style="font-size:16px; font-style:italic">Known bug: historical information for players who switched teams this year (for example LeSean McCoy, DeMarco Murray) doesn't work. Sorry :/</span></h3></div>
+			</div>
+			<div class="col-sm-2 col-xs-12" style="padding-left:5px">
+				<table id="statTable1" class="summary-table table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>Metric</th>
+						<th>Value</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-4" style="text-align:center;margin-bottom:5px;margin-top:5px">
+				<button id="addSecondPlayer" class="btn btn-primary btn-xs">Show Second Graph</button>
+			</div>
+		</div>
+
+		<form id="form1" class="row player-bar hidden-chart">
+			<div class="col-xs-3">
+				<select class="form-control"  id="yearSelect2">
+					<option value="2015" selected>2015</option>
+					<option value="2014">2014</option>
+					<option value="2013">2013</option>
+					<option value="2012">2012</option>
+				</select>
+			</div>
+			<div class="col-xs-3">
+				<select class="form-control"  id="typeSelect2">
+					<option value="rushing">Rushers</option>
+					<option value="receiving">Receivers</option>
+				</select>
+			</div>
+			<div class="col-xs-5">
+			<select class="form-control"  id="playerSelect2"></select>
+			</div>
+			<div class="col-xs-1">
+				<button id="submit2" type="submit" class="btn btn-success" disabled>Go</button>
+			</div>
+		</form>
+		<h3 class="hidden-chart" style="margin-top:0" id="playerName2"></h3>
+
+		<div class="row hidden-chart">
+			<div class="col-sm-12" style="overflow-x: scroll;padding-right:5px;">
+				<div id="playerGraph2" class="graph-container"><h3 style="padding-top:50px">Compare a second player</h3></div>
+			</div>
+			<div class="col-sm-2 col-xs-12" style="padding-left:5px">
+				<table id="statTable2" class="summary-table table table-condensed table-striped">
+				<thead>
+					<tr>
+						<th>Metric</th>
+						<th align="right">Value</th>
+					</tr>
+				</thead>
+				<tbody>
+				</tbody>
+				</table>
+			</div>
+		</div>
+		<h3 class="stats-row" style="margin:0">Play by Play</h3>
+		<div class="row stats-row">
+			<div class="col-sm-12 stats-container">
+				<h4 id="playTableName1" class="hidden-chart">Top Player</h4>
+				<table id="playTable1" class="table table-condensed">
 					<thead>
 						<tr>
-							<th>Metric</th>
-							<th>Value</th>
+							<th align="right" data-sort="int">Week</th>
+							<th width="165px" data-sort="string">Game</th>
+							<th data-sort="string">Type</th>
+							<th align="right" data-sort="int">Yards</th>
+							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					</tbody>
-					</table>
-				</div>
+				</table>
 			</div>
-
-			<hr>
-			<div class="row second-rusher">
-				<div class="col-xs-12">
-					<div class="pull-right form-inline">
-						<select class="form-control" style="display:inline-block" id="positionSelect2">
-							<option value="RB">Rushers</option>
-							<option value="WR">Receivers</option>
-						</select>
-						<select class="form-control" style="display:inline-block" id="playerSelect2"></select>
-						<select class="form-control" style="display:inline-block" id="yearSelect2">
-							<option value="2015" selected>2015</option>
-							<option value="2014">2014</option>
-							<option value="2013">2013</option>
-							<option value="2012">2012</option>
-						</select>
-						<button id="submit2" class="btn btn-primary" disabled>Go</button>
-					</div>
-					<h3 class="pull-left" style="margin-top:0"id="playerName2"></h3>
-				</div>
-			</div>
-			<div class="row second-rusher">
-				<div class="col-sm-10">
-					<div id="rusherYardsGraph2" class="graph-container"><h3 style="padding-top:50px">Compare a second player</h3></div>
-				</div>
-				<div class="col-sm-2 col-xs-4">
-					<table id="summaryTable2" class="summary-table table table-condensed table-striped">
+			<div class="col-sm-6 hidden-chart stats-container">
+				<h4 id="playTableName2">Bottom Player</h4>
+				<table id="playTable2" class="table table-condensed">
 					<thead>
 						<tr>
-							<th>Metric</th>
-							<th align="right">Value</th>
+							<th align="right" data-sort="int">Week</th>
+							<th width="200px" data-sort="string">Game</th>
+							<th data-sort="string">Type</th>
+							<th align="right" data-sort="int">Yards</th>
+							<th>Description</th>
 						</tr>
 					</thead>
 					<tbody>
 					</tbody>
-					</table>
-				</div>
+				</table>
 			</div>
+		</div>
 
-			<div class="row">
-				<div class="col-sm-12 stats-container">
-					<h4 id="tablePlayerName" class="second-rusher">Top Player</h4>
-					<table id="statsTable" class="table table-condensed">
-						<thead>
-							<tr>
-								<th align="right" data-sort="int">Week</th>
-								<th width="175px" data-sort="string">Game</th>
-								<th data-sort="string">Type</th>
-								<th align="right" data-sort="int">Yards</th>
-								<th>Description</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-				<div class="col-sm-6 second-rusher stats-container">
-					<h4 id="tablePlayerName2">Bottom Player</h4>
-					<table id="statsTable2" class="table table-condensed">
-						<thead>
-							<tr>
-								<th align="right" data-sort="int">Week</th>
-								<th width="200px" data-sort="string">Game</th>
-								<th data-sort="string">Type</th>
-								<th align="right" data-sort="int">Yards</th>
-								<th>Description</th>
-							</tr>
-						</thead>
-						<tbody>
-						</tbody>
-					</table>
-				</div>
-			</div>
+		<!-- <footer>
+			<p class="pull-right">Made by Calvin Hu (<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>)</p>
+		</footer> -->
+	</div>      
+	<script type=text/javascript>
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
 
-			<!-- <hr>
+	<script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/vendor/spin.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
+	<script>
+	  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-			<footer>
-				<p>Made by Calvin Hu (<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>)</p>
-			</footer> -->
-		</div> <!-- /container -->        
-		<script type=text/javascript>
-			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-		</script>
-		<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+	  ga('create', 'UA-68627421-1', 'auto');
+	  ga('send', 'pageview');
 
-		<script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/vendor/spin.min.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/util.js') }}"></script>
-		<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-		<script>
-		  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-		  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-		  ga('create', 'UA-68627421-1', 'auto');
-		  ga('send', 'pageview');
-
-		</script>
-		</body>
+	</script>
+	</body>
 </html>
