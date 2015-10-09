@@ -45,8 +45,7 @@ $(document).ready(function() {
 			chart: {
 				type: 'column',
 				height: 250,
-
-				alignTicks: false
+				marginLeft: 10
 
 			},
 			title: {
@@ -63,6 +62,10 @@ $(document).ready(function() {
 				minorGridLineWidth: 0,
 				lineColor: 'transparent',
 				min: 0,
+				labels: {
+					x: 0,
+            		y: -2
+				},
 				stackLabels: {
 					enabled: true
 				}
@@ -217,7 +220,7 @@ $(document).ready(function() {
 					.append($('<td>').attr('align','right').html(value.week))
 					.append($('<td>').html(value.game))
 					.append($('<td>').html(value.type))
-					.append($('<td>').attr('align','right').html(value.yards))
+					.append($('<td>').attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
 					.append($('<td>').html(value.desc))
 			)
 		});
