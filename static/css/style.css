@@ -46,9 +46,12 @@ body {
   display: none;
 }
 
-.stats-container {
-  height: calc(100vh - 380px);
-  overflow-y: scroll;
+.play-container thead, .play-container tbody { display: block;width:100%; }
+
+.play-container tbody {
+    height: calc(100vh - 380px); /* Just for the demo          */
+    overflow-y: auto;    /* Trigger vertical scroll    */
+    overflow-x: hidden;  /* Hide the horizontal scroll */
 }
 
 .scrollable-container {
@@ -81,6 +84,12 @@ body {
   padding: 15px;
   font-size:18px;
   width:95vw;
+}
+
+.player-bar {
+  margin-left: 0px;
+  margin-right: 0px;
+
 }
 /* Bigger than 750 */
 @media (min-width: 768px) {
