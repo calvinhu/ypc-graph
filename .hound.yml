@@ -1,0 +1,4 @@
+javascript:
+	ignore_file: .jshintignore
+python:
+	enabled: true
