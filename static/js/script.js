@@ -295,7 +295,7 @@ $(document).ready(function() {
 		var playerName = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").text();
 		var year = $('#yearSelect' + chartNum.toString() + ' option').filter(":selected").val();
 		var type = $('#typeSelect' + chartNum.toString() + ' option').filter(":selected").val();
-		
+
 		$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
 
 		getStats(playerid, year, type, chartNum, finishRender);
@@ -335,11 +335,13 @@ $(document).ready(function() {
 				$('#playTable1').parent().removeClass('col-sm-12').addClass('col-sm-6');
 
 				hiddenSecondGraph = false;
+				$(this).blur();
 			} else {
 				$('.hidden-chart').fadeOut();
 				$('#addSecondPlayer').text('Show Second Graph').removeClass('btn-danger').addClass('btn-primary');
 				$('#playTable1').parent().removeClass('col-sm-6').addClass('col-sm-12');
 				hiddenSecondGraph = true;
+				$(this).blur();
 			}
 		});
 
