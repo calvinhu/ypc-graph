@@ -199,7 +199,7 @@ $(document).ready(function() {
 			$(containerString + ' tbody').append(
 				$('<tr>').addClass(color)
 					.append($('<td>').attr('width',50).attr('align','right').html(value.week))
-					.append($('<td>').attr('width',165).html(value.game))
+					.append($('<td>').attr('width',155).html(value.game))
 					.append($('<td>').html(value.type))
 					.append($('<td>').attr('width',50).attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
 					.append($('<td>').html(value.desc))
