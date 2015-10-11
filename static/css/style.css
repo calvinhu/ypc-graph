@@ -27,7 +27,6 @@ body {
 #footer {
   position: absolute;
   bottom: 0;
-  width: 100%;
   /* Set the fixed height of the footer here */
   height: 40px;
   border-top: 2px solid #f1f1f1;
