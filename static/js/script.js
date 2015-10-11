@@ -23,7 +23,7 @@ $(document).ready(function() {
 				type: 'column',
 				height: 250,
 				spacingBottom: 0,
-				marginLeft: 20
+				marginLeft: 25
 
 			},
 			title: {
@@ -387,8 +387,6 @@ $(document).ready(function() {
 
 		$('#playerSelect1').change(function() {
 			$('#submit1').prop('disabled',false);
-			$('#playerSelect1').css('border','1px solid #ccc')
-
 		});
 
 		$('#playerSelect2').change(function() {

@@ -8,7 +8,8 @@ body {
 }
 #container {
   width: 100%;
-  padding: 15px;
+  padding: 15px 15px 0 15px;
+  margin-bottom: 40px;
 }
 
 #overlay {
@@ -28,18 +29,8 @@ body {
   bottom: 0;
   width: 100%;
   /* Set the fixed height of the footer here */
-  height: 60px;
-  background-color: #428bca;
-  border-color:#357ebd
-}
-#footer .text-muted {
-	color: white;
-	margin: 20px 0;
-}
-
-#footer .text-muted a {
-	color: white;
-	text-decoration: underline
+  height: 40px;
+  border-top: 2px solid #f1f1f1;
 }
 
 .stats-row {
@@ -49,7 +40,7 @@ body {
 .play-container thead, .play-container tbody { display: block;width:100%; }
 
 .play-container tbody {
-    height: calc(100vh - 380px); /* Just for the demo          */
+    height: calc(100vh - 470px); /* Just for the demo          */
     min-height: 300px;
     overflow-y: auto;    /* Trigger vertical scroll    */
     overflow-x: hidden;  /* Hide the horizontal scroll */
