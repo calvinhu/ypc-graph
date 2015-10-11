@@ -10,14 +10,14 @@ By displaying a histogram of every touch a player took, we can better understand
 
 ##Examples (2015 season, up to week 4)
 ![A.Peterson](http://i.imgur.com/YQbMVp3.png)
-Here we see that Adrian Peterson is performing almost exactly the same as he did in 2013 - preferring 2 and 4 yard runs, apparently.  
+> Here we see that Adrian Peterson is performing almost exactly the same as he did in 2013 - preferring 2 and 4 yard runs, apparently.  
 ****
 
 ![R.Hillman,C.Anderson](http://i.imgur.com/9rAPzfW.png)
-Which runningback in Denver is doing better (or, who isn't the worst)? If you remove Hillman's 72 yard run against Minnesota, they have comparable average YPC, but you can see that Hillman doesn't drop off like CJ from the line of scrimmage.  
+> Which runningback in Denver is doing better (or, who isn't the worst)? If you remove Hillman's 72 yard run against Minnesota, they have comparable average YPC, but you can see that Hillman doesn't drop off like CJ from the line of scrimmage.  
 ****
 
 ![G.Bernard,J.Hill](http://i.imgur.com/csvsY12.png)
-As for Cincinnati, Gio Bernard's average YPC is very uniform. Because of this, I think Bernard is a great 3rd and a short option, since he can reliably achieve yardage near his averag YPC.  
+> As for Cincinnati, Gio Bernard's average YPC is very uniform. Because of this, I think Bernard is a great 3rd and a short option, since he can reliably achieve yardage near his average YPC.  
 ****
 
