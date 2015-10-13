@@ -3,9 +3,12 @@ html {
   min-height: 100%;
 }
 body {
-	padding-bottom: 0;
-  font-size: 13px;
+  line-height: 2.0;
+  /*font-family:"brandon-grotesque-regular", "times new roman", Arial, sans-serif;*/
+  font-family: "San Francisco", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+
 }
+
 #container {
   width: 100%;
   padding: 5px 5px 0 5px;
@@ -42,7 +45,7 @@ body {
 .play-container thead, .play-container tbody { display: block;width:100%; }
 
 .play-container tbody {
-    height: calc(100vh - 470px); /* Just for the demo          */
+    height: calc(100vh - 475px); /* Just for the demo          */
     min-height: 300px;
     overflow-y: auto;    /* Trigger vertical scroll    */
     overflow-x: hidden;  /* Hide the horizontal scroll */
@@ -80,7 +83,8 @@ body {
   padding: 15px;
   margin: 0;
   font-size:18px;
-  width:98vw;
+  width:95vw;
+  font-weight: 400;
 }
 
 .player-bar {
