@@ -85,7 +85,6 @@ $(document).ready(function() {
 			},
 			tooltip: {
 				formatter: function () {
-					console.log(this.points);
 					if (this.points[0].total == 0) {
 						return false;
 					} else {
@@ -173,7 +172,6 @@ $(document).ready(function() {
 		}
 
 		var test = objToList(aggregate(touchdowns)).map(function(i) { var a = {}; a['x'] = i[0]; a['y'] = i[1]; a['marker'] = {enabled: i[1] == 0 ? false : true}; return a}).sort(compareObj);
-		console.log(test)
 		var result = [
 			{
 				name: 'RUSH',
