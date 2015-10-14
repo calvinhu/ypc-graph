@@ -47,3 +47,40 @@ function resizeTable(tableString) {
 		$(v).width(colWidth[i]);
 	}); 
 }
+
+function stupid_table_search(selectContainerString, tableContainerString, regex, all){
+	var $select_box = $(selectContainerString);
+	var $table = $(tableContainerString);
+	var text = $select_box.find('option').filter(":selected").val();
+		if (text === 'allweeks') {
+			$table.children('tbody').children('tr').each(function(index, row){
+				$(row).show();
+			});
+		} else {
+			if (regex) {
+				var regExp = new RegExp(text, 'i');
+			}
+			$table.children('tbody').children('tr').each(function(index, row){
+				var firstCell = $(row).find('td:eq(0)');
+				var found = false;
+				firstCell.each(function(index, td){
+					var match;
+					if (regex) {
+						match = regExp.test($(firstCell).text())
+					} else {
+						match = $(firstCell).text() === text
+					}
+					if(match){
+						found = true;
+						return false;
+					}
+				});
+
+				if(found)
+					$(row).show();
+				else 
+					$(row).hide();
+			});
+		}
+		
+};

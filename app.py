@@ -60,6 +60,14 @@ def custom400(error):
 def root():
 	return render_template('index.html')
 
+@app.route('/api/v0/weeks/<year>', methods=['GET'])
+@crossdomain(origin='*')
+def weeks(year):
+	current_year, current_week = nflgame.live.current_year_and_week()
+	weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
+	return jsonify(result = weeks)
+
+
 @app.route('/api/v0/toprushers/<count>', methods=['GET'])
 @crossdomain(origin='*')
 def toprushers(count):
@@ -87,7 +95,6 @@ def topreceivers(count):
 		return jsonify(result = topPlayers)
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
-
 
 @app.route('/api/v0/rushingyards/<year>/<playerid>', methods=['GET'])
 @crossdomain(origin='*')
