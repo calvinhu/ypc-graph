@@ -144,8 +144,8 @@ def rushingyards(playerid,team,year,week=None):
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
-@app.route('/api/v0/receivingyards/<playerid>/<year>', methods=['GET'])
-@app.route('/api/v0/receivingyards/<playerid>/<year>/<week>', methods=['GET'])
+@app.route('/api/v0/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
+@app.route('/api/v0/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 @crossdomain(origin='*')
 def receivingyards(playerid,team,year,week=None):
 	try:
@@ -160,10 +160,7 @@ def receivingyards(playerid,team,year,week=None):
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
 
 		try:
-			if int(year) == current_year:
-				games = nflgame.games(int(year), week=weeks, home=current_team, away=current_team)
-			else:
-				games = nflgame.games(int(year), week=weeks)
+			games = nflgame.games(int(year), week=weeks, home=team, away=team)
 		except (ValueError, KeyError, TypeError):
 			return jsonify(result = receiving_yds_per_att)
 
