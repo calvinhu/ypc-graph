@@ -407,7 +407,7 @@ $(document).ready(function() {
 		getTopPlayers(2015, 'rushing', '#playerSelect1');
 		getTopPlayers(2015, 'rushing', '#playerSelect2');
 
-		$('#playerSelect1').focus();
+		// $('#playerSelect1').focus();
 
 		// setTimeout(function() { $('#playerSelect1').css('border','2px #5cb85c solid')}, 0);
 
