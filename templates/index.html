@@ -119,16 +119,17 @@
 		</div>
 
 		<div class="stats-row row">
-			<h3 class="pull-left" style="margin:0">Play by Play</h3>
-			<div class="input-container pull-right">
-				<select id="weekSelect1" class="form-control">
-					<option value="allweeks">All weeks</option>
-				</select>
-			</div>
+			<h3 class="" style="margin:0">Play by Play</h3>
 		</div>
 		<div class="row stats-row">
 			<div class="col-sm-12 play-container">
-				<h4 id="playTableName1" class="hidden-chart">Top Player</h4>
+				<h4 id="playTableName1" class="hidden-chart pull-left">Top Player</h4>
+				<div class="input-container pull-right">
+					<select id="weekSelect1" class="form-control">
+						<option value="allweeks">All weeks</option>
+					</select>
+				</div>
+				<div class="clearfix"></div>
 				<table id="playTable1" class="table table-condensed">
 					<thead>
 						<tr>
@@ -144,7 +145,12 @@
 				</table>
 			</div>
 			<div class="col-sm-6 hidden-chart play-container">
-				<h4 id="playTableName2">Bottom Player</h4>
+				<h4 id="playTableName2" class="hidden-chart pull-left">Bottom Player</h4>
+				<div class="input-container pull-right hidden-chart">
+					<select id="weekSelect2" class="form-control">
+						<option value="allweeks">All weeks</option>
+					</select>
+				</div>
 				<table id="playTable2" class="table table-condensed">
 					<thead>
 						<tr>

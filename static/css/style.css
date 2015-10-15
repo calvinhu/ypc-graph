@@ -87,10 +87,9 @@ body {
 }
 
 .player-bar {
-  margin-left: 5px;
+  margin-left: calc(100% - 405px);
   margin-right: 5px;
-  float:none;
-  width: 100%;
+  float: right;
 }
 
 .form-control {
@@ -135,6 +134,7 @@ table.table-condensed {
   .player-bar {
     float: right;
     width: auto;
+    margin-left: 5px;
   }
 
   .graph-container {

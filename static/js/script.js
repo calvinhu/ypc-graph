@@ -311,15 +311,22 @@ $(document).ready(function() {
 		});
 	}
 
-	function getStats(playerid,year,type,chartNum, callback) {
+	function getStats(playerid,year,week,type,chartNum, callback) {
 		showLoad();
 		var statTableContainerString = '#statTable' + chartNum;
 		var playTableContainerString = '#playTable' + chartNum;
 		var graphContainerString = '#playerGraph' + chartNum;
 
+		var url;
+		if (week) {
+			url = $SCRIPT_ROOT + "api/v0/" + type + "yards/" + playerid + "/" + year + "/" + week;
+		} else {
+			url = $SCRIPT_ROOT + "api/v0/" + type + "yards/" + playerid + "/" + year;
+		}
+
 		$.ajax({
 			type: "GET",
-			url: $SCRIPT_ROOT + "api/v0/" + type + "yards/" + year + "/" + playerid,
+			url: url,
 			success: function (response) { 
 				hideLoad();    
 				makeGraph(graphContainerString,'YPC Distribution',selectGraphValues(response));
@@ -351,7 +358,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function submit(chartNum) {
+	function submit(chartNum,week) {
 		var playerid = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").val();
 		var playerName = $('#playerSelect' + chartNum.toString() + ' option').filter(":selected").text();
 		var year = $('#yearSelect' + chartNum.toString() + ' option').filter(":selected").val();
@@ -359,13 +366,15 @@ $(document).ready(function() {
 
 		$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
 
-		getStats(playerid, year, type, chartNum, finishRender);
+		getStats(playerid, year, week, type, chartNum, finishRender);
 
 		function finishRender() {
-			$('#playerName' + chartNum.toString() + ', #playTableName' + chartNum.toString()).html(playerName)
+			$('#playerName' + chartNum.toString() + ', #playTableName' + chartNum.toString()).html(playerName + ' ' + year)
 			$('#statTable' + chartNum.toString()).fadeIn();
 			$('.stats-row').fadeIn();
-			getWeeks(year,'#weekSelect'+chartNum.toString() ,displayWeek);
+			if (!week) {
+				getWeeks(year,'#weekSelect'+chartNum.toString() ,displayWeek);
+			}
 		}
 	}
 
@@ -455,11 +464,23 @@ $(document).ready(function() {
 		});
 
 		$('#weekSelect1').change(function() {
-			stupid_table_search('#weekSelect1','#playTable1');
+			var week = $('#weekSelect1' + ' option').filter(":selected").val();
+			if (week === 'allweeks') {
+				submit(1);
+			} else {
+				submit(1, week)
+			}
+			// stupid_table_search('#weekSelect1','#playTable1');
 		});
 
 		$('#weekSelect2').change(function() {
-			stupid_table_search('#weekSelect2','#playTable2');
+			var week = $('#weekSelect2' + ' option').filter(":selected").val();
+			if (week === 'allweeks') {
+				submit(2);
+			} else {
+				submit(2, week)
+			}
+			// stupid_table_search('#weekSelect2','#playTable2');
 		});
 
 		$(window).resize(function() {
