@@ -449,8 +449,6 @@ $(document).ready(function() {
 			var year = $('#yearSelect1 option').filter(":selected").val();
 
 			getTopPlayers(year, position, '#playerSelect1');
-			// $('#submit1').prop('disabled',true);
-
 		});
 
 		$('#typeSelect2, #yearSelect2').change(function(event) {
@@ -458,37 +456,34 @@ $(document).ready(function() {
 			var year = $('#yearSelect2 option').filter(":selected").val();
 
 			getTopPlayers(year, position, '#playerSelect2');
-			// $('#submit2').prop('disabled',true);
 		});
 
 		$('#playerSelect1').change(function() {
-			// $('#submit1').prop('disabled',false);
 			$('#form1').submit();
 		});
 
 		$('#playerSelect2').change(function() {
-			// $('#submit2').prop('disabled',false);
 			$('#form2').submit();
 		});
 
 		$('#weekSelect1').change(function() {
-			var week = $('#weekSelect1' + ' option').filter(":selected").val();
-			if (week === 'allweeks') {
-				submit(1);
-			} else {
-				submit(1, week)
-			}
-			// stupid_table_search('#weekSelect1','#playTable1');
+			// var week = $('#weekSelect1' + ' option').filter(":selected").val();
+			// if (week === 'allweeks') {
+			// 	submit(1);
+			// } else {
+			// 	submit(1, week)
+			// }
+			stupid_table_search('#weekSelect1','#playTable1');
 		});
 
 		$('#weekSelect2').change(function() {
-			var week = $('#weekSelect2' + ' option').filter(":selected").val();
-			if (week === 'allweeks') {
-				submit(2);
-			} else {
-				submit(2, week)
-			}
-			// stupid_table_search('#weekSelect2','#playTable2');
+			// var week = $('#weekSelect2' + ' option').filter(":selected").val();
+			// if (week === 'allweeks') {
+			// 	submit(2);
+			// } else {
+			// 	submit(2, week)
+			// }
+			stupid_table_search('#weekSelect2','#playTable2');
 		});
 
 		$(window).resize(function() {
