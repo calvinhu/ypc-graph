@@ -69,7 +69,7 @@ def send_list(filename):
 @crossdomain(origin='*')
 def weeks(year):
 	current_year, current_week = nflgame.live.current_year_and_week()
-	weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
+	weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 	return jsonify(result = weeks)
 
 @app.route('/api/v0/toprushers/<year>/<count>', methods=['GET'])
@@ -112,7 +112,7 @@ def rushingyards(playerid,team,year,week=None):
 		if week:
 			weeks = [int(week)]
 		else:
-			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
+			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 
 		try:
 			games = nflgame.games(int(year), week=weeks, home=team, away=team)
@@ -157,7 +157,7 @@ def receivingyards(playerid,team,year,week=None):
 		if week:
 			weeks = [int(week)]
 		else:
-			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
+			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 
 		try:
 			games = nflgame.games(int(year), week=weeks, home=team, away=team)

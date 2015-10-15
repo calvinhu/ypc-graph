@@ -57,11 +57,11 @@ $(document).ready(function() {
 					{
 						color: '#f2dede',
 						from: -5.5,
-						to: 0.5
+						to: -0.5
 					},
 					{
 						color: '#f9f9f9',
-						from: 0.5,
+						from: -0.5,
 						to: 50.5
 					}
 				],
