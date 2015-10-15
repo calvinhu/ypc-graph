@@ -45,7 +45,7 @@ body {
 .play-container thead, .play-container tbody { display: block;width:100%; }
 
 .play-container tbody {
-    height: calc(100vh - 455px);
+    height: calc(100vh - 460px);
     min-height: 300px;
     overflow-y: auto;
     overflow-x: hidden;
@@ -79,7 +79,7 @@ body {
 } 
 
 .instruction-text {
-  padding: 15px;
+  padding: 15px 15px 0 15px;
   margin: 0;
   font-size:18px;
   width:95vw;

@@ -4,6 +4,7 @@ from flask import Flask
 from flask import jsonify
 from flask import render_template
 from flask import abort
+from flask import send_from_directory
 app = Flask(__name__, static_url_path='/static')
 
 from datetime import timedelta
@@ -60,6 +61,10 @@ def custom400(error):
 def root():
 	return render_template('index.html')
 
+@app.route('/api/v0/data/<path:filename>')
+def send_list(filename):
+	return send_from_directory('static/data', filename)
+
 @app.route('/api/v0/weeks/<year>', methods=['GET'])
 @crossdomain(origin='*')
 def weeks(year):
@@ -67,12 +72,12 @@ def weeks(year):
 	weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
 	return jsonify(result = weeks)
 
-@app.route('/api/v0/toprushers/<count>', methods=['GET'])
+@app.route('/api/v0/toprushers/<year>/<count>', methods=['GET'])
 @crossdomain(origin='*')
-def toprushers(count):
+def toprushers(year,count=100):
 	try:
 		topPlayers = []
-		allgames = nflgame.games(2015)
+		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.rushing().sort('rushing_yds').limit(int(count)):
 			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
@@ -81,12 +86,12 @@ def toprushers(count):
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
-@app.route('/api/v0/topreceivers/<count>', methods=['GET'])
+@app.route('/api/v0/topreceivers/<year>/<count>', methods=['GET'])
 @crossdomain(origin='*')
-def topreceivers(count):
+def topreceivers(year,count=100):
 	try:
 		topPlayers = []
-		allgames = nflgame.games(2015)
+		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.receiving().sort('receiving_yds').limit(int(count)):
 			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
@@ -95,16 +100,13 @@ def topreceivers(count):
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
-@app.route('/api/v0/rushingyards/<playerid>/<year>', methods=['GET'])
-@app.route('/api/v0/rushingyards/<playerid>/<year>/<week>', methods=['GET'])
+@app.route('/api/v0/rushingyards/<playerid>/<team>/<year>', methods=['GET'])
+@app.route('/api/v0/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 @crossdomain(origin='*')
-def rushingyards(year,playerid,week=None):
+def rushingyards(playerid,team,year,week=None):
 	try:
 		print playerid
 		current_year, current_week = nflgame.live.current_year_and_week()
-		current_player = nflgame.players[playerid]
-		current_playerid = current_player.playerid
-		current_team = current_player.team
 		rushing_yds_per_att = []
 
 		if week:
@@ -113,17 +115,14 @@ def rushingyards(year,playerid,week=None):
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 17)]
 
 		try:
-			if int(year) == current_year:
-				games = nflgame.games(int(year), week=weeks, home=current_team, away=current_team)
-			else:
-				games = nflgame.games(int(year), week=weeks)
+			games = nflgame.games(int(year), week=weeks, home=team, away=team)
 		except (ValueError, KeyError, TypeError):
 			return jsonify(result = rushing_yds_per_att)
 
 		if games != []:
 			allplays = nflgame.combine_plays(games)
 			for p in allplays:
-				if p.has_player(current_playerid):
+				if p.has_player(playerid):
 					if (p.receiving_tar==1) or (p.rushing_att==1):
 						if p.rushing_att==1:
 							type = 'RUSH'
@@ -148,14 +147,11 @@ def rushingyards(year,playerid,week=None):
 @app.route('/api/v0/receivingyards/<playerid>/<year>', methods=['GET'])
 @app.route('/api/v0/receivingyards/<playerid>/<year>/<week>', methods=['GET'])
 @crossdomain(origin='*')
-def receivingyards(year,playerid,week=None):
+def receivingyards(playerid,team,year,week=None):
 	try:
 		print playerid
 
 		current_year, current_week = nflgame.live.current_year_and_week()
-		current_player = nflgame.players[playerid]
-		current_playerid = current_player.playerid
-		current_team = current_player.team
 		receiving_yds_per_att = []
 
 		if week:
@@ -174,7 +170,7 @@ def receivingyards(year,playerid,week=None):
 		if games != []:
 			allplays = nflgame.combine_plays(games)
 			for p in allplays:
-				if p.has_player(current_playerid):
+				if p.has_player(playerid):
 					if (p.receiving_tar==1):
 						if p.receiving_rec==1:
 							type = 'PASS'

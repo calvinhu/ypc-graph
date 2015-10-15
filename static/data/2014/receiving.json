@@ -1,0 +1,505 @@
+
+{
+  "result": [
+    {
+      "id": "00-0027793", 
+      "name": "Antonio Brown", 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0027874", 
+      "name": "Demaryius Thomas", 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0027944", 
+      "name": "Julio Jones", 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0026176", 
+      "name": "Jordy Nelson", 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0027685", 
+      "name": "Emmanuel Sanders", 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0029608", 
+      "name": "T.Y. Hilton", 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0027891", 
+      "name": "Golden Tate", 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0026995", 
+      "name": "Jeremy Maclin", 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0027902", 
+      "name": "Dez Bryant", 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0031235", 
+      "name": "Odell Beckham", 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0028002", 
+      "name": "Randall Cobb", 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0030564", 
+      "name": "DeAndre Hopkins", 
+      "team": "HOU"
+    }, 
+    {
+      "id": "00-0026189", 
+      "name": "DeSean Jackson", 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0029137", 
+      "name": "Alshon Jeffery", 
+      "team": "CHI"
+    }, 
+    {
+      "id": "00-0027656", 
+      "name": "Rob Gronkowski", 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0025389", 
+      "name": "Calvin Johnson", 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0020337", 
+      "name": "Steve Smith", 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0022084", 
+      "name": "Anquan Boldin", 
+      "team": "SF"
+    }, 
+    {
+      "id": "00-0031408", 
+      "name": "Mike Evans", 
+      "team": "TB"
+    }, 
+    {
+      "id": "00-0027942", 
+      "name": "A.J. Green", 
+      "team": "CIN"
+    }, 
+    {
+      "id": "00-0031359", 
+      "name": "Kelvin Benjamin", 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0025418", 
+      "name": "Greg Olsen", 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0023496", 
+      "name": "Vincent Jackson", 
+      "team": "TB"
+    }, 
+    {
+      "id": "00-0031325", 
+      "name": "Sammy Watkins", 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0027150", 
+      "name": "Julian Edelman", 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0027690", 
+      "name": "Eric Decker", 
+      "team": "NYJ"
+    }, 
+    {
+      "id": "00-0027681", 
+      "name": "Brandon LaFell", 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0029262", 
+      "name": "Rueben Randle", 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0022044", 
+      "name": "Andre Johnson", 
+      "team": "HOU"
+    }, 
+    {
+      "id": "00-0030085", 
+      "name": "Kenny Stills", 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0023462", 
+      "name": "Roddy White", 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0026201", 
+      "name": "Martellus Bennett", 
+      "team": "CHI"
+    }, 
+    {
+      "id": "00-0024466", 
+      "name": "Marques Colston", 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0024389", 
+      "name": "Delanie Walker", 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0027696", 
+      "name": "Jimmy Graham", 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0031299", 
+      "name": "Jordan Matthews", 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0030506", 
+      "name": "Travis Kelce", 
+      "team": "KC"
+    }, 
+    {
+      "id": "00-0026901", 
+      "name": "Mike Wallace", 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0022414", 
+      "name": "Malcom Floyd", 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0030496", 
+      "name": "Le'Veon Bell", 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0029638", 
+      "name": "Michael Floyd", 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0028434", 
+      "name": "Doug Baldwin", 
+      "team": "SEA"
+    }, 
+    {
+      "id": "00-0027918", 
+      "name": "Andrew Hawkins", 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0021547", 
+      "name": "Antonio Gates", 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0026184", 
+      "name": "Matt Forte", 
+      "team": "CHI"
+    }, 
+    {
+      "id": "00-0029632", 
+      "name": "Mohamed Sanu", 
+      "team": "CIN"
+    }, 
+    {
+      "id": "00-0022921", 
+      "name": "Larry Fitzgerald", 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0030279", 
+      "name": "Keenan Allen", 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0020498", 
+      "name": "Reggie Wayne", 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0026182", 
+      "name": "Eddie Royal", 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0029697", 
+      "name": "Coby Fleener", 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0027996", 
+      "name": "Torrey Smith", 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0023465", 
+      "name": "Heath Miller", 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0031382", 
+      "name": "Jarvis Landry", 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0025410", 
+      "name": "Dwayne Bowe", 
+      "team": "KC"
+    }, 
+    {
+      "id": "00-0026345", 
+      "name": "Pierre Garcon", 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0027006", 
+      "name": "Kenny Britt", 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0024267", 
+      "name": "Greg Jennings", 
+      "team": "MIN"
+    }, 
+    {
+      "id": "00-0024334", 
+      "name": "Brandon Marshall", 
+      "team": "CHI"
+    }, 
+    {
+      "id": "00-0029708", 
+      "name": "Kendall Wright", 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0030061", 
+      "name": "Zach Ertz", 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0030431", 
+      "name": "Robert Woods", 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0026986", 
+      "name": "Michael Crabtree", 
+      "team": "SF"
+    }, 
+    {
+      "id": "00-0031051", 
+      "name": "John Brown", 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0028263", 
+      "name": "Andre Holmes", 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0022127", 
+      "name": "Jason Witten", 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0030821", 
+      "name": "Allen Hurns", 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0025465", 
+      "name": "James Jones", 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0023367", 
+      "name": "Nate Washington", 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0030460", 
+      "name": "Markus Wheaton", 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0027061", 
+      "name": "Jared Cook", 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0031228", 
+      "name": "Taylor Gabriel", 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0030542", 
+      "name": "Terrance Williams", 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0028838", 
+      "name": "Larry Donnell", 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0028112", 
+      "name": "Charles Clay", 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0029572", 
+      "name": "Jarius Wright", 
+      "team": "MIN"
+    }, 
+    {
+      "id": "00-0022811", 
+      "name": "Jerricho Cotchery", 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0027758", 
+      "name": "Riley Cooper", 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0023921", 
+      "name": "Miles Austin", 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0028052", 
+      "name": "Cecil Shorts", 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0026224", 
+      "name": "Harry Douglas", 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0031236", 
+      "name": "Brandin Cooks", 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0031373", 
+      "name": "Martavis Bryant", 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0031428", 
+      "name": "Allen Robinson", 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0029159", 
+      "name": "Jermaine Kearse", 
+      "team": "SEA"
+    }, 
+    {
+      "id": "00-0030514", 
+      "name": "Mychal Rivera", 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0024313", 
+      "name": "Owen Daniels", 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0028093", 
+      "name": "Niles Paul", 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0024272", 
+      "name": "Devin Hester", 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0024204", 
+      "name": "Fred Jackson", 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0030521", 
+      "name": "Justin Hunter", 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0025516", 
+      "name": "Scott Chandler", 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0028067", 
+      "name": "Julius Thomas", 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0027077", 
+      "name": "Brian Hartline", 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0026998", 
+      "name": "Percy Harvin", 
+      "team": "SEA"
+    }, 
+    {
+      "id": "00-0028043", 
+      "name": "Roy Helu", 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0030113", 
+      "name": "Charles Johnson", 
+      "team": "MIN"
+    }, 
+    {
+      "id": "00-0030472", 
+      "name": "Jordan Reed", 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0022427", 
+      "name": "Wes Welker", 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0027873", 
+      "name": "Jermaine Gresham", 
+      "team": "CIN"
+    }
+  ]
+}
