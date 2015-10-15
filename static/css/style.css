@@ -90,6 +90,7 @@ body {
   margin-left: calc(100% - 405px);
   margin-right: 5px;
   float: right;
+  overflow-x: scroll;
 }
 
 .form-control {
