@@ -1,16 +1,12 @@
-import nflgame
 import os
-from flask import Flask
-from flask import jsonify
-from flask import render_template
-from flask import abort
-from flask import send_from_directory
-app = Flask(__name__, static_url_path='/static')
-
+from flask import Flask, jsonify, render_template, abort, send_from_directory, make_response, request, current_app
+from flask.ext.compress import Compress
 from datetime import timedelta
-from flask import make_response, request, current_app
 from functools import update_wrapper
+import nflgame
 
+app = Flask(__name__, static_url_path='/static')
+Compress(app)
 
 def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):
 	if methods is not None:
