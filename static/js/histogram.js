@@ -8,7 +8,10 @@ $(document).ready(function() {
 			chart: {
 				type: 'column',
 				spacingBottom: 0,
-				marginLeft: 25
+				marginLeft: 25,
+				style: {
+  					fontFamily: '"San Francisco", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif'
+				}
 			},
 			title: {
 				text: '',
@@ -25,6 +28,7 @@ $(document).ready(function() {
 				lineColor: 'transparent',
 				min: 0,
 				x: -50,
+				offset: -5,
 				stackLabels: {
 					formatter: function() {
 						return this.total == 0 ? '' : this.total;
@@ -37,8 +41,6 @@ $(document).ready(function() {
 					text: 'yards per attempt'
 				},
 				allowDecimals: false,
-				endOnTick: true,
-				startOnTick: true,
 				plotBands: [
 					{
 						color: '#f2dede',
@@ -369,7 +371,7 @@ $(document).ready(function() {
 	}
 
 	function getTopPlayers(year,type,containerString) {
-		showLoad();
+		// showLoad();
 		$.ajax({
 			type: "GET",
 			url: $SCRIPT_ROOT + "api/v0/data/" + year + '/' + type + '.json',
@@ -378,10 +380,10 @@ $(document).ready(function() {
 					return obj.team;
 				});   
 				displayList(grouped, containerString);
-				hideLoad();
+				// hideLoad();
 			},
 			error: function (jqxhr) {
-				hideLoad();
+				// hideLoad();
 				console.log(jqxhr.statusText);
 				makeError(jqxhr.statusText);
 			},
@@ -418,13 +420,13 @@ $(document).ready(function() {
 
 		$('#form1').submit(function(e) {
 			e.preventDefault();
-			$(this).blur();
+			$('#playerSelect1').blur();
 			submit(1);
 		});
 
 		$('#form2').submit(function(e) {
 			e.preventDefault();
-			$(this).blur();
+			$('#playerSelect2').blur();
 			submit(2);
 		});
 
