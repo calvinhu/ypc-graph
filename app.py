@@ -59,7 +59,15 @@ def custom400(error):
 
 @app.route('/')
 def root():
-	return render_template('index.html')
+	return render_template('histogram.html')
+
+@app.route('/rushers')
+def rushers():
+	return render_template('top.html', type='rushing')
+
+@app.route('/receivers')
+def receivers():
+	return render_template('top.html', type='receiving')
 
 @app.route('/api/v0/data/<path:filename>')
 def send_list(filename):
@@ -80,7 +88,7 @@ def toprushers(year,count=100):
 		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.rushing().sort('rushing_yds').limit(int(count)):
-			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
+			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'rushing_yds': ap.rushing_yds, 'rushing_att': ap.rushing_att}
 			topPlayers.append(topPlayer)
 		return jsonify(result = topPlayers)
 	except (ValueError, KeyError, TypeError):
@@ -94,7 +102,7 @@ def topreceivers(year,count=100):
 		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.receiving().sort('receiving_yds').limit(int(count)):
-			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team)}
+			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'receiving_yds': ap.receiving_yds, 'receiving_rec': ap.receiving_rec}
 			topPlayers.append(topPlayer)
 		return jsonify(result = topPlayers)
 	except (ValueError, KeyError, TypeError):

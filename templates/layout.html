@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html class="no-js">
+	<head>
+		<meta charset="utf-8">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<title>Yards Per Carry Histogram</title>
+		<meta name="description" content="This is a lightweight tool that creates a histogram of a NFL player's yards per attempt over the course of a season.">
+		<meta name="keywords" content="NFL, ff, fantasy, fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}?v=2" type="image/x-icon">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+		<link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
+	</head>
+	<body>
+	
+	<div class="errors"></div>
+	<div id="overlay"><div class="spinner"></div></div>
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="#"></a>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav">
+					<li id="histogram" class="active"><a href="/">Histogram</a></li>
+					<li id="top" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Top 100 <span class="caret"></span></a>
+						<ul class="dropdown-menu">
+							<li><a href="/rushers">Rushers</a></li>
+							<li><a href="/receivers">Receivers</a></li>
+						</ul>
+					</li>
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					<a href="https://www.github.com/calvinhu/ypc-graph" target="_blank" class="btn btn-simple"><i class="fa fa-2x fa-github"></i></a>
+					<a href="mailto:ypcgraph@gmail.com" target="_blank" class="btn btn-simple"><i class="fa fa-envelope fa-2x"></i></a>
+
+				</ul>
+			</div><!--/.nav-collapse -->
+		</div>
+	</nav>
+
+	{% block content %}{% endblock content %} 
+
+	<footer id="footer" class="row">
+		<p class="pull-right" style="margin: 5px 20px">(<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>) (<a href="mailto:ypcgraph@gmail.com">email</a>)</p>
+	</footer>
+
+	<script type=text/javascript>
+		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+	</script>
+	<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+	<script  src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+	<script async src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
+	<script async src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+	<script>
+	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+	 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+	 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+	 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+	 ga('create', 'UA-68627421-1', 'auto');
+	 ga('send', 'pageview');
+
+	</script>
+
+	{% block scripts %}{% endblock scripts %}
+	</body>
+</html>

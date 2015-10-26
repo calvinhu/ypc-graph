@@ -1,19 +1,5 @@
-/* Author: Calvin Hu (calvinhu00@gmail.com)
-*/
+/* Author: Calvin Hu (calvinhu00@gmail.com) */ 
 $(document).ready(function() {   
-
-	var spinner = new Spinner({color: '#fff'});
-
-	function showLoad() {
-		$('#overlay').show();
-		spinner.spin(document.getElementById('overlay'));
-	}
-
-	function hideLoad() {
-		$('#overlay').hide();
-			spinner.stop();
-	}
-
 	function makeGraph(container,title,data) {
 		$(container).highcharts({
 			credits: {
@@ -402,14 +388,12 @@ $(document).ready(function() {
 		});
 	}
 
+
 	(function initialize() {
+		selectTab('histogram');
 
 		getTopPlayers(2015, 'rushing', '#playerSelect1');
 		getTopPlayers(2015, 'rushing', '#playerSelect2');
-
-		// $('#playerSelect1').focus();
-
-		// setTimeout(function() { $('#playerSelect1').css('border','2px #5cb85c solid')}, 0);
 
 		//show and hide the second graph
 		var hiddenSecondGraph = true;
@@ -490,5 +474,4 @@ $(document).ready(function() {
 			resizeTable('.play-container');
 		});
 	}())
-
-});
+});	

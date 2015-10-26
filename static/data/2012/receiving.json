@@ -1,0 +1,705 @@
+
+{
+  "result": [
+    {
+      "id": "00-0025389", 
+      "name": "Calvin Johnson", 
+      "receiving_rec": 122, 
+      "receiving_yds": 1964, 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0022044", 
+      "name": "Andre Johnson", 
+      "receiving_rec": 112, 
+      "receiving_yds": 1598, 
+      "team": "HOU"
+    }, 
+    {
+      "id": "00-0024334", 
+      "name": "Brandon Marshall", 
+      "receiving_rec": 118, 
+      "receiving_yds": 1508, 
+      "team": "CHI"
+    }, 
+    {
+      "id": "00-0027874", 
+      "name": "Demaryius Thomas", 
+      "receiving_rec": 94, 
+      "receiving_yds": 1442, 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0023496", 
+      "name": "Vincent Jackson", 
+      "receiving_rec": 72, 
+      "receiving_yds": 1384, 
+      "team": "TB"
+    }, 
+    {
+      "id": "00-0027902", 
+      "name": "Dez Bryant", 
+      "receiving_rec": 92, 
+      "receiving_yds": 1382, 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0020498", 
+      "name": "Reggie Wayne", 
+      "receiving_rec": 106, 
+      "receiving_yds": 1355, 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0022427", 
+      "name": "Wes Welker", 
+      "receiving_rec": 118, 
+      "receiving_yds": 1354, 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0023462", 
+      "name": "Roddy White", 
+      "receiving_rec": 92, 
+      "receiving_yds": 1351, 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0027942", 
+      "name": "A.J. Green", 
+      "receiving_rec": 97, 
+      "receiving_yds": 1350, 
+      "team": "CIN"
+    }, 
+    {
+      "id": "00-0027944", 
+      "name": "Julio Jones", 
+      "receiving_rec": 79, 
+      "receiving_yds": 1198, 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0020337", 
+      "name": "Steve Smith", 
+      "receiving_rec": 73, 
+      "receiving_yds": 1174, 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0024466", 
+      "name": "Marques Colston", 
+      "receiving_rec": 83, 
+      "receiving_yds": 1154, 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0026986", 
+      "name": "Michael Crabtree", 
+      "receiving_rec": 85, 
+      "receiving_yds": 1105, 
+      "team": "SF"
+    }, 
+    {
+      "id": "00-0027265", 
+      "name": "Victor Cruz", 
+      "receiving_rec": 86, 
+      "receiving_yds": 1092, 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0027077", 
+      "name": "Brian Hartline", 
+      "receiving_rec": 74, 
+      "receiving_yds": 1083, 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0027690", 
+      "name": "Eric Decker", 
+      "receiving_rec": 85, 
+      "receiving_yds": 1064, 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0026364", 
+      "name": "Steve Johnson", 
+      "receiving_rec": 79, 
+      "receiving_yds": 1046, 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0023310", 
+      "name": "Lance Moore", 
+      "receiving_rec": 65, 
+      "receiving_yds": 1041, 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0022127", 
+      "name": "Jason Witten", 
+      "receiving_rec": 110, 
+      "receiving_yds": 1039, 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0027702", 
+      "name": "Mike Williams", 
+      "receiving_rec": 63, 
+      "receiving_yds": 996, 
+      "team": "TB"
+    }, 
+    {
+      "id": "00-0027696", 
+      "name": "Jimmy Graham", 
+      "receiving_rec": 85, 
+      "receiving_yds": 982, 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0028052", 
+      "name": "Cecil Shorts", 
+      "receiving_rec": 55, 
+      "receiving_yds": 981, 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0028002", 
+      "name": "Randall Cobb", 
+      "receiving_rec": 80, 
+      "receiving_yds": 954, 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0023921", 
+      "name": "Miles Austin", 
+      "receiving_rec": 66, 
+      "receiving_yds": 943, 
+      "team": "DAL"
+    }, 
+    {
+      "id": "00-0006101", 
+      "name": "Tony Gonzalez", 
+      "receiving_rec": 93, 
+      "receiving_yds": 930, 
+      "team": "ATL"
+    }, 
+    {
+      "id": "00-0022084", 
+      "name": "Anquan Boldin", 
+      "receiving_rec": 65, 
+      "receiving_yds": 921, 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0022097", 
+      "name": "Brandon Lloyd", 
+      "receiving_rec": 74, 
+      "receiving_yds": 911, 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0029707", 
+      "name": "Justin Blackmon", 
+      "receiving_rec": 64, 
+      "receiving_yds": 865, 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0029608", 
+      "name": "T.Y. Hilton", 
+      "receiving_rec": 50, 
+      "receiving_yds": 861, 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0026995", 
+      "name": "Jeremy Maclin", 
+      "receiving_rec": 69, 
+      "receiving_yds": 857, 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0027996", 
+      "name": "Torrey Smith", 
+      "receiving_rec": 49, 
+      "receiving_yds": 855, 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0025418", 
+      "name": "Greg Olsen", 
+      "receiving_rec": 69, 
+      "receiving_yds": 843, 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0026901", 
+      "name": "Mike Wallace", 
+      "receiving_rec": 64, 
+      "receiving_yds": 838, 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0028091", 
+      "name": "Jeremy Kerley", 
+      "receiving_rec": 56, 
+      "receiving_yds": 827, 
+      "team": "NYJ"
+    }, 
+    {
+      "id": "00-0023465", 
+      "name": "Heath Miller", 
+      "receiving_rec": 71, 
+      "receiving_yds": 816, 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0027135", 
+      "name": "Brandon Myers", 
+      "receiving_rec": 79, 
+      "receiving_yds": 815, 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0022414", 
+      "name": "Malcom Floyd", 
+      "receiving_rec": 56, 
+      "receiving_yds": 814, 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0029664", 
+      "name": "Josh Gordon", 
+      "receiving_rec": 50, 
+      "receiving_yds": 805, 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0022921", 
+      "name": "Larry Fitzgerald", 
+      "receiving_rec": 71, 
+      "receiving_yds": 798, 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0025410", 
+      "name": "Dwayne Bowe", 
+      "receiving_rec": 59, 
+      "receiving_yds": 797, 
+      "team": "KC"
+    }, 
+    {
+      "id": "00-0027656", 
+      "name": "Rob Gronkowski", 
+      "receiving_rec": 55, 
+      "receiving_yds": 790, 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0027793", 
+      "name": "Antonio Brown", 
+      "receiving_rec": 66, 
+      "receiving_yds": 787, 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0025465", 
+      "name": "James Jones", 
+      "receiving_rec": 64, 
+      "receiving_yds": 784, 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0026173", 
+      "name": "Donnie Avery", 
+      "receiving_rec": 60, 
+      "receiving_yds": 781, 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0026000", 
+      "name": "Davone Bess", 
+      "receiving_rec": 61, 
+      "receiving_yds": 778, 
+      "team": "MIA"
+    }, 
+    {
+      "id": "00-0027691", 
+      "name": "Andre Roberts", 
+      "receiving_rec": 64, 
+      "receiving_yds": 759, 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0025431", 
+      "name": "Sidney Rice", 
+      "receiving_rec": 50, 
+      "receiving_yds": 748, 
+      "team": "SEA"
+    }, 
+    {
+      "id": "00-0026176", 
+      "name": "Jordy Nelson", 
+      "receiving_rec": 49, 
+      "receiving_yds": 745, 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0028086", 
+      "name": "Denarius Moore", 
+      "receiving_rec": 51, 
+      "receiving_yds": 741, 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0027873", 
+      "name": "Jermaine Gresham", 
+      "receiving_rec": 64, 
+      "receiving_yds": 737, 
+      "team": "CIN"
+    }, 
+    {
+      "id": "00-0023367", 
+      "name": "Nate Washington", 
+      "receiving_rec": 45, 
+      "receiving_yds": 729, 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0024313", 
+      "name": "Owen Daniels", 
+      "receiving_rec": 62, 
+      "receiving_yds": 716, 
+      "team": "HOU"
+    }, 
+    {
+      "id": "00-0026189", 
+      "name": "DeSean Jackson", 
+      "receiving_rec": 45, 
+      "receiving_yds": 700, 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0029614", 
+      "name": "Chris Givens", 
+      "receiving_rec": 42, 
+      "receiving_yds": 698, 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0027005", 
+      "name": "Hakeem Nicks", 
+      "receiving_rec": 53, 
+      "receiving_yds": 692, 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0026937", 
+      "name": "Brandon Gibson", 
+      "receiving_rec": 51, 
+      "receiving_yds": 691, 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0025549", 
+      "name": "Brent Celek", 
+      "receiving_rec": 57, 
+      "receiving_yds": 684, 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0027891", 
+      "name": "Golden Tate", 
+      "receiving_rec": 45, 
+      "receiving_yds": 682, 
+      "team": "SEA"
+    }, 
+    {
+      "id": "00-0026998", 
+      "name": "Percy Harvin", 
+      "receiving_rec": 62, 
+      "receiving_yds": 677, 
+      "team": "MIN"
+    }, 
+    {
+      "id": "00-0027681", 
+      "name": "Brandon LaFell", 
+      "receiving_rec": 44, 
+      "receiving_yds": 677, 
+      "team": "CAR"
+    }, 
+    {
+      "id": "00-0027714", 
+      "name": "Dennis Pitta", 
+      "receiving_rec": 61, 
+      "receiving_yds": 669, 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0023564", 
+      "name": "Darren Sproles", 
+      "receiving_rec": 75, 
+      "receiving_yds": 667, 
+      "team": "NO"
+    }, 
+    {
+      "id": "00-0026231", 
+      "name": "Jermichael Finley", 
+      "receiving_rec": 61, 
+      "receiving_yds": 667, 
+      "team": "GB"
+    }, 
+    {
+      "id": "00-0026035", 
+      "name": "Danny Amendola", 
+      "receiving_rec": 63, 
+      "receiving_yds": 666, 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0027912", 
+      "name": "Danario Alexander", 
+      "receiving_rec": 37, 
+      "receiving_yds": 658, 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0024324", 
+      "name": "Jason Avant", 
+      "receiving_rec": 53, 
+      "receiving_yds": 648, 
+      "team": "PHI"
+    }, 
+    {
+      "id": "00-0027997", 
+      "name": "Greg Little", 
+      "receiving_rec": 53, 
+      "receiving_yds": 647, 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0026345", 
+      "name": "Pierre Garcon", 
+      "receiving_rec": 45, 
+      "receiving_yds": 644, 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0026201", 
+      "name": "Martellus Bennett", 
+      "receiving_rec": 55, 
+      "receiving_yds": 626, 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0029708", 
+      "name": "Kendall Wright", 
+      "receiving_rec": 64, 
+      "receiving_yds": 626, 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0027685", 
+      "name": "Emmanuel Sanders", 
+      "receiving_rec": 44, 
+      "receiving_yds": 626, 
+      "team": "PIT"
+    }, 
+    {
+      "id": "00-0026983", 
+      "name": "Darrius Heyward-Bey", 
+      "receiving_rec": 41, 
+      "receiving_yds": 606, 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0027006", 
+      "name": "Kenny Britt", 
+      "receiving_rec": 45, 
+      "receiving_yds": 589, 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0029129", 
+      "name": "Rod Streater", 
+      "receiving_rec": 39, 
+      "receiving_yds": 584, 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0020494", 
+      "name": "Santana Moss", 
+      "receiving_rec": 41, 
+      "receiving_yds": 573, 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0025516", 
+      "name": "Scott Chandler", 
+      "receiving_rec": 43, 
+      "receiving_yds": 571, 
+      "team": "BUF"
+    }, 
+    {
+      "id": "00-0024345", 
+      "name": "Domenik Hixon", 
+      "receiving_rec": 39, 
+      "receiving_yds": 567, 
+      "team": "NYG"
+    }, 
+    {
+      "id": "00-0026996", 
+      "name": "Brandon Pettigrew", 
+      "receiving_rec": 59, 
+      "receiving_yds": 565, 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0029638", 
+      "name": "Michael Floyd", 
+      "receiving_rec": 45, 
+      "receiving_yds": 562, 
+      "team": "ARI"
+    }, 
+    {
+      "id": "00-0026267", 
+      "name": "Jacob Tamme", 
+      "receiving_rec": 52, 
+      "receiving_yds": 555, 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0024221", 
+      "name": "Vernon Davis", 
+      "receiving_rec": 41, 
+      "receiving_yds": 548, 
+      "team": "SF"
+    }, 
+    {
+      "id": "00-0015754", 
+      "name": "Brandon Stokley", 
+      "receiving_rec": 45, 
+      "receiving_yds": 544, 
+      "team": "DEN"
+    }, 
+    {
+      "id": "00-0028017", 
+      "name": "Leonard Hankerson", 
+      "receiving_rec": 38, 
+      "receiving_yds": 543, 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0024243", 
+      "name": "Marcedes Lewis", 
+      "receiving_rec": 52, 
+      "receiving_yds": 540, 
+      "team": "JAC"
+    }, 
+    {
+      "id": "00-0021547", 
+      "name": "Antonio Gates", 
+      "receiving_rec": 49, 
+      "receiving_yds": 538, 
+      "team": "SD"
+    }, 
+    {
+      "id": "00-0027918", 
+      "name": "Andrew Hawkins", 
+      "receiving_rec": 51, 
+      "receiving_yds": 533, 
+      "team": "CIN"
+    }, 
+    {
+      "id": "00-0027061", 
+      "name": "Jared Cook", 
+      "receiving_rec": 44, 
+      "receiving_yds": 523, 
+      "team": "TEN"
+    }, 
+    {
+      "id": "00-0029689", 
+      "name": "Dwayne Allen", 
+      "receiving_rec": 45, 
+      "receiving_yds": 521, 
+      "team": "IND"
+    }, 
+    {
+      "id": "00-0027985", 
+      "name": "Lance Kendricks", 
+      "receiving_rec": 42, 
+      "receiving_yds": 519, 
+      "team": "STL"
+    }, 
+    {
+      "id": "00-0021931", 
+      "name": "Kevin Walter", 
+      "receiving_rec": 41, 
+      "receiving_yds": 518, 
+      "team": "HOU"
+    }, 
+    {
+      "id": "00-0026314", 
+      "name": "Josh Morgan", 
+      "receiving_rec": 48, 
+      "receiving_yds": 510, 
+      "team": "WAS"
+    }, 
+    {
+      "id": "00-0024276", 
+      "name": "Tony Scheffler", 
+      "receiving_rec": 42, 
+      "receiving_yds": 504, 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0022943", 
+      "name": "Benjamin Watson", 
+      "receiving_rec": 49, 
+      "receiving_yds": 501, 
+      "team": "CLE"
+    }, 
+    {
+      "id": "00-0026393", 
+      "name": "Marcel Reece", 
+      "receiving_rec": 52, 
+      "receiving_yds": 496, 
+      "team": "OAK"
+    }, 
+    {
+      "id": "00-0027981", 
+      "name": "Kyle Rudolph", 
+      "receiving_rec": 53, 
+      "receiving_yds": 493, 
+      "team": "MIN"
+    }, 
+    {
+      "id": "00-0027218", 
+      "name": "Joique Bell", 
+      "receiving_rec": 52, 
+      "receiving_yds": 485, 
+      "team": "DET"
+    }, 
+    {
+      "id": "00-0027713", 
+      "name": "Aaron Hernandez", 
+      "receiving_rec": 51, 
+      "receiving_yds": 483, 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0026195", 
+      "name": "Ray Rice", 
+      "receiving_rec": 61, 
+      "receiving_yds": 478, 
+      "team": "BAL"
+    }, 
+    {
+      "id": "00-0029613", 
+      "name": "Doug Martin", 
+      "receiving_rec": 49, 
+      "receiving_yds": 472, 
+      "team": "TB"
+    }
+  ]
+}

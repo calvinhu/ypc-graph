@@ -1,23 +1,5 @@
-<!DOCTYPE html>
-<html class="no-js">
-	<head>
-		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-		<title>Yards Per Carry Histogram</title>
-		<meta name="description" content="This is a lightweight tool that creates a histogram of a NFL player's yards per attempt over the course of a season.">
-		<meta name="keywords" content="NFL, ff, fantasy, fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}">
-		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
-
-		<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
-	</head>
-	<body>
-	<div class="errors"></div>
-	<div id="overlay"></div>
-	
+{% extends "layout.html" %}
+{% block content %}
 	<div id="container" class="container">
 		<div class="row">
 			<form id="form1" class="player-bar">
@@ -26,6 +8,7 @@
 						<option value="2015" selected>2015</option>
 						<option value="2014">2014</option>
 						<option value="2013">2013</option>
+						<option value="2012">2012</option>
 					</select>
 				</div><!-- 
 				--><div class="pull-left input-container">
@@ -40,7 +23,6 @@
 			</form>
 			<h3 class="pull-left" style="margin:0 0 0 5px" id="playerName1"></h3>
 		</div>
-
 		<div class="row">
 			<div class="col-md-12 scrollable-container" style="">
 				<div id="playerGraph1" class="graph-container">
@@ -62,7 +44,6 @@
 				</table>
 			</div>
 		</div>
-
 		<div class="row">
 			<form id="form2" class="player-bar hidden-chart">
 				<div class="pull-left input-container">
@@ -70,6 +51,7 @@
 						<option value="2015" selected>2015</option>
 						<option value="2014">2014</option>
 						<option value="2013">2013</option>
+						<option value="2012">2012</option>
 					</select>
 				</div><!-- 
 				--><div class="pull-left input-container">
@@ -85,7 +67,6 @@
 
 			<h3 class="hidden-chart pull-left" style="margin:0" id="playerName2"></h3>
 		</div>
-
 		<div class="row hidden-chart">
 			<div class="col-sm-12 scrollable-container" style="">
 				<div id="playerGraph2" class="graph-container"><h3 class="instruction-text">Compare a second player</h3></div>
@@ -103,16 +84,11 @@
 				</table>
 			</div>
 		</div>
-
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-4" style="text-align:center;margin-bottom:5px;margin-top:5px">
 				<button id="addSecondPlayer" class="btn btn-primary btn-xs">Show Second Graph</button>
 			</div>
 		</div>
-
-<!-- 		<div class="stats-row row">
-			<h3 class="" style="margin:0">Play by Play</h3>
-		</div> -->
 		<div class="row stats-row">
 			<div class="col-sm-12 play-container">
 				<h4 id="playTableName1" class="hidden-chart pull-left">Top Player</h4>
@@ -157,33 +133,10 @@
 					</tbody>
 				</table>
 			</div>
-
 		</div>
-		<footer id="footer" class="row">
-				<p class="pull-right" style="margin: 5px 20px">(<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>) (<a href="mailto:ypcgraph@gmail.com">email</a>)</p>
-		</footer>
-		
-	</div>   
-	<script type=text/javascript>
-		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-	</script>
-	<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+	</div>
+{% endblock content %}
 
-	<script src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/vendor/spin.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/util.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/script.js') }}"></script>
-	<script>
-	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
-	 ga('create', 'UA-68627421-1', 'auto');
-	 ga('send', 'pageview');
-
-	</script>
-	</body>
-</html>
+{% block scripts %}
+	<script src="{{ url_for('static', filename='js/histogram.js') }}"></script>
+{% endblock scripts %}

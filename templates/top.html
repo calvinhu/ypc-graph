@@ -1,0 +1,52 @@
+{% extends "layout.html" %}
+{% block content %}
+<script type=text/javascript>
+</script>
+<div class="container" style="margin-bottom:40px">
+	<div class="row">
+		<div class="col-xs-12">
+			<span style="display:none" id="type">{{type}}</span>
+			<h3 style="margin-top:0" class="pull-left">Top {{type}} <span class="title-year">2015</span></h3>
+			<div class="pull-right input-container">
+				<select class="form-control" id="yearSelect">
+					<option value="2015" selected>2015</option>
+					<option value="2014">2014</option>
+					<option value="2013">2013</option>
+					<option value="2012">2012</option>
+				</select>
+			</div>
+			<div class="clearfix"></div>
+			<table id="rushingTable" class="table table-condensed table-striped" style="display:none">
+			<thead>
+				<tr>
+					<th data-sort="string">Player</th>
+					<th data-sort="string">Team</th>
+					<th data-sort="int" style="text-align:right">Rushing Yards</th>
+					<th data-sort="int" style="text-align:right">Rushing Attempts</th>
+					<th data-sort="float" style="text-align:right">Average YPC</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			</table>
+			<table id="receivingTable" class="table table-condensed table-striped" style="display:none">
+			<thead>
+				<tr>
+					<th data-sort="string">Player</th>
+					<th data-sort="string">Team</th>
+					<th data-sort="int" style="text-align:right">Receiving Yards</th>
+					<th data-sort="int" style="text-align:right">Receptions</th>
+					<th data-sort="float" style="text-align:right">Average YPR</th>
+				</tr>
+			</thead>
+			<tbody>
+			</tbody>
+			</table>
+		</div>
+	</div>
+</div>
+{% endblock content %}
+
+{% block scripts %}
+	<script src="{{ url_for('static', filename='js/top.js') }}"></script>
+{% endblock scripts %}

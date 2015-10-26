@@ -1,3 +1,16 @@
+function showLoad() {
+	$('#overlay').show();
+}
+
+function hideLoad() {
+	$('#overlay').hide();
+}
+
+function selectTab(id) {
+	$('.navbar li').removeClass('active');
+	$('#'+id).addClass('active');
+}
+
 function makeError(message) {
 	var button = $('<button>').addClass('close').attr('type','button').attr('data-dismiss','alert').html('&times;');
 	$('.errors').append(
