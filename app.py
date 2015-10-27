@@ -1,53 +1,10 @@
 import os
 from flask import Flask, jsonify, render_template, abort, send_from_directory, make_response, request, current_app
 from flask.ext.compress import Compress
-from datetime import timedelta
-from functools import update_wrapper
 import nflgame
 
 app = Flask(__name__, static_url_path='/static')
 Compress(app)
-
-def crossdomain(origin=None, methods=None, headers=None, max_age=21600, attach_to_all=True, automatic_options=True):
-	if methods is not None:
-		methods = ', '.join(sorted(x.upper() for x in methods))
-	if headers is not None and not isinstance(headers, basestring):
-		headers = ', '.join(x.upper() for x in headers)
-	if not isinstance(origin, basestring):
-		origin = ', '.join(origin)
-	if isinstance(max_age, timedelta):
-		max_age = max_age.total_seconds()
-
-	def get_methods():
-		if methods is not None:
-			return methods
-
-		options_resp = current_app.make_default_options_response()
-		return options_resp.headers['allow']
-
-	def decorator(f):
-		def wrapped_function(*args, **kwargs):
-			if automatic_options and request.method == 'OPTIONS':
-				resp = current_app.make_default_options_response()
-			else:
-				resp = make_response(f(*args, **kwargs))
-			if not attach_to_all and request.method != 'OPTIONS':
-				return resp
-
-			h = resp.headers
-			h['Access-Control-Allow-Origin'] = origin
-			h['Access-Control-Allow-Methods'] = get_methods()
-			h['Access-Control-Max-Age'] = str(max_age)
-			h['Access-Control-Allow-Credentials'] = 'true'
-			h['Access-Control-Allow-Headers'] = \
-				"Origin, X-Requested-With, Content-Type, Accept, Authorization"
-			if headers is not None:
-				h['Access-Control-Allow-Headers'] = headers
-			return resp
-
-		f.provide_automatic_options = False
-		return update_wrapper(wrapped_function, f)
-	return decorator
 
 @app.errorhandler(400)
 def custom400(error):
@@ -70,14 +27,12 @@ def send_list(filename):
 	return send_from_directory('static/data', filename)
 
 @app.route('/api/v0/weeks/<year>', methods=['GET'])
-@crossdomain(origin='*')
 def weeks(year):
 	current_year, current_week = nflgame.live.current_year_and_week()
 	weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 	return jsonify(result = weeks)
 
 @app.route('/api/v0/toprushers/<year>/<count>', methods=['GET'])
-@crossdomain(origin='*')
 def toprushers(year,count=100):
 	try:
 		topPlayers = []
@@ -91,7 +46,6 @@ def toprushers(year,count=100):
 		abort(400, 'custom error message to appear in body')
 
 @app.route('/api/v0/topreceivers/<year>/<count>', methods=['GET'])
-@crossdomain(origin='*')
 def topreceivers(year,count=100):
 	try:
 		topPlayers = []
@@ -106,7 +60,6 @@ def topreceivers(year,count=100):
 
 @app.route('/api/v0/rushingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route('/api/v0/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
-@crossdomain(origin='*')
 def rushingyards(playerid,team,year,week=None):
 	try:
 		print playerid
@@ -150,7 +103,6 @@ def rushingyards(playerid,team,year,week=None):
 
 @app.route('/api/v0/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route('/api/v0/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
-@crossdomain(origin='*')
 def receivingyards(playerid,team,year,week=None):
 	try:
 		print playerid
@@ -191,6 +143,20 @@ def receivingyards(playerid,team,year,week=None):
 		return jsonify(result = receiving_yds_per_att)
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
+
+@app.after_request
+def add_cors(resp):
+	""" Ensure all responses have the CORS headers. This ensures any failures are also accessible
+		by the client. """
+	resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin','*')
+#    resp.headers['Access-Control-Allow-Credentials'] = 'false'
+	resp.headers['Access-Control-Allow-Methods'] = 'POST, PUT, GET'
+	resp.headers['Access-Control-Allow-Headers'] = request.headers.get(
+		'Access-Control-Request-Headers', 'Authorization' )
+	# set low for debugging
+	if app.debug:
+		resp.headers['Access-Control-Max-Age'] = '1'
+	return resp
 
 ###################
 
