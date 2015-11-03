@@ -223,7 +223,14 @@ $(document).ready(function() {
 					.append($('<td>').html(value.desc))
 			)
 		});
-		$(containerString).stupidtable();
+		var table = $(containerString).stupidtable();
+		table.on("aftertablesort", function (event, data) {
+			var th = $(this).find("th");
+			th.find(".arrow").remove();
+			var dir = $.fn.stupidtable.dir;
+			var arrow = data.direction === dir.ASC ? "&uarr;" : "&darr;";
+			th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+		});
 		setTimeout(function() {resizeTable(containerString)},0);
 	}
 

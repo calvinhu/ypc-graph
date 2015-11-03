@@ -10,19 +10,17 @@ Compress(app)
 def custom400(error):
 	response = jsonify({'message': error.description})
 
+# VIEWS
 @app.route('/')
 def root():
 	return render_template('histogram.html')
 
-@app.route('/rushers')
+@app.route('/top')
 def rushers():
-	return render_template('top.html', type='rushing')
+	return render_template('top.html')
 
-@app.route('/receivers')
-def receivers():
-	return render_template('top.html', type='receiving')
-
-@app.route('/api/v0/data/<path:filename>')
+# API ROUTES
+@app.route('/api/v0/data/<path:filename>', methods=['GET'])
 def send_list(filename):
 	return send_from_directory('static/data', filename)
 

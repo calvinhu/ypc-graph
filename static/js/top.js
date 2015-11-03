@@ -18,7 +18,7 @@ $(document).ready(function() {
 
 	function displayList(list,type,tableString) {
 		//populates the player selection input
-		$('.table').hide();
+		// $('.table').hide();
 		$(tableString).show();
 		var $tbody = $(tableString + ' tbody');
 
@@ -49,18 +49,27 @@ $(document).ready(function() {
 		}
 
 		
-		$(tableString).stupidtable();
+		var table = $(tableString).stupidtable();
+
+		table.on("aftertablesort", function (event, data) {
+			var th = $(this).find("th");
+			th.find(".arrow").remove();
+			var dir = $.fn.stupidtable.dir;
+			var arrow = data.direction === dir.ASC ? "&uarr;" : "&darr;";
+			th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
+		});
 	}
 
 	(function initialize() {
 		selectTab('top');
-		var type = $('#type').html();
-		getTopPlayers(2015,type, '#' + type + 'Table');
+		// var type = $('#type').html();
+		getTopPlayers(2015,'rushing', '#' + 'rushing' + 'Table');
+		getTopPlayers(2015,'receiving', '#' + 'receiving' + 'Table');
 
 		$('#yearSelect').change(function(event) {
 			var year = $('#yearSelect option').filter(":selected").val();
-			getTopPlayers(year,type, '#' + type + 'Table');
-			$('.title-year').html(year);
+			getTopPlayers(year,'rushing', '#' + 'rushing' + 'Table');
+			getTopPlayers(year,'receiving', '#' + 'receiving' + 'Table');
 		});
 	})()
 

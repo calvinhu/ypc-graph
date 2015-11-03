@@ -138,5 +138,6 @@
 {% endblock content %}
 
 {% block scripts %}
+	<script async src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/histogram.js') }}"></script>
 {% endblock scripts %}

@@ -8,10 +8,42 @@
 		<meta name="keywords" content="NFL, ff, fantasy, fantasy football,yards per carry,ypc,histogram,distribution,carries,yards,running backs,runningbacks,RB,RBBC,compare">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<link rel="icon" href="{{ url_for('static', filename='favicon.ico') }}?v=2" type="image/x-icon">
-		<!-- <link async rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}"> -->
-		<!-- <link async rel="stylesheet" href="{{ url_for('static', filename='css/fonts.css') }}"> -->
-		<!-- <link async rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}"> -->
-		<!-- <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet"> -->
+		<style type="text/css">
+			.fouc { display:none; }
+		</style>
+	</head>
+	<body class="fouc">
+		<div class="errors"></div>
+		<div id="overlay"><div class="spinner"></div></div>
+		<nav class="navbar navbar-default navbar-static-top">
+			<div class="container">
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+				</div>
+				<div id="navbar" class="navbar-collapse collapse">
+					<ul class="nav navbar-nav">
+						<li id="histogram" class="active"><a href="/">Histogram</a></li>
+						<li id="top" class=""><a href="/top">Top 100</a></li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+
+		{% block content %}{% endblock content %} 
+
+		<footer id="footer" class="row">
+			<p class="pull-right" style="margin: 5px 20px">(<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>) (<a href="mailto:ypcgraph@gmail.com">email</a>)</p>
+		</footer>
+
+		<script type=text/javascript>
+			$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+		</script>
+		
 		<script>
 			(function(w){
 				"use strict";
@@ -69,82 +101,79 @@
 					module.exports = w.loadCSS;
 				}
 			}(this));
+
 		</script>
-		<style type="text/css">
-			.fouc { display:none; }
-		</style>
-		<script type="text/javascript">
-				var html=document.getElementsByTagName("html")[0];
-				document.addEventListener("DOMContentLoaded", function(event) { html.className = html.className.replace( /(?:^|\s)fouc(?!\S)/g , '' ) });
-				html.className += " fouc";
+		<script>
+			function onloadCSS( ss, callback ) {
+				ss.onload = function() {
+					ss.onload = null;
+					if( callback ) {
+						callback.call( ss );
+					}
+				};
+
+				// Weak inference targets Android < 4.4
+				if( "isApplicationInstalled" in navigator && "onloadcssdefined" in ss ) {
+					ss.onloadcssdefined( callback );
+				}
+			}
+
+			function onloadCSSList( ssList, callback ) {
+				function complete() {
+					for (var i=0 ; i<ssList.length ; i++) {
+						ssList[i].onload = null;
+					}
+					if( callback ) {
+						callback.call( ssList );
+					}
+				}
+
+				var counter = ssList.length
+				for (var i=0 ; i<ssList.length ; i++) {
+					ssList[i].onload = function() {
+						counter--;
+						if (counter == 0) {
+							complete();
+						}
+					}
+				}
+
+				// Weak inference targets Android < 4.4
+				if( "isApplicationInstalled" in navigator && "onloadcssdefined" in ssList[0] ) {
+					ssList[0].onloadcssdefined( callback );
+				}
+			}
 		</script>
 
 		<script>
-		    loadCSS("{{ url_for('static', filename='css/bootstrap.min.css') }}");
-		    loadCSS("{{ url_for('static', filename='css/fonts.css') }}");
-		    loadCSS("{{ url_for('static', filename='css/style.css') }}");
+			var bootstrap = loadCSS("{{ url_for('static', filename='css/bootstrap.min.css') }}");
+			var font = loadCSS("{{ url_for('static', filename='css/fonts.css') }}");
+			var style = loadCSS("{{ url_for('static', filename='css/style.css') }}");
+			// onloadCSS(style, function() {
+			// 	document.body.className = document.body.className.replace( /(?:^|\s)fouc(?!\S)/g , '' )
+			// })
+			onloadCSSList([bootstrap,style,font], function() {
+				document.body.className = document.body.className.replace( /(?:^|\s)fouc(?!\S)/g , '' )
+			})
 		</script>
-	</head>
-	<body>
-	
-	<div class="errors"></div>
-	<div id="overlay"><div class="spinner"></div></div>
-	<nav class="navbar navbar-default navbar-static-top">
-		<div class="container">
-			<div class="navbar-header">
-				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-					<span class="sr-only">Toggle navigation</span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-					<span class="icon-bar"></span>
-				</button>
-				<!-- <a class="navbar-brand" href="#"></a> -->
-			</div>
-			<div id="navbar" class="navbar-collapse collapse">
-				<ul class="nav navbar-nav">
-					<li id="histogram" class="active"><a href="/">Histogram</a></li>
-					<li id="top" class="dropdown">
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Top 100 <span class="caret"></span></a>
-						<ul class="dropdown-menu">
-							<li><a href="/rushers">Rushers</a></li>
-							<li><a href="/receivers">Receivers</a></li>
-						</ul>
-					</li>
-				</ul>
-				<!-- <ul class="nav navbar-nav navbar-right">
-					<a href="https://www.github.com/calvinhu/ypc-graph" target="_blank" class="btn btn-simple"><i class="fa fa-2x fa-github"></i></a>
-					<a href="mailto:ypcgraph@gmail.com" target="_blank" class="btn btn-simple"><i class="fa fa-envelope fa-2x"></i></a>
-				</ul> -->
-			</div><!--/.nav-collapse -->
-		</div>
-	</nav>
 
-	{% block content %}{% endblock content %} 
+		<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+		<script async src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
+		<script src="{{ url_for('static', filename='js/util.js') }}"></script>
+		
+		<script async>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
 
-	<footer id="footer" class="row">
-		<p class="pull-right" style="margin: 5px 20px">(<a href="http://www.github.com/calvinhu/ypc-graph" target="_blank">github</a>) (<a href="mailto:ypcgraph@gmail.com">email</a>)</p>
-	</footer>
+			ga('create', 'UA-68627421-1', 'auto');
+			ga('send', 'pageview');
 
-	<script type=text/javascript>
-		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-	</script>
-	<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
-	<script  src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
-	<script async src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
-	<script async src="{{ url_for('static', filename='js/vendor/highcharts.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
-	<script src="{{ url_for('static', filename='js/util.js') }}"></script>
-	<script>
-	 (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-	 (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-	 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-	 })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+		</script>
 
-	 ga('create', 'UA-68627421-1', 'auto');
-	 ga('send', 'pageview');
-
-	</script>
-
-	{% block scripts %}{% endblock scripts %}
+		{% block scripts %}{% endblock scripts %}
 	</body>
+
 </html>
