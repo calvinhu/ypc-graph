@@ -33,6 +33,7 @@ $(document).ready(function() {
 						.append($('<td>').attr('align','right').html(addCommas(value.rushing_yds)))
 						.append($('<td>').attr('align','right').html(value.rushing_att))
 						.append($('<td>').attr('align','right').html(parseFloat(value.rushing_yds / value.rushing_att).toFixed(1) ))
+						.append($('<td>').attr('align','right').html(addCommas(value.rushing_tds)))
 				)
 			});
 		} else {
@@ -44,6 +45,7 @@ $(document).ready(function() {
 						.append($('<td>').attr('align','right').html(addCommas(value.receiving_yds)))
 						.append($('<td>').attr('align','right').html(value.receiving_rec))
 						.append($('<td>').attr('align','right').html(parseFloat(value.receiving_yds / value.receiving_rec).toFixed(1) ))
+						.append($('<td>').attr('align','right').html(addCommas(value.receiving_tds)))
 				)
 			});
 		}

@@ -50,12 +50,11 @@
 		<script>
 			window.onload = function() {
 				document.body.className = document.body.className.replace( /(?:^|\s)fouc(?!\S)/g , '' )
-				
 			}
-
 		</script>
 		<script src="{{ url_for('static', filename='js/vendor/modernizr-2.6.2-respond-1.1.0.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/vendor/jquery-1.11.0.min.js') }}"></script>
+		<script async src="{{ url_for('static', filename='js/vendor/bootstrap.min.js') }}"></script>
 		<script async src="{{ url_for('static', filename='js/vendor/stupidtable.min.js') }}"></script>
 		<script src="{{ url_for('static', filename='js/util.js') }}"></script>
 		

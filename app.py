@@ -37,7 +37,7 @@ def toprushers(year,count=100):
 		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.rushing().sort('rushing_yds').limit(int(count)):
-			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'rushing_yds': ap.rushing_yds, 'rushing_att': ap.rushing_att}
+			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'rushing_yds': ap.rushing_yds, 'rushing_att': ap.rushing_att, 'rushing_tds': ap.rushing_tds}
 			topPlayers.append(topPlayer)
 		return jsonify(result = topPlayers)
 	except (ValueError, KeyError, TypeError):
@@ -50,7 +50,7 @@ def topreceivers(year,count=100):
 		allgames = nflgame.games(int(year))
 		allplayers = nflgame.combine_game_stats(allgames)
 		for ap in allplayers.receiving().sort('receiving_yds').limit(int(count)):
-			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'receiving_yds': ap.receiving_yds, 'receiving_rec': ap.receiving_rec}
+			topPlayer = {'id': ap.playerid,'name': nflgame.players[ap.playerid].full_name, 'team': str(ap.team), 'receiving_yds': ap.receiving_yds, 'receiving_rec': ap.receiving_rec, 'receiving_tds': ap.receiving_tds}
 			topPlayers.append(topPlayer)
 		return jsonify(result = topPlayers)
 	except (ValueError, KeyError, TypeError):
@@ -147,11 +147,9 @@ def add_cors(resp):
 	""" Ensure all responses have the CORS headers. This ensures any failures are also accessible
 		by the client. """
 	resp.headers['Access-Control-Allow-Origin'] = request.headers.get('Origin','*')
-#    resp.headers['Access-Control-Allow-Credentials'] = 'false'
 	resp.headers['Access-Control-Allow-Methods'] = 'POST, PUT, GET'
 	resp.headers['Access-Control-Allow-Headers'] = request.headers.get(
 		'Access-Control-Request-Headers', 'Authorization' )
-	# set low for debugging
 	if app.debug:
 		resp.headers['Access-Control-Max-Age'] = '1'
 	return resp
