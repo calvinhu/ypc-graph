@@ -460,23 +460,23 @@ $(document).ready(function() {
 		});
 
 		$('#weekSelect1').change(function() {
-			// var week = $('#weekSelect1' + ' option').filter(":selected").val();
-			// if (week === 'allweeks') {
-			// 	submit(1);
-			// } else {
-			// 	submit(1, week)
-			// }
-			stupid_table_search('#weekSelect1','#playTable1');
+			var week = $('#weekSelect1' + ' option').filter(":selected").val();
+			if (week === 'allweeks') {
+				submit(1);
+			} else {
+				submit(1, week)
+			}
+			// stupid_table_search('#weekSelect1','#playTable1');
 		});
 
 		$('#weekSelect2').change(function() {
-			// var week = $('#weekSelect2' + ' option').filter(":selected").val();
-			// if (week === 'allweeks') {
-			// 	submit(2);
-			// } else {
-			// 	submit(2, week)
-			// }
-			stupid_table_search('#weekSelect2','#playTable2');
+			var week = $('#weekSelect2' + ' option').filter(":selected").val();
+			if (week === 'allweeks') {
+				submit(2);
+			} else {
+				submit(2, week)
+			}
+			// stupid_table_search('#weekSelect2','#playTable2');
 		});
 
 		$(window).resize(function() {
