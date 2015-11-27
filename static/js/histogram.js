@@ -278,7 +278,6 @@ $(document).ready(function() {
 		var $container = $(containerString);
 
 		$container.html('');
-
 		$container.append($('<option>').html('Select a Player').attr('selected','selected').attr('disabled','disabled'));
 		var $optgroup;
 		$.each(Object.keys(list).sort(), function(index,value) {
