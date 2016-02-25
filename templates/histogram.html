@@ -2,7 +2,7 @@
 {% block content %}
 	<div id="container" class="container">
 		<div class="row">
-			<form id="form1" class="player-bar">
+			<form id="form1" class="form1 player-bar hidden">
 				<div class="pull-left input-container">
 					<select class="form-control" id="yearSelect1">
 						<option value="2015" selected>2015</option>
@@ -26,9 +26,36 @@
 		<div class="row">
 			<div class="col-md-12 scrollable-container" style="">
 				<div id="playerGraph1" class="graph-container">
-				<h3 class="instruction-text">This is a lightweight tool that creates a histogram of a NFL player's yards per attempt over the course of a season.
-				<br /><br />
-				To use, select the year and type of statistic you want to see, then select a player.</h3>
+					<div class="vid-container fullscreen">
+						<video autoplay muted class="fullscreen" id="bgvid">
+						</video>
+						<!-- <div class="player-box">
+							<h3 class="player-box-name">Player Name</h3>
+							<button class="player-box-button btn btn-primary">View Player</button>
+						</div> -->
+					</div>
+					<div class="splash-container">
+						<h3 class="instruction-text centered">View a histogram of an NFL player's yards per attempt over the course of a season.</h3>
+						<form id="form1Splash" class="form1 center-box clearfix">
+							<div class="input-container" style="display:inline-block">
+								<select class="form-control" id="yearSelect1Splash">
+									<option value="2015" selected>2015</option>
+									<option value="2014">2014</option>
+									<option value="2013">2013</option>
+									<option value="2012">2012</option>
+								</select>
+							</div>
+							<div class="input-container" style="display:inline-block">
+								<select class="form-control" id="typeSelect1Splash">
+									<option value="rushing">Rush</option>
+									<option value="receiving">Receive</option>
+								</select>
+							</div>
+							<div class="input-container" style="display:inline-block">
+								<select class="form-control" id="playerSelect1Splash"></select>
+							</div>
+						</form>
+					</div>
 				</div>
 			</div>
 			<div class="col-sm-2 col-xs-8 col-xs-offset-2 col-sm-offset-0" style="padding-left:5px">
@@ -45,7 +72,7 @@
 			</div>
 		</div>
 		<div class="row">
-			<form id="form2" class="player-bar hidden-chart">
+			<form id="form2" class="player-bar hidden-chart hidden">
 				<div class="pull-left input-container">
 					<select class="form-control" id="yearSelect2">
 						<option value="2015" selected>2015</option>
@@ -69,7 +96,28 @@
 		</div>
 		<div class="row hidden-chart">
 			<div class="col-sm-12 scrollable-container" style="">
-				<div id="playerGraph2" class="graph-container"><h3 class="instruction-text">Compare a second player</h3></div>
+				<div id="playerGraph2" class="graph-container">
+					<h3 class="instruction-text">Compare a second player</h3>
+					<form id="form2Splash" class="form1 center-box clearfix">
+						<div class="input-container" style="display:inline-block">
+							<select class="form-control" id="yearSelect2Splash">
+								<option value="2015" selected>2015</option>
+								<option value="2014">2014</option>
+								<option value="2013">2013</option>
+								<option value="2012">2012</option>
+							</select>
+						</div>
+						<div class="input-container" style="display:inline-block">
+							<select class="form-control" id="typeSelect2Splash">
+								<option value="rushing">Rush</option>
+								<option value="receiving">Receive</option>
+							</select>
+						</div>
+						<div class="input-container" style="display:inline-block">
+							<select class="form-control" id="playerSelect2Splash"></select>
+						</div>
+					</form>
+				</div>
 			</div>
 			<div class="col-sm-2 col-xs-8 col-xs-offset-2 col-sm-offset-0" style="padding-left:5px">
 				<table id="statTable2" class="summary-table table table-condensed table-striped">
@@ -86,7 +134,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-4" style="text-align:center;margin-bottom:5px;margin-top:5px">
-				<button id="addSecondPlayer" class="btn btn-primary btn-xs">Show Second Graph</button>
+				<button id="addSecondPlayer" class="btn btn-default btn-xs hidden">Show Second Graph</button>
 			</div>
 		</div>
 		<div class="row stats-row">
@@ -105,6 +153,7 @@
 							<th data-sort="string">Game</th>
 							<th data-sort="string">Type</th>
 							<th align="right" data-sort="int">Yards</th>
+							<th align="right" data-sort="int">Time</th>
 							<th>Description</th>
 						</tr>
 					</thead>
@@ -126,6 +175,7 @@
 							<th width="155px" data-sort="string">Game</th>
 							<th data-sort="string">Type</th>
 							<th align="right" data-sort="int">Yards</th>
+							<th align="right" data-sort="int">Time</th>
 							<th>Description</th>
 						</tr>
 					</thead>

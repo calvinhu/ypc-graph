@@ -30,7 +30,7 @@ $(document).ready(function() {
 					$('<tr>')
 						.append($('<td>').html(value.name))
 						.append($('<td>').html(value.team))
-						.append($('<td>').attr('align','right').html(addCommas(value.rushing_yds)))
+						.append($('<td data-sort-value=' + value.rushing_yds + '>').attr('align','right').html(addCommas(value.rushing_yds)))
 						.append($('<td>').attr('align','right').html(value.rushing_att))
 						.append($('<td>').attr('align','right').html(parseFloat(value.rushing_yds / value.rushing_att).toFixed(1) ))
 						.append($('<td>').attr('align','right').html(addCommas(value.rushing_tds)))
@@ -42,7 +42,7 @@ $(document).ready(function() {
 					$('<tr>')
 						.append($('<td>').html(value.name))
 						.append($('<td>').html(value.team))
-						.append($('<td>').attr('align','right').html(addCommas(value.receiving_yds)))
+						.append($('<td data-sort-value=' + value.receiving_yds + '>').attr('align','right').html(addCommas(value.receiving_yds)))
 						.append($('<td>').attr('align','right').html(value.receiving_rec))
 						.append($('<td>').attr('align','right').html(parseFloat(value.receiving_yds / value.receiving_rec).toFixed(1) ))
 						.append($('<td>').attr('align','right').html(addCommas(value.receiving_tds)))
@@ -51,7 +51,7 @@ $(document).ready(function() {
 		}
 
 		
-		var table = $(tableString).stupidtable();
+		var table = ($.fn.stupidtable) ? $(tableString).stupidtable() : setTimeout(function() { $(tableString).stupidtable() },1000);
 
 		table.on("aftertablesort", function (event, data) {
 			var th = $(this).find("th");
@@ -64,6 +64,7 @@ $(document).ready(function() {
 
 	(function initialize() {
 		selectTab('top');
+		$('.navbar').removeClass('navbar-inverse').addClass('navbar-default')
 		// var type = $('#type').html();
 		getTopPlayers(2015,'rushing', '#' + 'rushing' + 'Table');
 		getTopPlayers(2015,'receiving', '#' + 'receiving' + 'Table');

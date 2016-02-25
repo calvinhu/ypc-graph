@@ -116,6 +116,7 @@ $(document).ready(function() {
 	}
 
 	function selectGraphValues(response) {
+		console.log(response)
 		var rush_attempts = response.result.filter(function(item) { return item.type === 'RUSH'});
 		var pass_attempts = response.result.filter(function(item) { return item.type === 'PASS'});
 		var touchdowns = response.result.filter(function(item) { return item.yards > 0 && item.desc.indexOf("TOUCHDOWN") > -1});
@@ -158,7 +159,16 @@ $(document).ready(function() {
 			return 0;
 		}
 
-		var test = objToList(aggregate(touchdowns)).map(function(i) { var a = {}; a['x'] = i[0]; a['y'] = i[1]; a['marker'] = {enabled: i[1] == 0 ? false : true}; return a}).sort(compareObj);
+		var test = objToList(aggregate(touchdowns)).map(
+			function(i) { 
+				var a = {}; 
+				a['x'] = i[0]; 
+				a['y'] = i[1]; 
+				if (i[1] == 0) {
+					a['marker'] = {enabled: false}; 
+				}
+				return a
+			}).sort(compareObj);
 		var result = [
 			{
 				name: 'RUSH',
@@ -180,7 +190,7 @@ $(document).ready(function() {
 
 			},
 		];
-
+		console.log(result)
 		return result;
 	}
 
@@ -203,24 +213,25 @@ $(document).ready(function() {
 		$(containerString + ' tbody').html('');
 		var color;
 		$.each(response.result, function(index,value) {
-			if (value.type === 'RUSH') {
+			if (parseInt(value.yards) < 0) {
+				color = 'danger';
+			} else if (value.type === 'RUSH') {
 				color = 'info';
 			} else if (value.type === 'PASS') {
 				color = 'success';
 			} else if (value.type === 'INCOMPLETE') {
 				color = 'active';
-			} else if (parseInt(value.yards) <= 0) {
-				color = 'danger';
 			} else {
 				color = 'default'
 			}
 			$(containerString + ' tbody').append(
 				$('<tr>').addClass(color)
-					.append($('<td>').attr('width',50).attr('align','right').html(value.week))
+					.append($('<td>').attr('width',50).attr('align','right').html(value.week).attr('data-sort-value',index))
 					.append($('<td>').attr('width',155).html(value.game))
 					.append($('<td>').html(value.type))
-					.append($('<td>').attr('width',50).attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards))
-					.append($('<td>').html(value.desc))
+					.append($('<td>').attr('width',50).attr('align','right').html(value.type === 'INCOMPLETE' ? '' : value.yards).attr('data-sort-value',value.yards))
+					.append($('<td>').attr('width',75).html(value.time))
+					.append($('<td>').html(formatDescription(value.desc)))
 			)
 		});
 		var table = $(containerString).stupidtable();
@@ -232,6 +243,10 @@ $(document).ready(function() {
 			th.eq(data.column).append('<span class="arrow">' + arrow +'</span>');
 		});
 		setTimeout(function() {resizeTable(containerString)},0);
+	}
+
+	function formatDescription(input) {
+		return input
 	}
 
 	function makeRushingStats(response) {
@@ -352,7 +367,7 @@ $(document).ready(function() {
 		});
 	}
 
-	function submit(chartNum,week) {
+	function submit(chartNum,week,callback) {
 		var playerObj = JSON.parse($('#playerSelect' + chartNum.toString() + ' option').filter(":selected").val());
 
 		var playerid = playerObj['id'];
@@ -362,9 +377,9 @@ $(document).ready(function() {
 		var year = $('#yearSelect' + chartNum.toString() + ' option').filter(":selected").val();
 		var type = $('#typeSelect' + chartNum.toString() + ' option').filter(":selected").val();
 
-		$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
-
 		getStats(playerid, team, year, week, type, chartNum, finishRender);
+
+		$('#playerGraph' + chartNum.toString()).parent().removeClass('col-md-12').addClass('col-sm-10');
 
 		function finishRender() {
 			$('#playerName' + chartNum.toString() + ', #playTableName' + chartNum.toString()).html(playerName + ' ' + year)
@@ -372,6 +387,10 @@ $(document).ready(function() {
 			$('.stats-row').fadeIn();
 			if (!week) {
 				getWeeks(year,'#weekSelect'+chartNum.toString() ,displayWeek);
+			}
+			$('.navbar').removeClass('navbar-inverse').addClass('navbar-default')
+			if (callback) {
+				callback();
 			}
 		}
 	}
@@ -396,26 +415,77 @@ $(document).ready(function() {
 		});
 	}
 
+	function bindUpdateMainForm(sourceString) {
+		$(sourceString + ' :input').change(function(e) {
+			var sourceInputString = $(e.target).attr('id');
+			var targetInputString = sourceInputString.split('Splash')[0];
+
+			var value = $('#' + sourceInputString + ' option').filter(":selected").val();
+			$('#' + targetInputString + ' option').each(function() { this.selected = (this.value === value )})
+			$('#' + targetInputString).trigger('change');
+		})
+	}
+
+	function loadBackground(name) {
+		var video = document.getElementById('bgvid');
+		video.poster = '../static/img/' + name + '.png'
+		$(video).fadeIn(2000)
+
+		setTimeout(function() { 
+			console.log("LOAD");
+			video.src = '/api/v0/stream/' + name + '.mp4';
+			video.play();
+
+		},2000)
+	}
+
+	function removeBackground() {
+		var video = document.getElementById('bgvid');
+			console.log("STOP");
+			video.pause()
+			$(video).fadeOut(1000)
+	}
 
 	(function initialize() {
+
+		var splash1 = true;
+		var splash2 = true;
+		var windowWidth = $(window).width();
+		var currentScreen;
+
 		selectTab('histogram');
 
-		getTopPlayers(2015, 'rushing', '#playerSelect1');
-		getTopPlayers(2015, 'rushing', '#playerSelect2');
+		getTopPlayers(2015, 'rushing', '#playerSelect1, #playerSelect1Splash');
+
+		bindUpdateMainForm('#form1Splash');
+		var players = ['AD','MG','TR']
+		var rand = players[Math.floor(Math.random() * players.length)];
+
+		if (windowWidth < 768) {
+			currentScreen = 'mobile'
+			$('#bgvid').addClass('mobile');
+		} else {
+			currentScreen = 'desktop'
+			$('#bgvid').addClass('desktop');
+			loadBackground(rand);
+		}
 
 		//show and hide the second graph
 		var hiddenSecondGraph = true;
 		$('#addSecondPlayer').click(function() {
+			getTopPlayers(2015, 'rushing', '#playerSelect2, #playerSelect2Splash');
+			bindUpdateMainForm('#form2Splash');
+
 			if (hiddenSecondGraph) {
 				$('.hidden-chart').fadeIn();
-				$('#addSecondPlayer').text('Hide Second Graph').removeClass('btn-primary').addClass('btn-danger');
+				$('#addSecondPlayer').text('Hide Second Graph').removeClass('btn-default').addClass('btn-danger');
 				$('#playTable1').parent().removeClass('col-sm-12').addClass('col-sm-6');
 
 				hiddenSecondGraph = false;
 				$(this).blur();
 			} else {
 				$('.hidden-chart').fadeOut();
-				$('#addSecondPlayer').text('Show Second Graph').removeClass('btn-danger').addClass('btn-primary');
+				$('#addSecondPlayer').text('Show Second Graph').removeClass('btn-danger').addClass('btn-default');
 				$('#playTable1').parent().removeClass('col-sm-6').addClass('col-sm-12');
 
 				hiddenSecondGraph = true;
@@ -427,13 +497,18 @@ $(document).ready(function() {
 		$('#form1').submit(function(e) {
 			e.preventDefault();
 			$('#playerSelect1').blur();
-			submit(1);
+			submit(1, null, function() {
+				$('#addSecondPlayer').removeClass('hidden');
+				splash1 ? $('#form1').removeClass('hidden') : '';
+			});
 		});
 
 		$('#form2').submit(function(e) {
 			e.preventDefault();
 			$('#playerSelect2').blur();
-			submit(2);
+			submit(2, null, function() {
+				splash2 ? $('#form2').removeClass('hidden') : ''
+			});
 		});
 
 		$('#typeSelect1, #yearSelect1').change(function(event) {
@@ -448,6 +523,20 @@ $(document).ready(function() {
 			var year = $('#yearSelect2 option').filter(":selected").val();
 
 			getTopPlayers(year, position, '#playerSelect2');
+		});
+
+		$('#typeSelect1Splash, #yearSelect1Splash').change(function(event) {
+			var position = $('#typeSelect1Splash option').filter(":selected").val();
+			var year = $('#yearSelect1Splash option').filter(":selected").val();
+
+			getTopPlayers(year, position, '#playerSelect1Splash');
+		});
+
+		$('#typeSelect2Splash, #yearSelect2Splash').change(function(event) {
+			var position = $('#typeSelect2Splash option').filter(":selected").val();
+			var year = $('#yearSelect2Splash option').filter(":selected").val();
+
+			getTopPlayers(year, position, '#playerSelect2Splash');
 		});
 
 		$('#playerSelect1').change(function() {
@@ -478,8 +567,29 @@ $(document).ready(function() {
 			// stupid_table_search('#weekSelect2','#playTable2');
 		});
 
-		$(window).resize(function() {
+		var resizeEvents = debounce(function() {
 			resizeTable('.play-container');
-		});
+			var windowWidth = $(window).width();
+			if (windowWidth < 768 && currentScreen == 'desktop') {
+				currentScreen = 'mobile';
+				removeBackground();
+				$('#bgvid').removeClass('desktop').addClass('mobile');
+			} else if (windowWidth >= 768 && currentScreen == 'mobile') {
+				currentScreen = 'desktop'
+				$('#bgvid').removeClass('mobile').addClass('desktop');
+				loadBackground(rand);
+			} else {
+			}
+		},300)
+
+		document.getElementById('bgvid').addEventListener('ended',myHandler,false);
+	    function myHandler(e) {
+	    	console.log("DONE")
+	    	removeBackground();
+	        // document.getElementById('bgvid').play();
+	    }
+
+		window.addEventListener('resize',resizeEvents);
+
 	}())
 });	
