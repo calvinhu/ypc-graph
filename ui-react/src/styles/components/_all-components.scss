@@ -1,0 +1,234 @@
+html {
+  position: relative;
+  min-height: 100%;
+  /*min-width: 600px !important;*/
+}
+
+body {
+  line-height: 2.0;
+  font-family: "San Francisco", "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  margin-top: 20px;
+}
+
+select{
+  font-size: 50px;
+}
+
+#container {
+  width: 100%;
+  padding: 5px 5px 0 5px;
+  margin-bottom: 40px;
+}
+
+.panel-container {
+  margin-bottom: 46px;
+}
+
+.vid-container {
+  background-color: #222;
+}
+
+.fullscreen { 
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -100;
+  -ms-transform: translateX(-50%) translateY(-50%);
+  -moz-transform: translateX(-50%) translateY(-50%);
+  -webkit-transform: translateX(-50%) translateY(-50%);
+  transform: translateX(-50%) translateY(-50%);
+  background-size: cover; 
+  object-fit: cover;
+}
+
+.player-box {
+  position: fixed;
+  right: 5%;
+  bottom: 10%;
+  min-width: 400px;
+  height: 100px;
+  background-color: rgba(34,34,34,0.7);
+  text-align: center;
+  color: white;
+}
+
+video#bgvid.desktop { 
+  display: none;
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  /* Set the fixed height of the footer here */
+  height: 40px;
+  border-top: 2px solid #f9f9f9;
+  margin-left: -15px;
+  margin-right: -15px;
+}
+
+.stats-row {
+  display: none;
+}
+
+.play-container thead, .play-container tbody { display: block;width:100%; }
+
+.play-container tbody {
+    height: calc(100vh - 495px);
+    min-height: 300px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.scrollable-container {
+  /*overflow-x: scroll;*/
+}
+
+.scrollable-container::-webkit-scrollbar { width: 0 !important }
+
+.graph-container {
+  min-height: 175px;
+  /*min-width: 635px !important;*/
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+}
+
+.splash-container {
+  width: calc(100%);
+  min-height: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  background-color: rgba(34,34,34,0.7);
+  border-radius: 5px;
+  color: white;
+}
+
+.hidden {
+  display: none;
+}
+
+.summary-table {
+  display: none;
+}
+
+.col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    padding-left: 0px;
+    padding-right: 0px;
+} 
+
+.instruction-text {
+  padding: 15px 15px 0 15px;
+  margin: 20px auto 0 auto;
+  font-size:18px;
+  /*width:95vw;*/
+  font-weight: 400;
+}
+
+.player-bar {
+  /*margin-left: calc(100% - 405px);*/
+  margin-right: 0;
+}
+
+.player-bar .form-group {
+  margin-bottom: 0;
+}
+.player-name {
+  margin: 0 0 0 5px;
+}
+
+.form-control {
+  padding: 0;
+}
+
+.row {
+  margin-left: -5px;
+  margin-right: -5px;
+}
+
+.centered {
+  text-align: center;
+}
+
+.center-box {
+  margin-top: 25px;
+  text-align: center;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.highcharts-stack-labels text {
+  display: none;
+}
+
+#playerSelect2, #playerSelect1 {
+  max-width: calc(100vw - 195px);
+}
+
+.playsTable {
+  width: 100%;
+}
+
+.playDescription > div {
+  display: inline-block;
+}
+
+table.table-condensed {
+  margin-bottom: 0;
+}
+
+th[data-sort]{
+  cursor:pointer;
+}
+
+/* Bigger than 768 */
+@media (min-width: 768px) {
+
+  #container {
+    padding: 5px 15px 0 15px;
+  }
+
+  #playerSelect2, #playerSelect1 {
+    max-width: 240px;
+  }
+  .col-xs-1, .col-sm-1, .col-md-1, .col-lg-1, .col-xs-2, .col-sm-2, .col-md-2, .col-lg-2, .col-xs-3, .col-sm-3, .col-md-3, .col-lg-3, .col-xs-4, .col-sm-4, .col-md-4, .col-lg-4, .col-xs-5, .col-sm-5, .col-md-5, .col-lg-5, .col-xs-6, .col-sm-6, .col-md-6, .col-lg-6, .col-xs-7, .col-sm-7, .col-md-7, .col-lg-7, .col-xs-8, .col-sm-8, .col-md-8, .col-lg-8, .col-xs-9, .col-sm-9, .col-md-9, .col-lg-9, .col-xs-10, .col-sm-10, .col-md-10, .col-lg-10, .col-xs-11, .col-sm-11, .col-md-11, .col-lg-11, .col-xs-12, .col-sm-12, .col-md-12, .col-lg-12 {
+    padding-left: 5px;
+    padding-right: 5px;
+  }
+
+  .input-container {
+    margin-right: 5px;
+  }
+
+  .player-bar {
+    width: auto;
+    margin-left: 5px;
+  }
+
+  .graph-container {
+    height: 250px;
+  }
+
+  .splash-container {
+    width: calc(75% - 10px);
+    min-height: 80%;
+  }
+
+  .form-control {
+    padding: 6px 12px;
+  }
+
+  .instruction-text {
+    padding:25px;
+    font-size: 24px;
+  }
+
+  .highcharts-stack-labels text {
+    display: block;
+  }
+}
