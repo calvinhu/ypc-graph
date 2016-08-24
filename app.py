@@ -1,7 +1,7 @@
 import os
 from time import gmtime, strftime
 from flask import Flask, jsonify, render_template, abort, request, send_file, Response, send_from_directory, make_response, request, current_app
-from flask.ext.compress import Compress
+from flask_compress import Compress
 import re
 import mimetypes
 import nflgame
@@ -20,11 +20,11 @@ def custom400(error):
 # VIEWS
 @app.route('/')
 def root():
-	return render_template('histogram.html')
+	return render_template('index.html')
 
 @app.route('/top')
 def rushers():
-	return render_template('top.html')
+	return render_template('index.html')
 
 # API ROUTES
 
@@ -119,13 +119,13 @@ def topreceivers(year,count=100):
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 def rushingyards(playerid,team,year,week=None):
 	try:
-		print playerid
-		current_year, current_week = nflgame.live.current_year_and_week()
 		rushing_yds_per_att = []
-
+		current_year = 2016
+		current_week = 17
 		if week:
 			weeks = [int(week)]
 		else:
+			current_year, current_week = nflgame.live.current_year_and_week()
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 
 		try:
@@ -136,7 +136,6 @@ def rushingyards(playerid,team,year,week=None):
 		if games != []:
 			allplays = nflgame.combine_plays(games)
 			player_position = nflgame.players[playerid].position
-			print player_position
 			for p in allplays:
 				if p.has_player(playerid):
 					if (p.receiving_tar==1) or (p.rushing_att==1):
@@ -170,14 +169,13 @@ def rushingyards(playerid,team,year,week=None):
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 def receivingyards(playerid,team,year,week=None):
 	try:
-		print playerid
-
-		current_year, current_week = nflgame.live.current_year_and_week()
 		receiving_yds_per_att = []
-
+		current_year = 2016
+		current_week = 17
 		if week:
 			weeks = [int(week)]
 		else:
+			current_year, current_week = nflgame.live.current_year_and_week()
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
 
 		try:
