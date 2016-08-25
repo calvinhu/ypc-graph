@@ -11,9 +11,12 @@
   
 </head>
 <body>
-  <div id="app">APPLICATION CONTENT</div>
+  <div id="app"></div>
 
   <script>__REACT_DEVTOOLS_GLOBAL_HOOK__ = parent.__REACT_DEVTOOLS_GLOBAL_HOOK__</script>
   <script src="{{ url_for('static', filename='js/assets/app.js') }}"></script>
+  <script type=text/javascript>
+      $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+    </script>
 </body>
 </html>
