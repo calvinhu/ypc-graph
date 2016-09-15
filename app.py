@@ -126,10 +126,16 @@ def rushingyards(playerid,team,year,week=None):
 			weeks = [int(week)]
 		else:
 			current_year, current_week = nflgame.live.current_year_and_week()
+			print "current year:"
+			print current_year
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+			print "current weeks"
+			print weeks
 
 		try:
 			games = nflgame.games(int(year), week=weeks, home=team, away=team)
+			print "games"
+			print games
 		except (ValueError, KeyError, TypeError):
 			return jsonify(result = rushing_yds_per_att)
 
