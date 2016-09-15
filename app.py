@@ -134,9 +134,8 @@ def rushingyards(playerid,team,year,week=None):
 
 		try:
 			games = nflgame.games(int(year), week=weeks, home=team, away=team)
-			print "games"
-			print games
 		except (ValueError, KeyError, TypeError):
+			print "FAILED"
 			return jsonify(result = rushing_yds_per_att)
 
 		if games != []:
