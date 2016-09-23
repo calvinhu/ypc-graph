@@ -64,7 +64,6 @@ def show(filename):
 	path_to_video = APP_STATIC + '/img/' + filename
 	return send_file_206(path_to_video,filename)
 
-
 @app.route(API_ROOT + '/data/<path:filename>', methods=['GET'])
 def send_list(filename):
 	return send_from_directory('static/data', filename)
@@ -77,41 +76,47 @@ def weeks(year):
 
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
 def toprushers(year,count=100):
+	def get_player_stats(ap):
+		return {
+			'id': ap.playerid,
+			'name': nflgame.players[str(ap.playerid)].full_name, 
+			'team': str(ap.team), 
+			'rushing_yds': ap.rushing_yds, 
+			'rushing_att': ap.rushing_att, 
+			'rushing_tds': ap.rushing_tds
+		}
 	try:
-		topPlayers = []
-		allgames = nflgame.games(int(year))
+		current_year, current_week = nflgame.live.current_year_and_week()
+		weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+		allgames = nflgame.games(int(year), weeks)
 		allplayers = nflgame.combine_game_stats(allgames)
-		for ap in allplayers.rushing().sort('rushing_yds').limit(int(count)):
-			topPlayer = {
-				'id': ap.playerid,
-				'name': nflgame.players[ap.playerid].full_name, 
-				'team': str(ap.team), 
-				'rushing_yds': ap.rushing_yds, 
-				'rushing_att': ap.rushing_att, 
-				'rushing_tds': ap.rushing_tds
-			}
-			topPlayers.append(topPlayer)
-		return jsonify(result = topPlayers)
+
+		topplayers = map(get_player_stats, allplayers.rushing().sort('rushing_yds').limit(int(count)))
+
+		return jsonify(result = topplayers)
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
 @app.route(API_ROOT + '/topreceivers/<year>/<count>', methods=['GET'])
 def topreceivers(year,count=100):
+	def get_player_stats(ap):
+		return {
+			'id': ap.playerid,
+			'name': nflgame.players[ap.playerid].full_name, 
+			'team': str(ap.team), 
+			'receiving_yds': ap.receiving_yds, 
+			'receiving_rec': ap.receiving_rec, 
+			'receiving_tds': ap.receiving_tds
+		}
 	try:
-		topPlayers = []
-		allgames = nflgame.games(int(year))
+		current_year, current_week = nflgame.live.current_year_and_week()
+		weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+		allgames = nflgame.games(int(year), weeks)
 		allplayers = nflgame.combine_game_stats(allgames)
-		for ap in allplayers.receiving().sort('receiving_yds').limit(int(count)):
-			topPlayer = {
-				'id': ap.playerid,
-				'name': nflgame.players[ap.playerid].full_name, 
-				'team': str(ap.team), 
-				'receiving_yds': ap.receiving_yds, 
-				'receiving_rec': ap.receiving_rec, 
-				'receiving_tds': ap.receiving_tds
-			}
-			topPlayers.append(topPlayer)
-		return jsonify(result = topPlayers)
+
+		topplayers = map(get_player_stats, allplayers.receiving().sort('receiving_yds').limit(int(count)))
+
+		return jsonify(result = topplayers)
 	except (ValueError, KeyError, TypeError):
 		abort(400, 'custom error message to appear in body')
 
@@ -127,8 +132,6 @@ def rushingyards(playerid,team,year,week=None):
 		else:
 			current_year, current_week = nflgame.live.current_year_and_week()
 			weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
-			print "current weeks"
-			print weeks
 
 		try:
 			games = nflgame.games(int(year), week=weeks, home=team, away=team)
