@@ -1,6 +1,21 @@
-
 {
   "result": [
+    {
+      "id": "00-0027325", 
+      "name": "LeGarrette Blount", 
+      "rushing_att": 75, 
+      "rushing_tds": 4, 
+      "rushing_yds": 298, 
+      "team": "NE"
+    }, 
+    {
+      "id": "00-0029615", 
+      "name": "Lamar Miller", 
+      "rushing_att": 74, 
+      "rushing_tds": 0, 
+      "rushing_yds": 269, 
+      "team": "HOU"
+    }, 
     {
       "id": "00-0024242", 
       "name": "DeAngelo Williams", 
@@ -24,22 +39,6 @@
       "rushing_tds": 2, 
       "rushing_yds": 195, 
       "team": "CLE"
-    }, 
-    {
-      "id": "00-0027325", 
-      "name": "LeGarrette Blount", 
-      "rushing_att": 51, 
-      "rushing_tds": 2, 
-      "rushing_yds": 193, 
-      "team": "NE"
-    }, 
-    {
-      "id": "00-0029615", 
-      "name": "Lamar Miller", 
-      "rushing_att": 53, 
-      "rushing_tds": 0, 
-      "rushing_yds": 189, 
-      "team": "HOU"
     }, 
     {
       "id": "00-0029854", 
@@ -314,6 +313,14 @@
       "team": "OAK"
     }, 
     {
+      "id": "00-0033119", 
+      "name": "Jacoby Brissett", 
+      "rushing_att": 12, 
+      "rushing_tds": 1, 
+      "rushing_yds": 60, 
+      "team": "NE"
+    }, 
+    {
       "id": "00-0026164", 
       "name": "Chris Johnson", 
       "rushing_att": 17, 
@@ -482,6 +489,14 @@
       "team": "DET"
     }, 
     {
+      "id": "00-0031062", 
+      "name": "James White", 
+      "rushing_att": 8, 
+      "rushing_tds": 0, 
+      "rushing_yds": 35, 
+      "team": "NE"
+    }, 
+    {
       "id": "00-0032257", 
       "name": "Duke Johnson", 
       "rushing_att": 6, 
@@ -530,6 +545,14 @@
       "team": "SEA"
     }, 
     {
+      "id": "00-0027150", 
+      "name": "Julian Edelman", 
+      "rushing_att": 6, 
+      "rushing_tds": 0, 
+      "rushing_yds": 30, 
+      "team": "NE"
+    }, 
+    {
       "id": "00-0028083", 
       "name": "Jacquizz Rodgers", 
       "rushing_att": 2, 
@@ -560,6 +583,14 @@
       "rushing_tds": 0, 
       "rushing_yds": 27, 
       "team": "DEN"
+    }, 
+    {
+      "id": "00-0031075", 
+      "name": "Alfred Blue", 
+      "rushing_att": 8, 
+      "rushing_tds": 0, 
+      "rushing_yds": 27, 
+      "team": "HOU"
     }, 
     {
       "id": "00-0028198", 
@@ -594,20 +625,20 @@
       "team": "SEA"
     }, 
     {
+      "id": "00-0029682", 
+      "name": "Brock Osweiler", 
+      "rushing_att": 7, 
+      "rushing_tds": 0, 
+      "rushing_yds": 24, 
+      "team": "HOU"
+    }, 
+    {
       "id": "00-0030404", 
       "name": "Chris Thompson", 
       "rushing_att": 6, 
       "rushing_tds": 1, 
       "rushing_yds": 24, 
       "team": "WAS"
-    }, 
-    {
-      "id": "00-0031062", 
-      "name": "James White", 
-      "rushing_att": 5, 
-      "rushing_tds": 0, 
-      "rushing_yds": 23, 
-      "team": "NE"
     }, 
     {
       "id": "00-0032780", 
@@ -656,22 +687,6 @@
       "rushing_tds": 0, 
       "rushing_yds": 17, 
       "team": "PHI"
-    }, 
-    {
-      "id": "00-0027150", 
-      "name": "Julian Edelman", 
-      "rushing_att": 3, 
-      "rushing_tds": 0, 
-      "rushing_yds": 16, 
-      "team": "NE"
-    }, 
-    {
-      "id": "00-0031075", 
-      "name": "Alfred Blue", 
-      "rushing_att": 6, 
-      "rushing_tds": 0, 
-      "rushing_yds": 15, 
-      "team": "HOU"
     }, 
     {
       "id": "00-0028986", 
@@ -778,28 +793,12 @@
       "team": "PIT"
     }, 
     {
-      "id": "00-0033119", 
-      "name": "Jacoby Brissett", 
+      "id": "00-0029510", 
+      "name": "Jonathan Grimes", 
       "rushing_att": 4, 
       "rushing_tds": 0, 
       "rushing_yds": 12, 
-      "team": "NE"
-    }, 
-    {
-      "id": "00-0033118", 
-      "name": "Kenyan Drake", 
-      "rushing_att": 2, 
-      "rushing_tds": 1, 
-      "rushing_yds": 12, 
-      "team": "MIA"
-    }, 
-    {
-      "id": "00-0026901", 
-      "name": "Mike Wallace", 
-      "rushing_att": 1, 
-      "rushing_tds": 0, 
-      "rushing_yds": 11, 
-      "team": "BAL"
+      "team": "HOU"
     }
   ]
 }
