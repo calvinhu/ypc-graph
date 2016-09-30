@@ -33,6 +33,14 @@
       "team": "HOU"
     }, 
     {
+      "id": "00-0031285", 
+      "name": "Devonta Freeman", 
+      "rushing_att": 42, 
+      "rushing_tds": 0, 
+      "rushing_yds": 265, 
+      "team": "ATL"
+    }, 
+    {
       "id": "00-0026184", 
       "name": "Matt Forte", 
       "rushing_att": 67, 
@@ -79,6 +87,14 @@
       "rushing_tds": 4, 
       "rushing_yds": 225, 
       "team": "SF"
+    }, 
+    {
+      "id": "00-0031301", 
+      "name": "Jeremy Hill", 
+      "rushing_att": 58, 
+      "rushing_tds": 3, 
+      "rushing_yds": 221, 
+      "team": "CIN"
     }, 
     {
       "id": "00-0032187", 
@@ -137,20 +153,20 @@
       "team": "LA"
     }, 
     {
+      "id": "00-0027966", 
+      "name": "Mark Ingram", 
+      "rushing_att": 36, 
+      "rushing_tds": 0, 
+      "rushing_yds": 165, 
+      "team": "NO"
+    }, 
+    {
       "id": "00-0030513", 
       "name": "Latavius Murray", 
       "rushing_att": 32, 
       "rushing_tds": 3, 
       "rushing_yds": 153, 
       "team": "OAK"
-    }, 
-    {
-      "id": "00-0031301", 
-      "name": "Jeremy Hill", 
-      "rushing_att": 37, 
-      "rushing_tds": 3, 
-      "rushing_yds": 150, 
-      "team": "CIN"
     }, 
     {
       "id": "00-0031939", 
@@ -225,20 +241,20 @@
       "team": "SD"
     }, 
     {
-      "id": "00-0031285", 
-      "name": "Devonta Freeman", 
-      "rushing_att": 28, 
-      "rushing_tds": 0, 
-      "rushing_yds": 113, 
-      "team": "ATL"
-    }, 
-    {
       "id": "00-0028118", 
       "name": "Tyrod Taylor", 
       "rushing_att": 16, 
       "rushing_tds": 1, 
       "rushing_yds": 112, 
       "team": "BUF"
+    }, 
+    {
+      "id": "00-0032058", 
+      "name": "Tevin Coleman", 
+      "rushing_att": 32, 
+      "rushing_tds": 4, 
+      "rushing_yds": 110, 
+      "team": "ATL"
     }, 
     {
       "id": "00-0027864", 
@@ -305,14 +321,6 @@
       "team": "TB"
     }, 
     {
-      "id": "00-0027966", 
-      "name": "Mark Ingram", 
-      "rushing_att": 21, 
-      "rushing_tds": 0, 
-      "rushing_yds": 88, 
-      "team": "NO"
-    }, 
-    {
       "id": "00-0032764", 
       "name": "Derrick Henry", 
       "rushing_att": 24, 
@@ -353,6 +361,14 @@
       "team": "SF"
     }, 
     {
+      "id": "00-0031590", 
+      "name": "Jay Ajayi", 
+      "rushing_att": 18, 
+      "rushing_tds": 1, 
+      "rushing_yds": 75, 
+      "team": "MIA"
+    }, 
+    {
       "id": "00-0026153", 
       "name": "Jonathan Stewart", 
       "rushing_att": 20, 
@@ -377,12 +393,12 @@
       "team": "DET"
     }, 
     {
-      "id": "00-0032058", 
-      "name": "Tevin Coleman", 
-      "rushing_att": 20, 
-      "rushing_tds": 1, 
+      "id": "00-0030456", 
+      "name": "Giovani Bernard", 
+      "rushing_att": 25, 
+      "rushing_tds": 0, 
       "rushing_yds": 68, 
-      "team": "ATL"
+      "team": "CIN"
     }, 
     {
       "id": "00-0023459", 
@@ -399,6 +415,14 @@
       "rushing_tds": 0, 
       "rushing_yds": 67, 
       "team": "CHI"
+    }, 
+    {
+      "id": "00-0033118", 
+      "name": "Kenyan Drake", 
+      "rushing_att": 13, 
+      "rushing_tds": 1, 
+      "rushing_yds": 64, 
+      "team": "MIA"
     }, 
     {
       "id": "00-0030668", 
@@ -447,14 +471,6 @@
       "rushing_tds": 0, 
       "rushing_yds": 58, 
       "team": "NYJ"
-    }, 
-    {
-      "id": "00-0027973", 
-      "name": "Andy Dalton", 
-      "rushing_att": 11, 
-      "rushing_tds": 0, 
-      "rushing_yds": 54, 
-      "team": "CIN"
     }, 
     {
       "id": "00-0029701", 
@@ -513,14 +529,6 @@
       "team": "PHI"
     }, 
     {
-      "id": "00-0030456", 
-      "name": "Giovani Bernard", 
-      "rushing_att": 15, 
-      "rushing_tds": 0, 
-      "rushing_yds": 50, 
-      "team": "CIN"
-    }, 
-    {
       "id": "00-0025394", 
       "name": "Adrian Peterson", 
       "rushing_att": 31, 
@@ -535,14 +543,6 @@
       "rushing_tds": 1, 
       "rushing_yds": 49, 
       "team": "SF"
-    }, 
-    {
-      "id": "00-0033118", 
-      "name": "Kenyan Drake", 
-      "rushing_att": 11, 
-      "rushing_tds": 1, 
-      "rushing_yds": 49, 
-      "team": "MIA"
     }, 
     {
       "id": "00-0026796", 
@@ -593,6 +593,14 @@
       "team": "IND"
     }, 
     {
+      "id": "00-0027973", 
+      "name": "Andy Dalton", 
+      "rushing_att": 17, 
+      "rushing_tds": 0, 
+      "rushing_yds": 42, 
+      "team": "CIN"
+    }, 
+    {
       "id": "00-0028198", 
       "name": "Matt Asiata", 
       "rushing_att": 16, 
@@ -601,12 +609,12 @@
       "team": "MIN"
     }, 
     {
-      "id": "00-0031590", 
-      "name": "Jay Ajayi", 
-      "rushing_att": 12, 
-      "rushing_tds": 1, 
-      "rushing_yds": 42, 
-      "team": "MIA"
+      "id": "00-0026289", 
+      "name": "Tim Hightower", 
+      "rushing_att": 10, 
+      "rushing_tds": 0, 
+      "rushing_yds": 37, 
+      "team": "NO"
     }, 
     {
       "id": "00-0029665", 
@@ -633,12 +641,28 @@
       "team": "NE"
     }, 
     {
+      "id": "00-0026143", 
+      "name": "Matt Ryan", 
+      "rushing_att": 8, 
+      "rushing_tds": 0, 
+      "rushing_yds": 33, 
+      "team": "ATL"
+    }, 
+    {
       "id": "00-0029263", 
       "name": "Russell Wilson", 
       "rushing_att": 10, 
       "rushing_tds": 0, 
       "rushing_yds": 33, 
       "team": "SEA"
+    }, 
+    {
+      "id": "00-0030874", 
+      "name": "Damien Williams", 
+      "rushing_att": 5, 
+      "rushing_tds": 0, 
+      "rushing_yds": 33, 
+      "team": "MIA"
     }, 
     {
       "id": "00-0032156", 
@@ -729,14 +753,6 @@
       "team": "HOU"
     }, 
     {
-      "id": "00-0030874", 
-      "name": "Damien Williams", 
-      "rushing_att": 3, 
-      "rushing_tds": 0, 
-      "rushing_yds": 24, 
-      "team": "MIA"
-    }, 
-    {
       "id": "00-0029273", 
       "name": "Robert Turbin", 
       "rushing_att": 8, 
@@ -751,6 +767,14 @@
       "rushing_tds": 0, 
       "rushing_yds": 23, 
       "team": "WAS"
+    }, 
+    {
+      "id": "00-0029626", 
+      "name": "Isaiah Pead", 
+      "rushing_att": 8, 
+      "rushing_tds": 0, 
+      "rushing_yds": 22, 
+      "team": "MIA"
     }, 
     {
       "id": "00-0022942", 
@@ -775,30 +799,6 @@
       "rushing_tds": 1, 
       "rushing_yds": 21, 
       "team": "CLE"
-    }, 
-    {
-      "id": "00-0030433", 
-      "name": "Mike Gillislee", 
-      "rushing_att": 3, 
-      "rushing_tds": 0, 
-      "rushing_yds": 20, 
-      "team": "BUF"
-    }, 
-    {
-      "id": "00-0022924", 
-      "name": "Ben Roethlisberger", 
-      "rushing_att": 3, 
-      "rushing_tds": 0, 
-      "rushing_yds": 19, 
-      "team": "PIT"
-    }, 
-    {
-      "id": "00-0026289", 
-      "name": "Tim Hightower", 
-      "rushing_att": 7, 
-      "rushing_tds": 0, 
-      "rushing_yds": 18, 
-      "team": "NO"
     }
   ]
 }

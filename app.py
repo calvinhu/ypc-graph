@@ -83,7 +83,7 @@ def toprushers(year,count=100):
 			'team': str(ap.team), 
 			'rushing_yds': ap.rushing_yds, 
 			'rushing_att': ap.rushing_att, 
-			'rushing_tds': ap.rushing_tds
+			'rushing_tds': ap.rushing_tds + ap.receiving_tds
 		}
 	try:
 		current_year, current_week = nflgame.live.current_year_and_week()
@@ -106,7 +106,7 @@ def topreceivers(year,count=100):
 			'team': str(ap.team), 
 			'receiving_yds': ap.receiving_yds, 
 			'receiving_rec': ap.receiving_rec, 
-			'receiving_tds': ap.receiving_tds
+			'receiving_tds': ap.rushing_tds + ap.receiving_tds
 		}
 	try:
 		current_year, current_week = nflgame.live.current_year_and_week()
