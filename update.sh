@@ -1,6 +1,6 @@
 #!/bin/bash
-RUSHING=$(curl http://www.ypcgraph.com/api/v0/toprushers/2016/100)
-RECEIVING=$(curl http://www.ypcgraph.com/api/v0/topreceivers/2016/100)
+RUSHING=$(curl http://www.ypcgraph.com/api/v0/toprushers/2016/100 | sed -e 's/JAC/JAX/g')
+RECEIVING=$(curl http://www.ypcgraph.com/api/v0/topreceivers/2016/100 | sed -e 's/JAC/JAX/g')
 
 # echo $RUSHING
 # echo $RECEIVING
