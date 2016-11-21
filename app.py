@@ -2,9 +2,9 @@ import os
 from time import gmtime, strftime
 from flask import Flask, jsonify, render_template, abort, request, send_file, Response, send_from_directory, make_response, request, current_app
 from flask_compress import Compress
-from multiprocessing import Process, Pipe
 import re
 import nflgame
+import gc
 
 app = Flask(__name__)
 Compress(app)
@@ -40,35 +40,28 @@ def weeks(year):
 
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
 def toprushers(year,count=100):
-  def f(conn,year,count):
-    def get_player_stats(ap):
-      return {
-        'id': ap.playerid,
-        'name': nflgame.players[str(ap.playerid)].full_name, 
-        'team': str(ap.team), 
-        'rushing_yds': ap.rushing_yds, 
-        'rushing_att': ap.rushing_att, 
-        'rushing_tds': ap.rushing_tds + ap.receiving_tds
-      }
-
+  def get_player_stats(ap):
+    return {
+      'id': ap.playerid,
+      'name': nflgame.players[str(ap.playerid)].full_name, 
+      'team': str(ap.team), 
+      'rushing_yds': ap.rushing_yds, 
+      'rushing_att': ap.rushing_att, 
+      'rushing_tds': ap.rushing_tds + ap.receiving_tds
+    }
+  try:
     current_year, current_week = nflgame.live.current_year_and_week()
     weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
     topplayers = map(get_player_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).rushing().sort('rushing_yds').limit(int(count)))
-    conn.send(topplayers)
-    conn.close()
-
-  parent_conn, child_conn = Pipe()
-  p = Process(target=f, args=(child_conn,year,count))
-  p.start()
-  result = parent_conn.recv()
-  p.join()
-  return jsonify(result = result)
+    gc.collect()
+    return jsonify(result = topplayers)
+  except (ValueError, KeyError, TypeError):
+    abort(400, 'custom error message to appear in body')
 
 @app.route(API_ROOT + '/topreceivers/<year>/<count>', methods=['GET'])
 def topreceivers(year,count=100):
-  def f(conn,year,count):
-    def get_player_stats(ap):
-      return {
+  def get_player_stats(ap):
+    return {
       'id': ap.playerid,
       'name': nflgame.players[ap.playerid].full_name, 
       'team': str(ap.team), 
@@ -76,19 +69,14 @@ def topreceivers(year,count=100):
       'receiving_rec': ap.receiving_rec, 
       'receiving_tds': ap.rushing_tds + ap.receiving_tds
     }
-
+  try:
     current_year, current_week = nflgame.live.current_year_and_week()
     weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
     topplayers = map(get_player_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).receiving().sort('receiving_yds').limit(int(count)))
-    conn.send(topplayers)
-    conn.close()
-
-  parent_conn, child_conn = Pipe()
-  p = Process(target=f, args=(child_conn,year,count))
-  p.start()
-  result = parent_conn.recv()
-  p.join()
-  return jsonify(result = result)
+    gc.collect()
+    return jsonify(result = topplayers)
+  except (ValueError, KeyError, TypeError):
+    abort(400, 'custom error message to appear in body')
 
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
@@ -136,8 +124,10 @@ def rushingyards(playerid,team,year,week=None):
                 'week': p.drive.game.schedule['week']
               }
               rushing_yds_per_att.append(play)
+
     else:
       print "EMPTY"
+    gc.collect()
     return jsonify(result = rushing_yds_per_att)
   except (ValueError, KeyError, TypeError):
     abort(400, 'custom error message to appear in body')
@@ -181,7 +171,7 @@ def receivingyards(playerid,team,year,week=None):
               'game': str(p.drive.game), 
               'week': p.drive.game.schedule['week']}
             receiving_yds_per_att.append(play)
-
+    gc.collect()
     return jsonify(result = receiving_yds_per_att)
   except (ValueError, KeyError, TypeError):
     abort(400, 'custom error message to appear in body')
