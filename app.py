@@ -6,8 +6,13 @@ from flask_compress import Compress
 import re
 import gc
 import nflgame
+import logging
 
 app = Flask(__name__)
+
+app.logger.addHandler(logging.StreamHandler(sys.stdout))
+app.logger.setLevel(logging.ERROR)
+
 Compress(app)
 
 API_ROOT = '/api/v0';
