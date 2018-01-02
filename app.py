@@ -95,8 +95,6 @@ def rushingyards(playerid,team,year,week=None):
     else:
       current_year, current_week = nflgame.live.current_year_and_week()
       weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
-    print "WEEKS:"
-    print weeks
 
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
