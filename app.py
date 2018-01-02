@@ -107,30 +107,31 @@ def rushingyards(playerid,team,year,week=None):
     if games != []:
       all_plays = nflgame.combine_plays(games)
       player_position = nflgame.players[playerid].position
-      for p in all_plays:
-        if p.has_player(playerid):
-          if (p.receiving_tar==1) or (p.rushing_att==1):
-            if p.rushing_att==1:
-              type = 'RUSH'
-            elif p.receiving_rec==1:
-              type = 'PASS'
-            else:
-              type = 'INCOMPLETE'
-            if (player_position == 'QB') and (type == 'PASS' or type == 'INCOMPLETE'):
-              pass
-            else:
-              play = {
-                'type': type, 
-                'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
-                # 'desc': str(re.sub(r'\([^)]*\)', '', p.desc)), 
-                'desc': str(p.desc), 
-                'down': str(p.down) + ' and ' + str(p.yards_togo),
-                'time': str(p.time),
-                'position': str(p.yardline),
-                'game': str(p.drive.game), 
-                'week': p.drive.game.schedule['week']
-              }
-              rushing_yds_per_att.append(play)
+
+      player_plays = [p for p in all_plays if p.has_player(playerid)]
+      for p in player_plays:
+        if (p.receiving_tar==1) or (p.rushing_att==1):
+          if p.rushing_att==1:
+            type = 'RUSH'
+          elif p.receiving_rec==1:
+            type = 'PASS'
+          else:
+            type = 'INCOMPLETE'
+          if (player_position == 'QB') and (type == 'PASS' or type == 'INCOMPLETE'):
+            pass
+          else:
+            play = {
+              'type': type, 
+              'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
+              # 'desc': str(re.sub(r'\([^)]*\)', '', p.desc)), 
+              'desc': str(p.desc), 
+              'down': str(p.down) + ' and ' + str(p.yards_togo),
+              'time': str(p.time),
+              'position': str(p.yardline),
+              'game': str(p.drive.game), 
+              'week': p.drive.game.schedule['week']
+            }
+            rushing_yds_per_att.append(play)
     else:
       print "EMPTY"
     return jsonify(result = rushing_yds_per_att)
@@ -158,25 +159,25 @@ def receivingyards(playerid,team,year,week=None):
 
     if games != []:
       all_plays = nflgame.combine_plays(games)
-      for p in all_plays:
-        if p.has_player(playerid):
-          if (p.receiving_tar==1):
-            if p.receiving_rec==1:
-              type = 'PASS'
-            else:
-              type = 'INCOMPLETE'
-            play = {
-              'type': type,
-              'complete': p.receiving_rec,
-              'yards': p.receiving_yds, 
-              'yac_yards': p.receiving_yac_yds, 
-              'desc': str(p.desc), 
-              'down': str(p.down) + ' and ' + str(p.yards_togo), 
-              'time': str(p.time),
-              'position': str(p.yardline),
-              'game': str(p.drive.game), 
-              'week': p.drive.game.schedule['week']}
-            receiving_yds_per_att.append(play)
+      player_plays = [p for p in all_plays if p.has_player(playerid)]
+      for p in player_plays:
+        if (p.receiving_tar==1):
+          if p.receiving_rec==1:
+            type = 'PASS'
+          else:
+            type = 'INCOMPLETE'
+          play = {
+            'type': type,
+            'complete': p.receiving_rec,
+            'yards': p.receiving_yds, 
+            'yac_yards': p.receiving_yac_yds, 
+            'desc': str(p.desc), 
+            'down': str(p.down) + ' and ' + str(p.yards_togo), 
+            'time': str(p.time),
+            'position': str(p.yardline),
+            'game': str(p.drive.game), 
+            'week': p.drive.game.schedule['week']}
+          receiving_yds_per_att.append(play)
 
     return jsonify(result = receiving_yds_per_att)
   except (ValueError, KeyError, TypeError):
