@@ -47,9 +47,6 @@ def send_list(filename):
 def weeks(year):
   current_year, current_week = nflgame.live.current_year_and_week()
   phase = nflgame.live._cur_season_phase
-  print "current_year: {}".format(current_year)
-  print "current_week: {}".format(current_week)
-  print "current_phase: {}".format(phase)
   weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
   return jsonify(result = weeks)
 
@@ -57,8 +54,8 @@ def weeks(year):
 def toprushers(year,count=100):
   try:
     current_year, current_week = nflgame.live.current_year_and_week()
-    print current_week
-    weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+    phase = nflgame.live._cur_season_phase
+    weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
     topplayers = list(map(get_rusher_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).rushing().sort('rushing_yds').limit(int(count))))
     sys.exc_clear()
     sys.exc_traceback = sys.last_traceback = None
@@ -79,8 +76,8 @@ def topreceivers(year,count=100):
     }
   try:
     current_year, current_week = nflgame.live.current_year_and_week()
-    print current_week
-    weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+    phase = nflgame.live._cur_season_phase
+    weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
     topplayers = map(get_player_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).receiving().sort('receiving_yds').limit(int(count)))
 
     return jsonify(result = topplayers)
@@ -98,7 +95,8 @@ def rushingyards(playerid,team,year,week=None):
       weeks = [int(week)]
     else:
       current_year, current_week = nflgame.live.current_year_and_week()
-      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+      phase = nflgame.live._cur_season_phase
+      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
 
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
@@ -150,7 +148,8 @@ def receivingyards(playerid,team,year,week=None):
       weeks = [int(week)]
     else:
       current_year, current_week = nflgame.live.current_year_and_week()
-      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+      phase = nflgame.live._cur_season_phase
+      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
 
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
