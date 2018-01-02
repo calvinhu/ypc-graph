@@ -46,10 +46,11 @@ def send_list(filename):
 @app.route(API_ROOT + '/weeks/<year>', methods=['GET'])
 def weeks(year):
   current_year, current_week = nflgame.live.current_year_and_week()
+  phase = nflgame.live._cur_season_phase
   print "current_year: {}".format(current_year)
   print "current_week: {}".format(current_week)
-  print "current_phase: {}".format(nflgame.live._cur_season_phase)
-  weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) else [x for x in range(1, 18)]
+  print "current_phase: {}".format(phase)
+  weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
   return jsonify(result = weeks)
 
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
