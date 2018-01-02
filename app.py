@@ -32,6 +32,7 @@ def get_rusher_stats(ap):
 @app.errorhandler(400)
 def custom400(error):
   response = jsonify({'message': error.description})
+  return response
 
 # VIEWS
 @app.route('/')
@@ -65,8 +66,8 @@ def toprushers(year,count=100):
     sys.exc_clear()
     sys.exc_traceback = sys.last_traceback = None
     return jsonify(result = topplayers)
-  except (ValueError, KeyError, TypeError):
-    abort(400, 'custom error message to appear in body')
+  except Exception as e:
+    abort(400, e)
 
 @app.route(API_ROOT + '/topreceivers/<year>/<count>', methods=['GET'])
 def topreceivers(year,count=100):
@@ -86,8 +87,8 @@ def topreceivers(year,count=100):
     topplayers = map(get_player_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).receiving().sort('receiving_yds').limit(int(count)))
 
     return jsonify(result = topplayers)
-  except (ValueError, KeyError, TypeError):
-    abort(400, 'custom error message to appear in body')
+  except Exception as e:
+    abort(400, e)
 
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
@@ -105,7 +106,7 @@ def rushingyards(playerid,team,year,week=None):
 
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
-    except (ValueError, KeyError, TypeError):
+    except Exception as e:
       print "FAILED"
       return jsonify(result = rushing_yds_per_att)
 
@@ -142,7 +143,7 @@ def rushingyards(playerid,team,year,week=None):
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
     print e
-    abort(400, 'custom error message to appear in body')
+    abort(400, e)
 
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
@@ -160,7 +161,7 @@ def receivingyards(playerid,team,year,week=None):
 
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
-    except (ValueError, KeyError, TypeError):
+    except Exception as e:
       return jsonify(result = receiving_yds_per_att)
 
     if games != []:
@@ -186,8 +187,8 @@ def receivingyards(playerid,team,year,week=None):
           receiving_yds_per_att.append(play)
 
     return jsonify(result = receiving_yds_per_att)
-  except (ValueError, KeyError, TypeError):
-    abort(400, 'custom error message to appear in body')
+  except Exception as e:
+    abort(400, e)
 
 @app.after_request
 def add_cors(resp):
