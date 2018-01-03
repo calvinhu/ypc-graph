@@ -94,6 +94,7 @@ def topreceivers(year,count=100):
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 def rushingyards(playerid,team,year,week=None):
   try:
+    print "INIT"
     rushing_yds_per_att = []
     current_year = 2017
     current_week = 17
@@ -144,8 +145,9 @@ def rushingyards(playerid,team,year,week=None):
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
     print "!!!!"
-    print e
     print type(e).__name__
+    print e
+    print e.message
     print "!!!!"
     abort(400, e)
 
