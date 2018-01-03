@@ -118,16 +118,16 @@ def rushingyards(playerid,team,year,week=None):
       for p in player_plays:
         if (p.receiving_tar==1) or (p.rushing_att==1):
           if p.rushing_att==1:
-            type = 'RUSH'
+            play_type = 'RUSH'
           elif p.receiving_rec==1:
-            type = 'PASS'
+            play_type = 'PASS'
           else:
-            type = 'INCOMPLETE'
-          if (player_position == 'QB') and (type == 'PASS' or type == 'INCOMPLETE'):
+            play_type = 'INCOMPLETE'
+          if (player_position == 'QB') and (play_type == 'PASS' or play_type == 'INCOMPLETE'):
             pass
           else:
             play = {
-              'type': type, 
+              'type': play_type, 
               'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
               # 'desc': str(re.sub(r'\([^)]*\)', '', p.desc)), 
               'desc': str(p.desc), 
@@ -173,11 +173,11 @@ def receivingyards(playerid,team,year,week=None):
       for p in player_plays:
         if (p.receiving_tar==1):
           if p.receiving_rec==1:
-            type = 'PASS'
+            play_type = 'PASS'
           else:
-            type = 'INCOMPLETE'
+            play_type = 'INCOMPLETE'
           play = {
-            'type': type,
+            'type': play_type,
             'complete': p.receiving_rec,
             'yards': p.receiving_yds, 
             'yac_yards': p.receiving_yac_yds, 
