@@ -113,8 +113,9 @@ def rushingyards(playerid,team,year,week=None):
     if games != []:
       all_plays = nflgame.combine_plays(games)
       player_position = nflgame.players[playerid].position
-
+      print "GOT ALL PLAYS"
       player_plays = [p for p in all_plays if p.has_player(playerid)]
+      print "FILTER PLAYER"
       for p in player_plays:
         if (p.receiving_tar==1) or (p.rushing_att==1):
           if p.rushing_att==1:
