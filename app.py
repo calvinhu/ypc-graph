@@ -142,7 +142,10 @@ def rushingyards(playerid,team,year,week=None):
       print "EMPTY"
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
+    print "!!!!"
     print e
+    print type(e).__name__
+    print "!!!!"
     abort(400, e)
 
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
