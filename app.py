@@ -112,7 +112,8 @@ def rushingyards(playerid,team,year,week=None):
       return jsonify(result = rushing_yds_per_att)
 
     if games != []:
-      player_position = nflgame.players[playerid].position
+      # player_position = nflgame.players[playerid].position
+      player_position = "RB"
       print "GOT POSITION"
       all_plays = nflgame.combine_plays(games)
       print "ALL_PLAYS"
