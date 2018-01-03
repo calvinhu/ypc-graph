@@ -112,9 +112,10 @@ def rushingyards(playerid,team,year,week=None):
       return jsonify(result = rushing_yds_per_att)
 
     if games != []:
-      all_plays = nflgame.combine_plays(games)
       player_position = nflgame.players[playerid].position
-      print "GOT ALL PLAYS"
+      print "GOT POSITION"
+      all_plays = nflgame.combine_plays(games)
+      print "ALL_PLAYS"
       player_plays = [p for p in all_plays if p.has_player(playerid)]
       print "FILTER PLAYER"
       for p in player_plays:
@@ -149,7 +150,7 @@ def rushingyards(playerid,team,year,week=None):
     print e
     print e.message
     print "!!!!"
-    abort(400, e)
+    return jsonify(result = rushing_yds_per_att)
 
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
