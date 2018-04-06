@@ -19,20 +19,16 @@ API_ROOT = '/api/v0';
 APP_ROOT = os.path.dirname(os.path.abspath(__file__))
 APP_STATIC = os.path.join(APP_ROOT, 'static')
 
-def get_rusher_stats(ap):
-    return {
-      'id': ap.playerid,
-      'name': nflgame.players[str(ap.playerid)].full_name, 
-      'team': str(ap.team), 
-      'rushing_yds': ap.rushing_yds, 
-      'rushing_att': ap.rushing_att, 
-      'rushing_tds': ap.rushing_tds + ap.receiving_tds
-    }
-
 @app.errorhandler(400)
 def custom400(error):
   response = jsonify({'message': error.description})
   return response
+
+# SSL
+CHECK_URL = "/.well-known/acme-challenge/-oFvNaVP_6REJN1Q_esdgAh_S_YVYpWVTLhJ80Xwuyk"
+@app.route(CHECK_URL)
+def check_url():
+  return "-oFvNaVP_6REJN1Q_esdgAh_S_YVYpWVTLhJ80Xwuyk.c98f0gzyazQulnJchxS6U0wR09DCHc4HutKAPXlEx_8"
 
 # VIEWS
 @app.route('/')
@@ -58,6 +54,15 @@ def weeks(year):
 
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
 def toprushers(year,count=100):
+  def get_rusher_stats(ap):
+    return {
+      'id': ap.playerid,
+      'name': nflgame.players[str(ap.playerid)].full_name, 
+      'team': str(ap.team), 
+      'rushing_yds': ap.rushing_yds, 
+      'rushing_att': ap.rushing_att, 
+      'rushing_tds': ap.rushing_tds + ap.receiving_tds
+    }
   try:
     current_year, current_week = nflgame.live.current_year_and_week()
     phase = nflgame.live._cur_season_phase
@@ -112,8 +117,7 @@ def rushingyards(playerid,team,year,week=None):
       return jsonify(result = rushing_yds_per_att)
 
     if games != []:
-      # player_position = nflgame.players[playerid].position
-      player_position = "RB"
+      player_position = nflgame.players[playerid].position
       print "GOT POSITION"
       all_plays = nflgame.combine_plays(games)
       print "ALL_PLAYS"
