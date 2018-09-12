@@ -25,10 +25,10 @@ def custom400(error):
   return response
 
 # SSL
-CHECK_URL = "/.well-known/acme-challenge/GBS4Nl-jTli9c2k_q6YNsG_bTSXPUew44FjTTM0M59I"
+CHECK_URL = "/.well-known/acme-challenge/E21iMwAQvH_ezOQTr1PIb-FTWQdhho1Q3KwJc0lpsvo"
 @app.route(CHECK_URL)
 def check_url():
-  return "GBS4Nl-jTli9c2k_q6YNsG_bTSXPUew44FjTTM0M59I.c98f0gzyazQulnJchxS6U0wR09DCHc4HutKAPXlEx_8"
+  return "E21iMwAQvH_ezOQTr1PIb-FTWQdhho1Q3KwJc0lpsvo.c98f0gzyazQulnJchxS6U0wR09DCHc4HutKAPXlEx_8"
 
 # VIEWS
 @app.route('/')
