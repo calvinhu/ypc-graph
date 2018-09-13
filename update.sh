@@ -1,7 +1,7 @@
 #!/bin/bash
-RUSHING=$(curl http://127.0.0.1:5000/api/v0/toprushers/2017/100 | sed -e 's/JAC/JAX/g')
+RUSHING=$(curl http://127.0.0.1:5000/api/v0/toprushers/2018/100 | sed -e 's/JAC/JAX/g')
 # RUSHING=$(curl http://www.ypcgraph.com/api/v0/toprushers/2016/100 | sed -e 's/JAC/JAX/g')
-RECEIVING=$(curl http://127.0.0.1:5000/api/v0/topreceivers/2017/100 | sed -e 's/JAC/JAX/g')
+RECEIVING=$(curl http://127.0.0.1:5000/api/v0/topreceivers/2018/100 | sed -e 's/JAC/JAX/g')
 # RECEIVING=$(curl http://www.ypcgraph.com/api/v0/topreceivers/2016/100 | sed -e 's/JAC/JAX/g')
 
 # echo $RUSHING

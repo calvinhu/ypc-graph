@@ -101,7 +101,7 @@ def rushingyards(playerid,team,year,week=None):
   try:
     print "INIT"
     rushing_yds_per_att = []
-    current_year = 2017
+    current_year = 2018
     current_week = 17
     if week:
       weeks = [int(week)]
@@ -162,7 +162,7 @@ def rushingyards(playerid,team,year,week=None):
 def receivingyards(playerid,team,year,week=None):
   try:
     receiving_yds_per_att = []
-    current_year = 2017
+    current_year = 2018
     current_week = 17
     if week:
       weeks = [int(week)]
