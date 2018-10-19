@@ -49,6 +49,8 @@ def weeks(year):
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
 def toprushers(year,count=100):
   def get_rusher_stats(ap):
+    if ap.playerid not in nflgame.players:
+      app.logger.info("Player ID {} not in nflgame".format(ap.playerid))
     return {
       'id': ap.playerid,
       'name': nflgame.players[str(ap.playerid)].full_name, 
