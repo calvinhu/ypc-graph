@@ -3,16 +3,10 @@ import sys
 from time import gmtime, strftime
 from flask import Flask, jsonify, render_template, abort, request, send_file, Response, send_from_directory, make_response, request, current_app
 from flask_compress import Compress
-import re
-import gc
 import nflgame
 import logging
 
 app = Flask(__name__)
-
-app.logger.addHandler(logging.StreamHandler(sys.stdout))
-app.logger.setLevel(logging.ERROR)
-
 Compress(app)
 
 API_ROOT = '/api/v0';
@@ -67,6 +61,7 @@ def toprushers(year,count=100):
     current_year, current_week = nflgame.live.current_year_and_week()
     phase = nflgame.live._cur_season_phase
     weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
+    app.logger.info("Year: {}, Week: {}".format(current_year, current_week))
     topplayers = list(map(get_rusher_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).rushing().sort('rushing_yds').limit(int(count))))
     sys.exc_clear()
     sys.exc_traceback = sys.last_traceback = None
@@ -77,6 +72,8 @@ def toprushers(year,count=100):
 @app.route(API_ROOT + '/topreceivers/<year>/<count>', methods=['GET'])
 def topreceivers(year,count=100):
   def get_player_stats(ap):
+    if ap.playerid not in nflgame.players:
+      app.logger.info("Player ID {} not in nflgame".format(ap.playerid))
     return {
       'id': ap.playerid,
       'name': nflgame.players[ap.playerid].full_name, 
@@ -89,6 +86,7 @@ def topreceivers(year,count=100):
     current_year, current_week = nflgame.live.current_year_and_week()
     phase = nflgame.live._cur_season_phase
     weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
+    app.logger.info("Year: {}, Week: {}".format(current_year, current_week))
     topplayers = map(get_player_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).receiving().sort('receiving_yds').limit(int(count)))
 
     return jsonify(result = topplayers)
@@ -99,7 +97,6 @@ def topreceivers(year,count=100):
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 def rushingyards(playerid,team,year,week=None):
   try:
-    print "INIT"
     rushing_yds_per_att = []
     current_year = 2018
     current_week = 17
@@ -113,16 +110,12 @@ def rushingyards(playerid,team,year,week=None):
     try:
       games = nflgame.games(int(year), week=weeks, home=team, away=team)
     except Exception as e:
-      print "FAILED"
       return jsonify(result = rushing_yds_per_att)
 
     if games != []:
       player_position = nflgame.players[playerid].position
-      print "GOT POSITION"
       all_plays = nflgame.combine_plays(games)
-      print "ALL_PLAYS"
       player_plays = [p for p in all_plays if p.has_player(playerid)]
-      print "FILTER PLAYER"
       for p in player_plays:
         if (p.receiving_tar==1) or (p.rushing_att==1):
           if p.rushing_att==1:
@@ -137,7 +130,6 @@ def rushingyards(playerid,team,year,week=None):
             play = {
               'type': play_type, 
               'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
-              # 'desc': str(re.sub(r'\([^)]*\)', '', p.desc)), 
               'desc': str(p.desc), 
               'down': str(p.down) + ' and ' + str(p.yards_togo),
               'time': str(p.time),
@@ -146,15 +138,9 @@ def rushingyards(playerid,team,year,week=None):
               'week': p.drive.game.schedule['week']
             }
             rushing_yds_per_att.append(play)
-    else:
-      print "EMPTY"
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
-    print "!!!!"
-    print type(e).__name__
-    print e
-    print e.message
-    print "!!!!"
+    app.logger.error("error: {}".format(e))
     return jsonify(result = rushing_yds_per_att)
 
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
@@ -200,7 +186,8 @@ def receivingyards(playerid,team,year,week=None):
 
     return jsonify(result = receiving_yds_per_att)
   except Exception as e:
-    abort(400, e)
+    app.logger.error("error: {}".format(e))
+    return jsonify(result = receiving_yds_per_att)
 
 @app.after_request
 def add_cors(resp):
@@ -217,6 +204,11 @@ def add_cors(resp):
   return resp
 
 ###################
+
+if __name__ != '__main__':
+    gunicorn_logger = logging.getLogger('gunicorn.error')
+    app.logger.handlers = gunicorn_logger.handlers
+    app.logger.setLevel(gunicorn_logger.level)
 
 if __name__ == '__main__':
   port = int(os.environ.get('PORT',5000))
