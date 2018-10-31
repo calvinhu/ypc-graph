@@ -213,6 +213,7 @@ if __name__ != '__main__':
     app.logger.setLevel(gunicorn_logger.level)
 
 if __name__ == '__main__':
+  nflgame.update_players.run()
   port = int(os.environ.get('PORT',5000))
-  app.debug = True
+  app.debug = False
   app.run(host='0.0.0.0', port=port)
