@@ -33,6 +33,8 @@ def reload_nflgame():
 
 @app.route('/update_players')
 def update_players():
+  print "UPDATING PLAYERS"
+  print dir(nflgame.update_players)
   nflgame.update_players.run()
   return render_template('index.html')
 
