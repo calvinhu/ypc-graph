@@ -5,6 +5,7 @@ from flask import Flask, jsonify, render_template, abort, request, send_file, Re
 from flask_compress import Compress
 import nflgame
 import logging
+import nflgame.update_players
 
 app = Flask(__name__)
 Compress(app)
@@ -23,6 +24,17 @@ CHECK_URL = "/.well-known/acme-challenge/E21iMwAQvH_ezOQTr1PIb-FTWQdhho1Q3KwJc0l
 @app.route(CHECK_URL)
 def check_url():
   return "E21iMwAQvH_ezOQTr1PIb-FTWQdhho1Q3KwJc0lpsvo.c98f0gzyazQulnJchxS6U0wR09DCHc4HutKAPXlEx_8"
+
+# RELOAD NFLGAME
+@app.route('/reload')
+def reload_nflgame():
+  reload(nflgame)
+  return render_template('index.html')
+
+@app.route('/update_players')
+def update_players():
+  nflgame.update_players.run()
+  return render_template('index.html')
 
 # VIEWS
 @app.route('/')
@@ -213,7 +225,6 @@ if __name__ != '__main__':
     app.logger.setLevel(gunicorn_logger.level)
 
 if __name__ == '__main__':
-  nflgame.update_players.run()
   port = int(os.environ.get('PORT',5000))
   app.debug = False
   app.run(host='0.0.0.0', port=port)
