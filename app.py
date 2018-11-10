@@ -47,6 +47,12 @@ def rushers():
   return render_template('index.html')
 
 # API ROUTES
+@app.route(API_ROOT + '/player_name/<id>')
+def get_player_name(id):
+  if id in nflgame.players:
+    return jsonify(result = nflgame.players[id].name)
+  else:
+    abort(400, {"description": "No such player with the ID: {}".format(id)})
 
 @app.route(API_ROOT + '/data/<path:filename>', methods=['GET'])
 def send_list(filename):
