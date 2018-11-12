@@ -5,7 +5,7 @@ from flask import Flask, jsonify, render_template, abort, request, send_file, Re
 from flask_compress import Compress
 import nflgame
 import logging
-import nflgame.update_players
+from memory_profiler import profile
 
 app = Flask(__name__)
 Compress(app)
@@ -43,7 +43,11 @@ def root():
   return render_template('index.html')
 
 @app.route('/top')
-def rushers():
+def top():
+  return render_template('index.html')
+
+@app.route('/player/<path:path>')
+def player(path):
   return render_template('index.html')
 
 # API ROUTES
@@ -66,6 +70,7 @@ def weeks(year):
   return jsonify(result = weeks)
 
 @app.route(API_ROOT + '/toprushers/<year>/<count>', methods=['GET'])
+@profile
 def toprushers(year,count=100):
   def get_rusher_stats(ap):
     if ap.playerid not in nflgame.players:
@@ -83,9 +88,7 @@ def toprushers(year,count=100):
     phase = nflgame.live._cur_season_phase
     weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
     app.logger.info("Year: {}, Week: {}".format(current_year, current_week))
-    topplayers = list(map(get_rusher_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).rushing().sort('rushing_yds').limit(int(count))))
-    sys.exc_clear()
-    sys.exc_traceback = sys.last_traceback = None
+    topplayers = map(get_rusher_stats, nflgame.combine_game_stats(nflgame.games(int(year), weeks)).rushing().sort('rushing_yds').limit(int(count)))
     return jsonify(result = topplayers)
   except Exception as e:
     abort(400, e)
@@ -116,49 +119,50 @@ def topreceivers(year,count=100):
 
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/rushingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
-def rushingyards(playerid,team,year,week=None):
+def rushingyards(playerid, team, year, week=None):
+  def parse_play(play):
+    player_position = nflgame.players[playerid].position
+    if play.rushing_att==1:
+      play_type = 'RUSH'
+    elif play.receiving_rec==1:
+      play_type = 'PASS'
+    else:
+      play_type = 'INCOMPLETE'
+    if (player_position == 'QB') and (play_type == 'PASS' or play_type == 'INCOMPLETE'):
+      pass
+    else:
+      play = {
+        'type': play_type,
+        'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds,
+        'desc': str(p.desc),
+        'down': str(p.down) + ' and ' + str(p.yards_togo),
+        'time': str(p.time),
+        'position': str(p.yardline),
+        'game': str(p.drive.game),
+        'week': p.drive.game.schedule['week']
+      }
+      return play
+
+  def is_relevant_play(play):
+    return play.has_player(playerid) and (play.receiving_tar==1 or play.rushing_att==1)
+
   try:
     rushing_yds_per_att = []
-    current_year = 2018
-    current_week = 17
     if week:
       weeks = [int(week)]
     else:
       current_year, current_week = nflgame.live.current_year_and_week()
       phase = nflgame.live._cur_season_phase
-      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
+      if int(year) == int(current_year) and phase == "REG":
+        weeks = [x for x in range(1, current_week+1)]
+      else:
+        weeks - [x for x in range(1, 18)]
 
-    try:
-      games = nflgame.games(int(year), week=weeks, home=team, away=team)
-    except Exception as e:
-      return jsonify(result = rushing_yds_per_att)
+    games = nflgame.games(int(year), week=weeks, home=team, away=team)
 
     if games != []:
-      player_position = nflgame.players[playerid].position
       all_plays = nflgame.combine_plays(games)
-      player_plays = [p for p in all_plays if p.has_player(playerid)]
-      for p in player_plays:
-        if (p.receiving_tar==1) or (p.rushing_att==1):
-          if p.rushing_att==1:
-            play_type = 'RUSH'
-          elif p.receiving_rec==1:
-            play_type = 'PASS'
-          else:
-            play_type = 'INCOMPLETE'
-          if (player_position == 'QB') and (play_type == 'PASS' or play_type == 'INCOMPLETE'):
-            pass
-          else:
-            play = {
-              'type': play_type, 
-              'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds, 
-              'desc': str(p.desc), 
-              'down': str(p.down) + ' and ' + str(p.yards_togo),
-              'time': str(p.time),
-              'position': str(p.yardline),
-              'game': str(p.drive.game), 
-              'week': p.drive.game.schedule['week']
-            }
-            rushing_yds_per_att.append(play)
+      rushing_yds_per_att = [parse_play(p) for p in all_plays if is_relevant_play(p) ]
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
     app.logger.error("error: {}".format(e))
@@ -167,43 +171,44 @@ def rushingyards(playerid,team,year,week=None):
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>', methods=['GET'])
 @app.route(API_ROOT + '/receivingyards/<playerid>/<team>/<year>/<week>', methods=['GET'])
 def receivingyards(playerid,team,year,week=None):
+  def parse_play(play):
+    if p.receiving_rec==1:
+      play_type = 'PASS'
+    else:
+      play_type = 'INCOMPLETE'
+      play = {
+        'type': play_type,
+        'complete': p.receiving_rec,
+        'yards': p.receiving_yds,
+        'yac_yards': p.receiving_yac_yds,
+        'desc': str(p.desc),
+        'down': str(p.down) + ' and ' + str(p.yards_togo),
+        'time': str(p.time),
+        'position': str(p.yardline),
+        'game': str(p.drive.game),
+        'week': p.drive.game.schedule['week']}
+      return play
+
+  def is_relevant_play(play):
+    return play.has_player(playerid) and (play.receiving_tar==1)
+
   try:
     receiving_yds_per_att = []
-    current_year = 2018
-    current_week = 17
     if week:
       weeks = [int(week)]
     else:
       current_year, current_week = nflgame.live.current_year_and_week()
       phase = nflgame.live._cur_season_phase
-      weeks = [x for x in range(1, current_week+1)] if int(year) == int(current_year) and phase == "REG" else [x for x in range(1, 18)]
+      if int(year) == int(current_year) and phase == "REG":
+        weeks = [x for x in range(1, current_week+1)]
+      else:
+        weeks - [x for x in range(1, 18)]
 
-    try:
-      games = nflgame.games(int(year), week=weeks, home=team, away=team)
-    except Exception as e:
-      return jsonify(result = receiving_yds_per_att)
+    games = nflgame.games(int(year), week=weeks, home=team, away=team)
 
     if games != []:
       all_plays = nflgame.combine_plays(games)
-      player_plays = [p for p in all_plays if p.has_player(playerid)]
-      for p in player_plays:
-        if (p.receiving_tar==1):
-          if p.receiving_rec==1:
-            play_type = 'PASS'
-          else:
-            play_type = 'INCOMPLETE'
-          play = {
-            'type': play_type,
-            'complete': p.receiving_rec,
-            'yards': p.receiving_yds, 
-            'yac_yards': p.receiving_yac_yds, 
-            'desc': str(p.desc), 
-            'down': str(p.down) + ' and ' + str(p.yards_togo), 
-            'time': str(p.time),
-            'position': str(p.yardline),
-            'game': str(p.drive.game), 
-            'week': p.drive.game.schedule['week']}
-          receiving_yds_per_att.append(play)
+      receiving_yds_per_att = [parse_play(p) for p in all_plays if is_relevant_play(p) ]
 
     return jsonify(result = receiving_yds_per_att)
   except Exception as e:
@@ -226,12 +231,15 @@ def add_cors(resp):
 
 ###################
 
+def main():
+  port = int(os.environ.get('PORT',5000))
+  app.debug = True
+  app.run(host='0.0.0.0', port=port)
+
 if __name__ != '__main__':
-    gunicorn_logger = logging.getLogger('gunicorn.error')
-    app.logger.handlers = gunicorn_logger.handlers
-    app.logger.setLevel(gunicorn_logger.level)
+  gunicorn_logger = logging.getLogger('gunicorn.error')
+  app.logger.handlers = gunicorn_logger.handlers
+  app.logger.setLevel(gunicorn_logger.level)
 
 if __name__ == '__main__':
-  port = int(os.environ.get('PORT',5000))
-  app.debug = False
-  app.run(host='0.0.0.0', port=port)
+  main()
