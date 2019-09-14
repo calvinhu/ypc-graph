@@ -177,18 +177,18 @@ def receivingyards(playerid,team,year,week=None):
       play_type = 'PASS'
     else:
       play_type = 'INCOMPLETE'
-      play = {
-        'type': play_type,
-        'complete': p.receiving_rec,
-        'yards': p.receiving_yds,
-        'yac_yards': p.receiving_yac_yds,
-        'desc': str(p.desc),
-        'down': str(p.down) + ' and ' + str(p.yards_togo),
-        'time': str(p.time),
-        'position': str(p.yardline),
-        'game': str(p.drive.game),
-        'week': p.drive.game.schedule['week']}
-      return play
+    play = {
+      'type': play_type,
+      'complete': p.receiving_rec,
+      'yards': p.receiving_yds,
+      'yac_yards': p.receiving_yac_yds,
+      'desc': str(p.desc),
+      'down': str(p.down) + ' and ' + str(p.yards_togo),
+      'time': str(p.time),
+      'position': str(p.yardline),
+      'game': str(p.drive.game),
+      'week': p.drive.game.schedule['week']}
+    return play
 
   def is_relevant_play(play):
     return play.has_player(playerid) and (play.receiving_tar==1)
