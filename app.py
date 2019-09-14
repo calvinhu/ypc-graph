@@ -131,7 +131,7 @@ def rushingyards(playerid, team, year, week=None):
     if (player_position == 'QB') and (play_type == 'PASS' or play_type == 'INCOMPLETE'):
       pass
     else:
-      play = {
+      result = {
         'type': play_type,
         'yards': p.rushing_yds if p.rushing_att==1 else p.receiving_yds,
         'desc': str(p.desc),
@@ -141,7 +141,7 @@ def rushingyards(playerid, team, year, week=None):
         'game': str(p.drive.game),
         'week': p.drive.game.schedule['week']
       }
-      return play
+      return result
 
   def is_relevant_play(play):
     return play.has_player(playerid) and (play.receiving_tar==1 or play.rushing_att==1)
@@ -156,13 +156,14 @@ def rushingyards(playerid, team, year, week=None):
       if int(year) == int(current_year) and phase == "REG":
         weeks = [x for x in range(1, current_week+1)]
       else:
-        weeks - [x for x in range(1, 18)]
+        weeks = [x for x in range(1, 18)]
 
     games = nflgame.games(int(year), week=weeks, home=team, away=team)
 
     if games != []:
       all_plays = nflgame.combine_plays(games)
-      rushing_yds_per_att = [parse_play(p) for p in all_plays if is_relevant_play(p) ]
+      rushing_yds_per_att = [parse_play(p) for p in all_plays if is_relevant_play(p)]
+      rushing_yds_per_att = [p for p in rushing_yds_per_att if p]
     return jsonify(result = rushing_yds_per_att)
   except Exception as e:
     app.logger.error("error: {}".format(e))
